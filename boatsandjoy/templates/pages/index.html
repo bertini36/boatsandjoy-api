@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static sekizai_tags %}
+
+{% block styles %}
+
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/pignose.calendar.min.css' %}">
+
+{% endblock styles %}
+
+{% block content %}
+
+    <div class="container">
+
+        {% include 'partials/header.html' %}
+        {% include 'partials/searcher.html' %}
+        {% include 'partials/results.html' %}
+
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    {{ block.super }}
+
+    <script src="{% static 'js/libs/vue.min.js' %}"></script>
+    <script src="{% static 'js/libs/pignose.calendar.full.min.js' %}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script src="{% static 'js/controllers/searcher-controller.js' %}"></script>
+    <script src="{% static 'js/controllers/results-controller.js' %}"></script>
+
+    {% addtoblock 'js' %}
+
+        <script type="application/javascript">
+
+            constants.STRIPE_API_KEY = "{{ STRIPE_API_KEY }}";
+
+            constants.TRANSLATIONS["DATE_REQUIRED"] = "{{ translations.DATE_REQUIRED }}";
+            constants.TRANSLATIONS["NO_AVAILABILITY"] = "{{ translations.NO_AVAILABILITY }}";
+            constants.TRANSLATIONS["PAYMENT_ERROR"] = "{{ translations.PAYMENT_ERROR }}";
+            constants.TRANSLATIONS["PRICING_OPTION_REQUIRED"] = "{{ translations.PRICING_OPTION_REQUIRED }}";
+            constants.TRANSLATIONS["LEGAL_ADVICE_HAS_TO_BE_ACCEPTED"] = "{{ translations.LEGAL_ADVICE_HAS_TO_BE_ACCEPTED }}";
+            constants.TRANSLATIONS["TERMS_AND_CONDITIONS_HAVE_TO_BE_ACCEPTED"] = "{{ translations.TERMS_AND_CONDITIONS_HAVE_TO_BE_ACCEPTED }}";
+            constants.TRANSLATIONS["CLIENT_NAME_IS_REQUIRED"] = "{{ translations.CLIENT_NAME_IS_REQUIRED }}";
+
+        </script>
+
+    {% endaddtoblock %}
+
+{% endblock scripts %}

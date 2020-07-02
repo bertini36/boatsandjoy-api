@@ -1,0 +1,32 @@
+{% load sekizai_tags %}
+
+<div class="row" style="margin-top: 5%">
+    <div class="col-sm-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div id="map"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% addtoblock 'js' %}
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_API_KEY }}&callback=initMap"></script>
+
+    <script type="application/javascript">
+
+        function initMap() {
+            let mallorca_location = {
+                lat: parseFloat("{{ HARBOUR_LOCATION.lat }}"),
+                lng: parseFloat("{{ HARBOUR_LOCATION.lng }}")
+            };
+            let map = new google.maps.Map(document.getElementById("map"), {zoom: 9, center: mallorca_location});
+            new google.maps.Marker({position: mallorca_location, map: map});
+        }
+
+    </script>
+
+{% endaddtoblock %}

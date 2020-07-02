@@ -1,0 +1,8 @@
+staticfiles
+.editorconfig
+.env
+.todos
+.gitignore
+.pylintrc
+README.md
+requirements.txt

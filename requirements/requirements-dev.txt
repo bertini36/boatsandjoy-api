@@ -1,0 +1,9 @@
+-r requirements-prod.txt
+
+django-extensions==2.2.9
+django-debug-toolbar==2.2
+flake8==3.7.9
+pylint-django==2.0.15
+pylint-common==0.2.5
+ipdb==0.13.2
+loguru==0.4.1

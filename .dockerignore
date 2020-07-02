@@ -1,0 +1,11 @@
+staticfiles
+utils
+.dockerignore
+.editorconfig
+.env
+.gitignore
+.pylintrc
+docker-compose.yml
+Dockerfile
+Makefile
+README.md

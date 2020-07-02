@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% load static i18n sekizai_tags %}
+
+{% block content %}
+
+    <div class="container">
+
+        <header id="header" class="row">
+            <div class="col-sm-12 text-center">
+                <h1>{% trans 'Something went wrong' %}</h1>
+            </div>
+        </header>
+
+        <div class="row" style="margin-top: 3%">
+
+            <div class="col-md-6 col-sm-12">
+                <div id="payment-error-modal" class="modal-lg" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+
+                                <blockquote class="blockquote text-center" style="margin-top: 5%">
+                                    <p class="mb-0">{% trans 'It seems that you had an error with the payment' %}</p>
+                                    <p class="mb-0">
+                                         {% trans 'Please contact with us to solve it!' %}
+                                    </p>
+                                    {% if booking %}
+                                        <footer class="blockquote-footer">
+                                            {% trans 'Booking locator' %}: <strong>{{ booking.locator }}</strong>
+                                        </footer>
+                                    {% endif %}
+                                </blockquote>
+
+                                <p style="margin-top: 10%">
+                                    {% include "partials/contact_information.html" %}
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="map_section" class="col-md-6 col-sm-12">
+                {% include 'partials/map.html' %}
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock content %}

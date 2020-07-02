@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% load static i18n %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-md-12 col-sm-12">
+                <div id="contact-modal" class="modal-lg" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-xl" role="document">
+
+                        <div class="modal-content" style="padding-left: 5%; padding-right: 5%; padding-bottom: 3%">
+
+                            <header id="header" class="row">
+                                <div class="col-sm-12">
+                                    <h1 class="text-center" style="margin-bottom: 5%"><strong>{% trans 'Boats' %}</strong></h1>
+                                </div>
+                            </header>
+
+                            <div class="modal-body">
+
+                                {% for boat in boats %}
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h3><strong>{{ boat.name }}</strong></h3>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            {{ boat.description | safe }}
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div id="boat_{{ boat.id }}_carousel" class="carousel slide" data-ride="carousel">
+
+                                                <!-- Indicators -->
+                                                <ul class="carousel-indicators">
+                                                    {% for photo in boat.photos.all %}
+                                                        {% if forloop.first %}
+                                                            <li class="#demo active" data-slide-to="index">
+                                                        {% else %}
+                                                            <li class="#demo" data-slide-to="index">
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </ul>
+
+                                                <!-- The slideshow -->
+                                                <div class="carousel-inner">
+
+                                                    {% for photo in boat.photos.all %}
+
+                                                        {% if forloop.first %}
+                                                            <div class="carousel-item active">
+                                                        {% else %}
+                                                            <div class="carousel-item">
+                                                        {% endif %}
+                                                            <img class="d-block w-100" src="{{ photo.image.url }}">
+                                                        </div>
+
+                                                    {% endfor %}
+
+                                                </div>
+
+                                                <!-- Left and right controls -->
+                                                <a class="carousel-control-prev" href="#boat_{{ boat.id }}_carousel" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon"></span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#boat_{{ boat.id }}_carousel" data-slide="next">
+                                                    <span class="carousel-control-next-icon"></span>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock content %}

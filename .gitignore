@@ -1,0 +1,52 @@
+# Sublime
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+
+# Basics
+*.py[cod]
+__pycache__
+
+# Logs
+*.log
+pip-log.txt
+logs/*
+!logs/.gitkeep
+
+# Pycharm
+.idea
+
+# npm
+node_modules/
+
+# Confs
+.env
+
+# Static generated
+staticfiles/*
+!staticfiles/.gitkeep
+
+# Media
+media/*
+!media/.gitkeep
+!media/boats/.gitkeep
+
+# Postgres
+init.sql/
+
+# Next steps
+.todos
+
+# Translations
+*.mo
+
+# Terraform
+environments/prod/infrastructure.tf
+environments/prod/.terraform/
+environments/prod/terraform.tfstate*
+environments/prod/.terraform.tfstate*
+
+# TODOs
+.todo

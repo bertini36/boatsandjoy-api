@@ -1,0 +1,59 @@
+version: "3"
+services:
+
+  #####################
+  ###  Django app   ###
+  #####################
+  django-app:
+    build:
+      context: ../..
+      dockerfile: environments/dev/Dockerfile
+      args:
+        REQUIREMENTS: requirements-dev.txt
+    env_file: ../../.env
+    volumes:
+      - "../../:/code"
+    depends_on:
+      - postgres-db
+    ports:
+      - "80:80"
+    environment:
+      - PYTHONIOENCODING=UTF-8
+      - PYTHONUNBUFFERED=1
+    command: python /code/manage.py runserver 0.0.0.0:80
+
+  #####################
+  ####  Database   ####
+  #####################
+  postgres-db:
+    image: postgres:12
+    restart: always
+    env_file: ../../.env
+    volumes:
+      - ~/Dropbox/projects/boatsandjoy:/data
+      - boatsandjoy-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  #####################
+  ####   Mailhog   ####
+  #####################
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025" # SMTP server
+      - "8025:8025" # Web UI
+
+  #####################
+  #####   Ngrok   #####
+  #####################
+  ngrok:
+    image: wernight/ngrok
+    links:
+      - django-app
+    command: ngrok http django-app:80
+    ports:
+      - "4040:4040" # Access to public domain: /api/tunnels
+
+volumes:
+  boatsandjoy-data: {}
