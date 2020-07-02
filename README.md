@@ -2,7 +2,8 @@
 
 # Boats & Joy
 
-Source code of Boats & Joy app (https://www.boatsandjoy.com/).
+Source code of [Boats & Joy](https://www.boatsandjoy.com/),
+an application to rent boats in Mallorca.
 Written in Python, using Django framework, deployed with Heroku and 
 development environment managed with Docker-compose.
 
