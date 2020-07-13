@@ -72,8 +72,12 @@ class BookingAdmin(admin.ModelAdmin):
         slots = obj.slots.all()
         first_slot = slots.first()
         last_slot = slots.last()
-        day = format_date(first_slot.day.date) if first_slot.day else ''
-        return f'{day}: from {first_slot.from_hour} to {last_slot.to_hour}'
+        time_str = ''
+        if first_slot and last_slot:
+            day = format_date(first_slot.day.date) if first_slot.day else ''
+            time_str = f'{day}: from {first_slot.from_hour} to ' \
+                       f'{last_slot.to_hour}'
+        return time_str
 
     @staticmethod
     def get_price(obj: Booking) -> str:
