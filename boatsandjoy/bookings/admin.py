@@ -72,7 +72,7 @@ class BookingAdmin(admin.ModelAdmin):
         slots = obj.slots.all()
         first_slot = slots.first()
         last_slot = slots.last()
-        day = format_date(first_slot.day.date)
+        day = format_date(first_slot.day.date) if first_slot.day else ''
         return f'{day}: from {first_slot.from_hour} to {last_slot.to_hour}'
 
     @staticmethod
