@@ -109,14 +109,14 @@ let searcher_controller = new Vue({
                 utils.show_notification("alert", constants.TRANSLATIONS.DATE_REQUIRED);
             } else {
                 this.block_calendar();
-                await this.get_date_availability(this.selected_date).then(
+                await this.get_date_availability(this.selected_date, 0).then(
                     date_availability => this.show_day_results(date_availability)
                 );
                 this.unblock_calendar();
             }
         },
 
-        async get_date_availability(date) {
+        async get_date_availability(date, apply_resident_discount) {
             /**
              * @returns: {
              *       "results": [
@@ -136,7 +136,7 @@ let searcher_controller = new Vue({
              *       ]
              * }
              */
-            const response = await axios.get(`${constants.GET_DAY_AVAILABILITY_URL}${date}/`);
+            const response = await axios.get(`${constants.GET_DAY_AVAILABILITY_URL}${date}/?apply_resident_discount=${apply_resident_discount}`);
             return response.data;
         },
 

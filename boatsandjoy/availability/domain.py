@@ -52,6 +52,7 @@ class DayDefinition:
     days: List[Day]
     n_slots_deal_threshold: int
     discount_when_deal: float
+    resident_discount: float
 
 
 @dataclass

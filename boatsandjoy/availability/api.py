@@ -71,7 +71,8 @@ class AvailabilityApi:
             boats = [Boat(**boat_data) for boat_data in results['data']]
             availablity_results = self._get_day_availability(
                 boats=boats,
-                date_=request.date
+                date_=request.date,
+                apply_resident_discount=request.apply_resident_discount
             )
             return self.response_builder(availablity_results).build()
 
@@ -111,13 +112,24 @@ class AvailabilityApi:
                 self._generate_no_availability_month(request)
             ).build()
 
-    def _get_day_availability(self, boats: List[Boat], date_: date) -> list:
+    def _get_day_availability(
+        self,
+        boats: List[Boat],
+        date_: date,
+        apply_resident_discount: bool
+    ) -> list:
         results = []
         for boat in boats:
             try:
                 if not boat.active:
                     raise NoActiveBoat(_('This boat is not active'))
-                results.append(self._get_boat_response(boat, date_))
+                results.append(
+                    self._get_boat_response(
+                        boat,
+                        date_,
+                        apply_resident_discount
+                    )
+                )
             except BoatsAndJoyException:
                 continue
         return results
@@ -145,7 +157,12 @@ class AvailabilityApi:
             results.append(result)
         return results
 
-    def _get_boat_response(self, boat: Boat, date_: date) -> dict:
+    def _get_boat_response(
+        self,
+        boat: Boat,
+        date_: date,
+        apply_resident_discount: bool
+    ) -> dict:
         day_definition = DjangoAvailabilityRepository.get_day_definition(
             boat_id=boat.id,
             date_=date_
@@ -183,10 +200,11 @@ class AvailabilityApi:
                         }
                         for slot in combination
                     ],
-                    'price': self._apply_combination_discount(
+                    'price': self._apply_discounts(
                         combination,
                         combinations_prices[i],
-                        day_definition
+                        day_definition,
+                        apply_resident_discount
                     ),
                     'from_hour': combinations_timings[i].from_hour,
                     'to_hour': combinations_timings[i].to_hour
@@ -337,10 +355,11 @@ class AvailabilityApi:
         return results
 
     @staticmethod
-    def _apply_combination_discount(
+    def _apply_discounts(
         combination: List[domain.Slot],
         theoretical_price: Decimal,
-        day_definition: domain.DayDefinition
+        day_definition: domain.DayDefinition,
+        apply_resident_discount: bool
     ) -> Decimal:
         price = theoretical_price
         if (
@@ -351,6 +370,8 @@ class AvailabilityApi:
                 theoretical_price -
                 theoretical_price * Decimal(day_definition.discount_when_deal)
             )
+        if apply_resident_discount:
+            price = price - price * Decimal(day_definition.resident_discount)
         return round(price, 2)
 
 

@@ -249,7 +249,8 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
                 for day in day_definition.days.all()
             ],
             n_slots_deal_threshold=day_definition.n_slots_deal_threshold,
-            discount_when_deal=day_definition.discount_when_deal
+            discount_when_deal=day_definition.discount_when_deal,
+            resident_discount=day_definition.resident_discount
         )
 
     @classmethod

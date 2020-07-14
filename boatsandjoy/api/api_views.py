@@ -45,7 +45,11 @@ def get_day_availability(request: HttpRequest, date_: str) -> JsonResponse:
     }
     """
     date_ = transform_to_internal_date(date_)
-    api_request = GetDayAvailabilityRequest(date=date_)
+    apply_resident_discount = bool(int(request.GET['apply_resident_discount']))
+    api_request = GetDayAvailabilityRequest(
+        date=date_,
+        apply_resident_discount=apply_resident_discount
+    )
     results = availability_api.get_day_availability(api_request)
     return JsonResponse(results)
 

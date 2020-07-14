@@ -7,6 +7,7 @@ from boatsandjoy.core.validators import DjangoRequestValidator
 
 class DjangoGetAvailabilityForm(forms.Form):
     date = forms.DateField(required=True)
+    apply_resident_discount = forms.BooleanField(required=False)
 
 
 class GetAvailabilityRequestValidator(DjangoRequestValidator):

@@ -12,7 +12,8 @@ let results_controller = new Vue({
         legal_advice_accepted: false,
         terms_and_conditions_accepted: false,
         customer_name: "",
-        customer_telephone_number: ""
+        customer_telephone_number: "",
+        apply_resident_discount: false
     },
 
     computed: {
@@ -126,6 +127,12 @@ let results_controller = new Vue({
                     );
                 });
             }
+        },
+
+        async updatePrices() {
+            await searcher_controller.get_date_availability(this.selected_date, this.apply_resident_discount ? 1 : 0).then(
+                date_availability => searcher_controller.show_day_results(date_availability)
+            );
         }
 
     }

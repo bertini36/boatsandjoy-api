@@ -67,6 +67,21 @@
                                                     <li>
                                                         <div class="checkbox">
                                                             <label>
+                                                                <input type="checkbox" v-model="apply_resident_discount" @change="updatePrices">
+                                                                &nbsp;&nbsp;{% trans 'I am a resident of the Balearic Islands' %}
+                                                            </label>
+                                                        </div>
+                                                        <div class="alert alert-warning" v-if="apply_resident_discount">
+                                                            {% blocktrans %}
+                                                                If you mark this checkbox you are having a special discount then
+                                                                you have to give some evidence of your residence in Mallorca.
+                                                                Otherwise this offer will not have any effect and the original price will be applied.
+                                                            {% endblocktrans %}
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="checkbox">
+                                                            <label>
                                                                 <input type="checkbox" v-model="legal_advice_accepted">
                                                                 &nbsp;&nbsp;Accept <a href="{% static 'aviso_legal.pdf' %}" target="_blank">{% trans 'legal advice' %}</a>
                                                             </label>

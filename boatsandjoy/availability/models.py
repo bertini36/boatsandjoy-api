@@ -63,6 +63,12 @@ class DayDefinition(BaseModel):
             ' n_slots_deal_threshold slots'
         )
     )
+    resident_discount = models.FloatField(
+        default=0.25,
+        help_text=(
+            'Discount applicable to Balearic islands residents'
+        )
+    )
 
     def __str__(self) -> str:
         return f'<Day definition that starts at {self.first_time}, ' \
@@ -109,7 +115,8 @@ class Slot(BaseModel):
     booked = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        slot_str = f'Slot {self.day} from {self.from_hour} to {self.to_hour}'
+        slot_str = f'Slot {self.day} from {self.from_hour} to {self.to_hour} ' \
+                   f'of {self.day.definition.boat}'
         if self.booked:
             return f'{slot_str} booked'
         return f'{slot_str} available'
