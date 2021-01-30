@@ -45,7 +45,6 @@ class DayDefinition:
     price_per_hour: Decimal
     from_date: date
     to_date: date
-    description: str
     boat_id: int
     days: List[Day]
     n_slots_deal_threshold: int
