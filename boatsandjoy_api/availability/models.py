@@ -45,7 +45,6 @@ class DayDefinition(BaseModel):
         blank=False,
         help_text='Until which date this definition is available'
     )
-    description = models.TextField(blank=True)
     n_slots_deal_threshold = models.IntegerField(
         default=0,
         help_text=(

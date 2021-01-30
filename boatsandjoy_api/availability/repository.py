@@ -236,7 +236,6 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
             price_per_hour=day_definition.price_per_hour,
             from_date=day_definition.from_date,
             to_date=day_definition.to_date,
-            description=day_definition.description,
             boat_id=day_definition.boat.id,
             days=[
                 cls.get_day_domain_object(day)

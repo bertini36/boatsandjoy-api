@@ -179,11 +179,6 @@ class AvailabilityApi:
             'boat': {
                 'id': boat.id,
                 'name': boat.name,
-                'description': boat.description,
-                'photos': [
-                    {'url': photo.url, 'description': photo.description}
-                    for photo in boat.photos
-                ]
             },
             'availability': [
                 {
