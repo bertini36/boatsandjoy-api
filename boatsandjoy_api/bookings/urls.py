@@ -1,32 +1,15 @@
 # -*- coding: UTF-8 -*-
 
-from django.urls import path, re_path
+from django.urls import path
 
-from .api_views import (
-    get_day_availability,
-    get_month_availability,
-    create_booking,
-    mark_booking_as_paid,
-    mark_booking_as_error,
-    register_booking_event,
-    generate_payment
+from .views import (
+    create_booking, generate_payment, mark_booking_as_error,
+    mark_booking_as_paid, register_booking_event,
 )
 
-app_name = 'api'
+app_name = 'bookings'
 
 urlpatterns = [
-
-    re_path(
-        r'day/(?P<date_>\d{4}-\d{2}-\d{2})/',
-        get_day_availability,
-        name='get-day-availability'
-    ),
-
-    re_path(
-        r'month/(?P<date_>\d{4}-\d{2}-\d{2})/',
-        get_month_availability,
-        name='get-month-availability'
-    ),
 
     path(r'create/booking/', create_booking,  name='create-booking'),
 

@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'boatsandjoy_api.boats',
     'boatsandjoy_api.availability',
     'boatsandjoy_api.bookings',
-    'boatsandjoy_api.api',
 
     # Healthchecks
     'health_check',
