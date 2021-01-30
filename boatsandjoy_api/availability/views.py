@@ -28,13 +28,19 @@ def get_day_availability(request: HttpRequest, date_: str) -> JsonResponse:
     }
     """
     date_ = cast_to_date(date_)
-    apply_resident_discount = bool(int(request.GET['apply_resident_discount']))
+    apply_resident_discount = get_apply_resident_discount(request)
     api_request = GetDayAvailabilityRequest(
         date=date_,
         apply_resident_discount=apply_resident_discount
     )
     results = availability_api.get_day_availability(api_request)
     return JsonResponse(results)
+
+
+def get_apply_resident_discount(request: HttpRequest) -> bool:
+    if 'apply_resident_discount' in request.GET:
+        return bool(int(request.GET['apply_resident_discount']))
+    return False
 
 
 @require_http_methods(['GET'])
