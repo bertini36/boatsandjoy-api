@@ -70,21 +70,9 @@ class DjangoBoatsRepository(BoatsRepository):
 
     @classmethod
     def get_boat_domain_object(cls, boat: models.Boat) -> domain.Boat:
-        photos = [
-            domain.Photo(
-                url=f'{settings.MEDIA_URL}{partial_url}',
-                description=description
-            )
-            for partial_url, description in boat.photos.values_list(
-                'image',
-                'description'
-            )
-        ]
         return domain.Boat(
             id=boat.id,
             created=boat.created,
             name=boat.name,
-            description=boat.description,
-            active=boat.active,
-            photos=photos
+            active=boat.active
         )

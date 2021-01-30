@@ -108,6 +108,8 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
+DATE_FORMAT = '%Y-%m-%d'
+
 # MIDDLEWARE CONFIGURATION
 # https://docs.djangoproject.com/en/dev/topics/http/middleware/
 # ------------------------------------------------------------------------------

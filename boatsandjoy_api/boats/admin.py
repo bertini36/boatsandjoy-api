@@ -19,7 +19,7 @@ from boatsandjoy_api.availability.models import (
 from boatsandjoy_api.availability.utils import date_ranges_collision
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
 from boatsandjoy_api.core.utils import format_date
-from .models import Boat, Photo
+from .models import Boat
 
 
 class DayDefinitionInlineFormset(BaseInlineFormSet):
@@ -104,12 +104,6 @@ class PriceVariationInlineAdmin(admin.StackedInline):
     extra = 0
 
 
-class PhotoInlineAdmin(admin.StackedInline):
-    model = Photo
-    exclude = ('description',)
-    extra = 0
-
-
 def generate_availability_for(modeladmin, request: HttpRequest,
                               queryset: QuerySet):
     try:
@@ -187,7 +181,6 @@ class BoatAdmin(admin.ModelAdmin):
     inlines = (
         DayDefinitionInlineAdmin,
         PriceVariationInlineAdmin,
-        PhotoInlineAdmin
     )
     action_form = BoatAdminActionForm
     actions = [
