@@ -20,13 +20,9 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include
-from django.urls import path
+from django.urls import include, path
 
 urlpatterns = [
-
-    # Fake admin
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
 
     # Django Admin, use {% url 'admin:index' %}
     path(f'{settings.ADMIN_URL}', admin.site.urls),
@@ -37,8 +33,7 @@ urlpatterns = [
     # Healthchecks
     path('ht/', include('health_check.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
-  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

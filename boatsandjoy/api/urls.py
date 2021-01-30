@@ -11,34 +11,10 @@ from .api_views import (
     register_booking_event,
     generate_payment
 )
-from .template_views import (
-    index,
-    contact,
-    points_of_interest,
-    watersports,
-    boats,
-    cookies
-)
 
 app_name = 'api'
 
 urlpatterns = [
-
-    ############################## Templates ###################################
-
-    path('', index, name='index'),
-
-    path('boats/', boats, name='boats'),
-
-    path('contact/', contact, name='contact'),
-
-    path('points-of-interest/', points_of_interest, name='points-of-interest'),
-
-    path('watersports/', watersports, name='watersports'),
-
-    path('cookies/', cookies, name='cookies'),
-
-    ################################# API ######################################
 
     re_path(
         r'day/(?P<date_>\d{4}-\d{2}-\d{2})/',

@@ -46,12 +46,6 @@ INSTALLED_APPS = [
     # Admin
     'django.contrib.admin',
 
-    # Fake admin
-    'admin_honeypot',
-
-    # Sekizai
-    'sekizai',
-
     # Boats & Joy apps
     'boatsandjoy.core',
     'boatsandjoy.boats',
@@ -84,7 +78,7 @@ DATABASES = {
 
 # ADMIN CONFIGURATION
 # ------------------------------------------------------------------------------
-ADMIN_URL = env('DJANGO_ADMIN_URL', default='realadmin/')
+ADMIN_URL = 'admin/'
 
 # URL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -104,11 +98,6 @@ TIME_ZONE = 'Europe/Madrid'
 LANGUAGE_CODE = 'en'
 LANGUAGES = (
     ('en', 'English'),
-    ('es', 'Spanish'),
-    ('de', 'German'),
-)
-LOCALE_PATHS = (
-    os.path.join(BASE_DIR, 'locale'),
 )
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
@@ -122,10 +111,6 @@ USE_L10N = True
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
-
-DATE_INPUT_FORMATS = ('%d-%m-%Y',)
-DATE_FORMAT = '%d-%m-%Y'
-INTERNAL_DATE_FORMAT = '%Y-%m-%d'
 
 # MIDDLEWARE CONFIGURATION
 # https://docs.djangoproject.com/en/dev/topics/http/middleware/
@@ -189,8 +174,6 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.contrib.messages.context_processors.messages',
-                'boatsandjoy.core.context_processors.common',
-                'sekizai.context_processors.sekizai',
             ],
         },
     },
@@ -215,24 +198,11 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-# MEDIA CONFIGURATION
-# ------------------------------------------------------------------------------
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-root
-MEDIA_ROOT = str(BASE_DIR('media'))
-
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = '/media/'
-
 # Web application domain
 DOMAIN = env('DOMAIN', default='')
 
 # THIRD PARTY APPLICATIONS
 # ******************************************************************************
-
-# Google Maps
-# ------------------------------------------------------------------------------
-GOOGLE_API_KEY = env('GOOGLE_API_KEY', default='')
-HARBOUR_LOCATION = {'lat': 39.578955, 'lng': 2.350158}
 
 # Stripe
 # https://github.com/stripe/stripe-python
