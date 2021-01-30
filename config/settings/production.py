@@ -15,9 +15,7 @@ django_heroku.settings(locals())
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 # ------------------------------------------------------------------------------
 ALLOWED_HOSTS = (
-    'boatsandjoy.herokuapp.com',
-    'www.boatsandjoy.com',
-    'boatsandjoy.com'
+    'boatsandjoy_api.herokuapp.com',
 )
 
 # EMAIL CONFIGURATION
@@ -53,7 +51,7 @@ LOGGING = {
         'file': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': BASE_DIR('logs/boatsandjoy.log'),
+            'filename': BASE_DIR('logs/boatsandjoy_api.log'),
             'formatter': 'verbose'
         },
     },
@@ -63,7 +61,7 @@ LOGGING = {
             'propagate': True,
             'level': 'DEBUG',
         },
-        'boatsandjoy': {
+        'boatsandjoy_api': {
             'handlers': ['file'],
             'level': 'DEBUG',
         },

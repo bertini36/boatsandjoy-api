@@ -42,7 +42,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'boatsandjoy': {
+        'boatsandjoy_api': {
             'handlers': ['console'],
             'level': 'DEBUG',
         },

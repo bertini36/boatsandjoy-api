@@ -28,7 +28,7 @@ urlpatterns = [
     path(f'{settings.ADMIN_URL}', admin.site.urls),
 
     # Web urls
-    path('', include('boatsandjoy.api.urls', namespace='api')),
+    path('', include('boatsandjoy_api.api.urls', namespace='api')),
 
     # Healthchecks
     path('ht/', include('health_check.urls')),

@@ -3,11 +3,11 @@
 .PHONY: build
 build: ## 👷 Build app
 	@echo "👷 Building app"
-	@docker-compose build --no-cache django-app
+	@docker-compose build --no-cache boatsandjoy-api
 
 up: ## 🛫 Run app
 	@echo "🛫 Serving app"
-	docker-compose up django-app
+	docker-compose up boatsandjoy-api
 
 down: ## 🔌 Shut down app deleting containers
 	@echo "🔌 Disconnecting"
@@ -19,7 +19,7 @@ kill: ## 🗡️ Kill containers
 
 restart: ## ️️↩️ Restart a containers
 	@echo "↩️ Restarting"
-	@docker-compose restart django-app
+	@docker-compose restart boatsandjoy-api
 
 clean:	## 🧹 Delete containers and their volumes
 	@echo "🧹 Cleaning"
@@ -27,39 +27,43 @@ clean:	## 🧹 Delete containers and their volumes
 
 connect: ## 🔞 Connect to a container
 	@echo "🔞 Connecting to container"
-	@docker-compose run django-app /bin/bash
+	@docker-compose run boatsandjoy-api /bin/bash
 
 logs: ## 📋 show container logs
 	@echo "📋 Showing logs"
-	@docker-compose logs -f --tail 100 django-app
+	@docker-compose logs -f --tail 100 boatsandjoy-api
 
 shell: ## 📗 Django shell plus console
 	@echo "📗 Shell plus console"
-	@docker-compose run --rm --entrypoint python django-app manage.py shell_plus
+	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py shell_plus
 
 dbshell: ## 💾 Database shell console
 	@echo "💾 Database shell console"
-	@docker-compose run --rm --entrypoint python django-app manage.py dbshell
+	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py dbshell
 
 showmigrations: ## 💾 Show migrations state
 	@echo "💾 Show migrations"
-	@docker-compose run --rm --entrypoint python django-app manage.py showmigrations $(args)
+	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py showmigrations $(args)
 
 makemigrations: ## 💾 New migrations generation
 	@echo "💾 Make migrations"
-	@docker-compose run --rm --entrypoint python django-app manage.py makemigrations $(args)
+	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py makemigrations $(args)
 
 migrate: ## 🚛 Migration execution
 	@echo "🚛 Migrate"
-	@docker-compose run --rm --entrypoint sh django-app -c "python manage.py migrate $(args)"
+	@docker-compose run --rm --entrypoint sh boatsandjoy-api -c "python manage.py migrate $(args)"
 
 createsuperuser: ## 👤 Create an admin user
 	@echo "👤 Create superuser"
-	@docker-compose run --rm --entrypoint python django-app manage.py createsuperuser
+	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py createsuperuser
 
 show-urls: ## 🕵️ Show app urls
 	@echo "🕵 Show urls"
-	@docker-compose run --rm --entrypoint python django-app manage.py show_urls
+	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py show_urls
+
+collectstatic: ## 🗿️ Collect statics
+	@echo "🗿 Collect statics"
+	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py collectstatic
 
 help: ## 📖 Show make targets
 	@echo "📖 Help"

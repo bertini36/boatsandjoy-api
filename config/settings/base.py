@@ -16,7 +16,7 @@ import os
 import environ
 
 BASE_DIR = environ.Path(__file__) - 3    # (/a/b/myfile.py - 3 = /)
-APPS_DIR = BASE_DIR.path('boatsandjoy')
+APPS_DIR = BASE_DIR.path('boatsandjoy_api')
 
 env = environ.Env()
 environ.Env.read_env('.env')
@@ -47,11 +47,11 @@ INSTALLED_APPS = [
     'django.contrib.admin',
 
     # Boats & Joy apps
-    'boatsandjoy.core',
-    'boatsandjoy.boats',
-    'boatsandjoy.availability',
-    'boatsandjoy.bookings',
-    'boatsandjoy.api',
+    'boatsandjoy_api.core',
+    'boatsandjoy_api.boats',
+    'boatsandjoy_api.availability',
+    'boatsandjoy_api.bookings',
+    'boatsandjoy_api.api',
 
     # Healthchecks
     'health_check',
