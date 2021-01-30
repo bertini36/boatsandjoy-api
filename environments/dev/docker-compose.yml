@@ -8,8 +8,6 @@ services:
     build:
       context: ../..
       dockerfile: environments/dev/Dockerfile
-      args:
-        REQUIREMENTS: requirements-dev.txt
     env_file: ../../.env
     volumes:
       - "../../:/code"

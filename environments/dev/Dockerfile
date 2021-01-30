@@ -8,10 +8,10 @@ RUN apt update \
  && apt install -y libjpeg-dev libgraphviz-dev libpq-dev build-essential \
  && apt install -y libxmlsec1-dev pkg-config graphviz graphicsmagick python-dev gettext
 
-COPY requirements.txt /code/requirements/
-COPY ${REQUIREMENTS} /code/requirements/
+COPY requirements/requirements-prod.txt /code/requirements/
+COPY requirements/requirements-dev.txt /code/requirements/
 
-RUN pip3 install --upgrade pip && pip3 install -r /code/requirements/${REQUIREMENTS}
+RUN pip3 install --upgrade pip && pip3 install -r /code/requirements/requirements-dev.txt
 
 COPY . /code/
 
