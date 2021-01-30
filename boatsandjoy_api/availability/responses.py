@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from boatsandjoy_api.core.responses import ResponseBuilderInterface
 
 

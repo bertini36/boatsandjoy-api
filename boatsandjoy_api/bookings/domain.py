@@ -1,7 +1,5 @@
-# -*- coding: UTF-8 -*-
-
 from dataclasses import dataclass
-from datetime import datetime, time, date
+from datetime import date, datetime, time
 from decimal import Decimal
 from typing import List
 

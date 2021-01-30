@@ -1,6 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-
 class BookingStatus:
 
     PENDING = 'pending'

@@ -1,13 +1,13 @@
-# -*- coding: UTF-8 -*-
-
 from dataclasses import asdict
 from typing import Type
 
 from boatsandjoy_api.core.responses import (
-    ErrorResponseBuilder, ResponseBuilder, ResponseBuilderInterface
+    ErrorResponseBuilder,
+    ResponseBuilder,
+    ResponseBuilderInterface,
 )
 from .exceptions import BoatsApiException
-from .repository import DjangoBoatsRepository, BoatsRepository
+from .repository import BoatsRepository, DjangoBoatsRepository
 from .requests import FilterBoatsRequest
 from .validators import FilterBoatsRequestValidator
 

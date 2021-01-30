@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from abc import ABC, abstractmethod
 from datetime import date
 from typing import List
@@ -7,7 +5,7 @@ from typing import List
 from django.utils.translation import gettext_lazy as _
 
 from boatsandjoy_api.boats.domain import Boat
-from .exceptions import NoDayDefinitionDefined, AvailabilityAlreadyCreated
+from .exceptions import AvailabilityAlreadyCreated, NoDayDefinitionDefined
 from .repository import DjangoAvailabilityRepository
 
 

@@ -1,7 +1,4 @@
-# -*- coding: UTF-8 -*-
-
-from django.contrib import admin
-from django.contrib import messages
+from django.contrib import admin, messages
 from django.contrib.admin.helpers import ActionForm
 from django.db.models import QuerySet
 from django.forms import ValidationError
@@ -11,9 +8,14 @@ from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
+from boatsandjoy_api.availability.availability_generators import (
+    AvailabilityGenerator
+)
 from boatsandjoy_api.availability.domain import DateRange
-from boatsandjoy_api.availability.availability_generators import AvailabilityGenerator
-from boatsandjoy_api.availability.models import Day, DayDefinition, PriceVariation
+from boatsandjoy_api.availability.models import (
+    Day, DayDefinition,
+    PriceVariation,
+)
 from boatsandjoy_api.availability.utils import date_ranges_collision
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
 from boatsandjoy_api.core.utils import format_date

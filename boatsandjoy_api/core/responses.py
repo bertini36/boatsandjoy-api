@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from abc import ABC, abstractmethod
 from datetime import date
 

@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from django.db import models
 
 from boatsandjoy_api.core.models import BaseModel

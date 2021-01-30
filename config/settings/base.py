@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 """
 Django settings for Boats & Joy project.
 
@@ -12,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os
 import environ
 
 BASE_DIR = environ.Path(__file__) - 3    # (/a/b/myfile.py - 3 = /)

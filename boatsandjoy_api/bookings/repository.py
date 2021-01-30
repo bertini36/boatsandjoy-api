@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 import random
 import string
 from abc import ABC, abstractmethod
@@ -13,11 +11,13 @@ from django.utils.translation import gettext_lazy as _
 from boatsandjoy_api.availability.models import Slot
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
 from boatsandjoy_api.core.utils import format_date
-from . import domain
-from . import models
+from . import domain, models
 from .constants import BookingStatus
-from .exceptions import BookingNotFound, BookingInvalidDataError
-from .exceptions import NoSlotsSelected
+from .exceptions import (
+    BookingInvalidDataError,
+    BookingNotFound,
+    NoSlotsSelected,
+)
 
 
 class BookingsRepository(ABC):

@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
 

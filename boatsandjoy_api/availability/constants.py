@@ -1,8 +1,3 @@
-# -*- coding: UTF-8 -*-
-
-from django.utils.translation import gettext_lazy as _
-
-
 class Months:
 
     JANUARY = 1

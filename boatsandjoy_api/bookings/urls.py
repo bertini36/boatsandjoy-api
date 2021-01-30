@@ -1,10 +1,11 @@
-# -*- coding: UTF-8 -*-
-
 from django.urls import path
 
 from .views import (
-    create_booking, generate_payment, mark_booking_as_error,
-    mark_booking_as_paid, register_booking_event,
+    create_booking,
+    generate_payment,
+    mark_booking_as_error,
+    mark_booking_as_paid,
+    register_booking_event,
 )
 
 app_name = 'bookings'

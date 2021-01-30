@@ -1,5 +1,3 @@
-# coding: utf-8
-
 from django import forms
 
 from boatsandjoy_api.core.utils import MultipleIntField

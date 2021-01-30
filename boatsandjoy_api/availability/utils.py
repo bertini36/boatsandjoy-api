@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from calendar import monthlen
 from datetime import date, timedelta
 

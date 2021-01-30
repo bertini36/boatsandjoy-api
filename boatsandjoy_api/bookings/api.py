@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from dataclasses import asdict
 from typing import Type
 
@@ -9,27 +7,26 @@ from django.utils.translation import gettext_lazy as _
 from boatsandjoy_api.boats.api import api as boats_api
 from boatsandjoy_api.core.responses import (
     ErrorResponseBuilder,
+    ResponseBuilder,
     ResponseBuilderInterface,
-    ResponseBuilder
 )
 from boatsandjoy_api.core.utils import send_email
 from .constants import BookingStatus
 from .domain import Booking
 from .exceptions import BookingsApiException
-from .payment_gateways import PaymentGateway
-from .payment_gateways import StripePaymentGateway
+from .payment_gateways import PaymentGateway, StripePaymentGateway
 from .repository import BookingsRepository, DjangoBookingsRepository
 from .requests import (
     CreateBookingRequest,
-    MarkBookingAsPaidRequest,
+    GetBookingRequest,
     MarkBookingAsErrorRequest,
+    MarkBookingAsPaidRequest,
     RegisterBookingEventRequest,
-    GetBookingRequest
 )
 from .validators import (
     BookingCreationRequestValidator,
+    GetBookingRequestValidator,
     IdentifyBookingBySessionRequestValidator,
-    GetBookingRequestValidator
 )
 from ..boats.requests import FilterBoatsRequest
 

@@ -1,8 +1,6 @@
-# -*- coding: UTF-8 -*-
-
 from collections import namedtuple
 from dataclasses import dataclass
-from datetime import time, date
+from datetime import date, time
 from decimal import Decimal
 from typing import List
 

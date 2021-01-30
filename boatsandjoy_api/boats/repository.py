@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from abc import ABC, abstractmethod
 from typing import List
 
@@ -7,8 +5,7 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
-from . import domain
-from . import models
+from . import domain, models
 from .exceptions import BoatNotFound
 
 

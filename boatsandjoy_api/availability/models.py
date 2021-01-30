@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-
 from datetime import time
 
 from django.core.validators import MaxValueValidator, MinValueValidator

@@ -1,8 +1,5 @@
-# -*- coding: UTF-8 -*-
-
 from abc import ABC, abstractmethod
-from datetime import date, timedelta
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from decimal import Decimal
 from typing import List
 
@@ -10,9 +7,8 @@ from django.utils.translation import gettext_lazy as _
 
 from boatsandjoy_api.boats.domain import Boat
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
-from . import domain
-from . import models
-from .exceptions import NoDayDefinitionDefined, NoAvailabilityForDay
+from . import domain, models
+from .exceptions import NoAvailabilityForDay, NoDayDefinitionDefined
 
 
 class AvailabilityRepository(ABC):

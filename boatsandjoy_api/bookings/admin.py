@@ -1,7 +1,4 @@
-# -*- coding: UTF-8 -*-
-
-from django.contrib import admin
-from django.contrib import messages
+from django.contrib import admin, messages
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.safestring import mark_safe
@@ -9,7 +6,7 @@ from django.utils.safestring import mark_safe
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
 from boatsandjoy_api.core.utils import format_date
 from .constants import BookingStatus
-from .exceptions import BookingAlreadyPending, BookingAlreadyConfirmed
+from .exceptions import BookingAlreadyConfirmed, BookingAlreadyPending
 from .models import Booking
 
 

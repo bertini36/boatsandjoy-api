@@ -1,16 +1,13 @@
-# -*- coding: UTF-8 -*-
-
 from copy import deepcopy
 from datetime import date
 from decimal import Decimal
-from typing import List
-from typing import Type
+from typing import List, Type
 
 from django.utils.translation import gettext_lazy as _
 
 from boatsandjoy_api.availability.exceptions import (
+    NoAvailabilityForDay,
     NoDayDefinitionDefined,
-    NoAvailabilityForDay
 )
 from boatsandjoy_api.boats.api import api as boats_api
 from boatsandjoy_api.boats.domain import Boat
@@ -19,19 +16,20 @@ from boatsandjoy_api.boats.requests import FilterBoatsRequest
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
 from boatsandjoy_api.core.responses import (
     ResponseBuilder,
-    ResponseBuilderInterface
+    ResponseBuilderInterface,
 )
 from . import domain
 from .constants import DayAvailabilityTypes
-from .exceptions import AvailabilityApiException
-from .exceptions import CombinationOfSize0, NoSlotsAvailable, NoSameDaySlots
-from .repository import AvailabilityRepository
-from .repository import DjangoAvailabilityRepository
+from .exceptions import (
+    AvailabilityApiException, CombinationOfSize0,
+    NoSameDaySlots, NoSlotsAvailable,
+)
+from .repository import AvailabilityRepository, DjangoAvailabilityRepository
 from .requests import GetDayAvailabilityRequest, GetMonthAvailabilityRequest
 from .utils import month_date_iter
 from .validators import (
     GetAvailabilityRequestValidator,
-    GetMonthAvailabilityRequestValidator
+    GetMonthAvailabilityRequestValidator,
 )
 
 

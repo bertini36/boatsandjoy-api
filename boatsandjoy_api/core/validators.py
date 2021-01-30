@@ -1,8 +1,5 @@
-# coding: utf-8
-
 from abc import ABC, abstractmethod
-from dataclasses import asdict
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 from .exceptions import InvalidDataError
 
