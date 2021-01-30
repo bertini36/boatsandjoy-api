@@ -5,7 +5,6 @@ from django.db import models
 
 from boatsandjoy_api.boats.models import Boat
 from boatsandjoy_api.core.models import BaseModel
-from boatsandjoy_api.core.utils import format_date
 
 
 class DayDefinition(BaseModel):
@@ -72,8 +71,8 @@ class DayDefinition(BaseModel):
         return f'<Day definition that starts at {self.first_time}, ' \
                f'with {self.n_slots} slots of {self.hours_per_slot} ' \
                f'hours each and with a price of {self.price_per_hour}€ per ' \
-               f'hour from {format_date(self.from_date)} ' \
-               f'to {format_date(self.to_date)}>'
+               f'hour from {self.from_date} ' \
+               f'to {self.to_date}>'
 
     class Meta:
         verbose_name = 'day definition'

@@ -18,7 +18,6 @@ from boatsandjoy_api.availability.models import (
 )
 from boatsandjoy_api.availability.utils import date_ranges_collision
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
-from boatsandjoy_api.core.utils import format_date
 from .models import Boat
 
 
@@ -201,9 +200,7 @@ class BoatAdmin(admin.ModelAdmin):
             f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change',
             args=[obj.id]
         )
-        return mark_safe(
-            f'<a href="{url}">{format_date(obj.created)}</a>'
-        )
+        return mark_safe(f'<a href="{url}">{obj.created}</a>')
 
     def get_availability_link(self, obj: Boat) -> str:
         url = reverse(f'admin:availability_day_changelist')

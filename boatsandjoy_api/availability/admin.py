@@ -7,7 +7,6 @@ from django.http import HttpRequest
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
-from boatsandjoy_api.core.utils import format_date
 from .constants import Months
 from .models import Day, Slot
 
@@ -121,9 +120,7 @@ class DayAdmin(admin.ModelAdmin):
             f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change',
             args=[obj.id]
         )
-        return mark_safe(
-            f'<a href="{url}">{format_date(obj.date)}</a>'
-        )
+        return mark_safe(f'<a href="{url}">{obj.date}</a>')
 
 
 admin.site.register(Day, DayAdmin)

@@ -1,7 +1,7 @@
 from django.http import HttpRequest, JsonResponse
 from django.views.decorators.http import require_http_methods
 
-from boatsandjoy_api.core.utils import transform_to_internal_date
+from boatsandjoy_api.core.utils import cast_to_date
 from .api import api as availability_api
 from .requests import GetDayAvailabilityRequest, GetMonthAvailabilityRequest
 
@@ -27,7 +27,7 @@ def get_day_availability(request: HttpRequest, date_: str) -> JsonResponse:
         ]
     }
     """
-    date_ = transform_to_internal_date(date_)
+    date_ = cast_to_date(date_)
     apply_resident_discount = bool(int(request.GET['apply_resident_discount']))
     api_request = GetDayAvailabilityRequest(
         date=date_,
@@ -52,7 +52,7 @@ def get_month_availability(request: HttpRequest, date_: str) -> JsonResponse:
         ]
     }
     """
-    date_ = transform_to_internal_date(date_)
+    date_ = cast_to_date(date_)
     api_request = GetMonthAvailabilityRequest(
         month=date_.month,
         year=date_.year

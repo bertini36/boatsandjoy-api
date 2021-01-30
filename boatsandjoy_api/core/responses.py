@@ -1,8 +1,6 @@
 from abc import ABC, abstractmethod
 from datetime import date
 
-from boatsandjoy_api.core.utils import format_date
-
 
 class ResponseBuilderInterface(ABC):
 
@@ -43,7 +41,7 @@ class ResponseBuilder(ResponseBuilderInterface):
     def _cast_dict_attrs(dict_obj: dict) -> dict:
         for key in dict_obj:
             if isinstance(dict_obj[key], date):
-                dict_obj[key] = format_date(dict_obj[key])
+                dict_obj[key] = dict_obj[key]
         return dict_obj
 
     def _serialize_object(self, obj: object) -> dict:
@@ -70,5 +68,5 @@ class ResponseBuilder(ResponseBuilderInterface):
     def _cast_obj_attrs(obj, attrs):
         for attr in attrs:
             if isinstance(getattr(obj, attr), date):
-                setattr(obj, attr, format_date(getattr(obj, attr)))
+                setattr(obj, attr, getattr(obj, attr))
         return obj

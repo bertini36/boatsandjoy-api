@@ -10,7 +10,6 @@ from django.utils.translation import gettext_lazy as _
 
 from boatsandjoy_api.availability.models import Slot
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
-from boatsandjoy_api.core.utils import format_date
 from . import domain, models
 from .constants import BookingStatus
 from .exceptions import (
@@ -107,7 +106,7 @@ class DjangoBookingsRepository(BookingsRepository):
         first_slot = slots.first()
         last_slot = slots.last()
         boat = first_slot.day.definition.boat
-        day = format_date(first_slot.day.date)
+        day = first_slot.day.date
         photo_url = ''
         photos = boat.photos.all()
         if photos:

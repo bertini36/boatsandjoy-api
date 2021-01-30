@@ -4,7 +4,6 @@ from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
-from boatsandjoy_api.core.utils import format_date
 from .constants import BookingStatus
 from .exceptions import BookingAlreadyConfirmed, BookingAlreadyPending
 from .models import Booking
@@ -71,7 +70,7 @@ class BookingAdmin(admin.ModelAdmin):
         last_slot = slots.last()
         time_str = ''
         if first_slot and last_slot:
-            day = format_date(first_slot.day.date) if first_slot.day else ''
+            day = first_slot.day.date if first_slot.day else ''
             time_str = f'{day}: from {first_slot.from_hour} to ' \
                        f'{last_slot.to_hour}'
         return time_str
