@@ -1,9 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from django.conf import settings
-from django.utils.translation import gettext_lazy as _
-
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
 from . import domain, models
 from .exceptions import BoatNotFound
@@ -65,7 +62,7 @@ class DjangoBoatsRepository(BoatsRepository):
         try:
             boat = models.Boat.objects.get(**django_filters)
         except models.Boat.DoesNotExist as e:
-            raise BoatNotFound(_(f'Boat not found: {e}'))
+            raise BoatNotFound(f'Boat not found: {e}')
         return cls.get_boat_domain_object(boat)
 
     @classmethod

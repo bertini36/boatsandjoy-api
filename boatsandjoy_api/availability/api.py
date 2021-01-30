@@ -3,8 +3,6 @@ from datetime import date
 from decimal import Decimal
 from typing import List, Type
 
-from django.utils.translation import gettext_lazy as _
-
 from boatsandjoy_api.availability.exceptions import (
     NoAvailabilityForDay,
     NoDayDefinitionDefined,
@@ -120,7 +118,7 @@ class AvailabilityApi:
         for boat in boats:
             try:
                 if not boat.active:
-                    raise NoActiveBoat(_('This boat is not active'))
+                    raise NoActiveBoat('This boat is not active')
                 results.append(
                     self._get_boat_response(
                         boat,
@@ -241,10 +239,10 @@ class AvailabilityApi:
     @staticmethod
     def _check_slots(slots: List[domain.Slot]):
         if not slots:
-            raise NoSlotsAvailable(_('No slots available for this day'))
+            raise NoSlotsAvailable('No slots available for this day')
         slot0_day_id = slots[0].day_id
         if any(slot.day_id != slot0_day_id for slot in slots):
-            raise NoSameDaySlots(_('Error: Slots don\'t belong to same day'))
+            raise NoSameDaySlots('Error: Slots don\'t belong to same day')
 
     @staticmethod
     def _add_combination(
@@ -282,7 +280,7 @@ class AvailabilityApi:
         slot_combination_hour_limits = []
         for combination in combinations:
             if len(combination) == 0:
-                raise CombinationOfSize0(_('Error: Combination of size 0'))
+                raise CombinationOfSize0('Error: Combination of size 0')
             elif len(combination) == 1:
                 slot_combination_hour_limits.append(
                     DjangoAvailabilityRepository.get_slot_timing(

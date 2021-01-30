@@ -3,7 +3,6 @@ from decimal import Decimal
 
 import stripe
 from django.conf import settings
-from django.utils.translation import gettext_lazy as _
 
 from .exceptions import PaymentGatewayException
 
@@ -73,13 +72,13 @@ class StripePaymentGateway(PaymentGateway):
                 settings.STRIPE_ENDPOINT_SECRET
             )
         except ValueError as e:
-            raise PaymentGatewayException(_(
+            raise PaymentGatewayException(
                 f'There has been some error in the '
                 f'construction of the event: {e}'
-            ))
+            )
         except stripe.error.SignatureVerificationError as e:
             raise PaymentGatewayException(
-                _(f'Signature verification has failed: {e}')
+                f'Signature verification has failed: {e}'
             )
         return event
 

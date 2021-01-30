@@ -2,7 +2,6 @@ from dataclasses import asdict
 from typing import Type
 
 from django.conf import settings
-from django.utils.translation import gettext_lazy as _
 
 from boatsandjoy_api.boats.api import api as boats_api
 from boatsandjoy_api.core.responses import (
@@ -157,7 +156,7 @@ class BookingsApi:
             api_request = FilterBoatsRequest(obj_id=booking.boat_id)
             results = boats_api.get(api_request)
             send_email(
-                subject=_('B&J: Booking confirmation'),
+                subject='B&J: Booking confirmation',
                 to_email=booking.customer_email,
                 from_email=settings.EMAIL_HOST_USER,
                 template='emails/confirmation.html',

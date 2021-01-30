@@ -6,7 +6,6 @@ from typing import List
 
 from django.conf import settings
 from django.db import DatabaseError
-from django.utils.translation import gettext_lazy as _
 
 from boatsandjoy_api.availability.models import Slot
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
@@ -102,7 +101,7 @@ class DjangoBookingsRepository(BookingsRepository):
     def get_purchase_details(cls, price: Decimal, slot_ids: List[int]) -> dict:
         slots = Slot.objects.filter(id__in=slot_ids).order_by('position')
         if not slots:
-            raise NoSlotsSelected(_('A purchase requires slots!'))
+            raise NoSlotsSelected('A purchase requires slots!')
         first_slot = slots.first()
         last_slot = slots.last()
         boat = first_slot.day.definition.boat
@@ -113,10 +112,10 @@ class DjangoBookingsRepository(BookingsRepository):
             photo_url = photos.first().image
         purchase_details = {
             'name': boat.name,
-            'description': (_(
+            'description': (
                 f'Renting for {day} from '
                 f'{first_slot.from_hour} to {last_slot.to_hour}'
-            )),
+            ),
             'photo_url': f'{settings.MEDIA_URL}{photo_url}',
             'price': price
         }
@@ -137,7 +136,7 @@ class DjangoBookingsRepository(BookingsRepository):
         try:
             booking = models.Booking.objects.get(**django_filters)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(_(f'Booking not found: {e}'))
+            raise BookingNotFound(f'Booking not found: {e}')
         return cls.get_booking_domain_object(booking)
 
     @classmethod
@@ -145,7 +144,7 @@ class DjangoBookingsRepository(BookingsRepository):
         try:
             booking = models.Booking.objects.get(id=booking.id)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(_(f'Booking not found: {e}'))
+            raise BookingNotFound(f'Booking not found: {e}')
         booking.status = BookingStatus.CONFIRMED
         booking.save()
         cls._mark_slots_as_booked(booking)
@@ -156,7 +155,7 @@ class DjangoBookingsRepository(BookingsRepository):
         try:
             booking = models.Booking.objects.get(id=booking.id)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(_(f'Booking not found: {e}'))
+            raise BookingNotFound(f'Booking not found: {e}')
         booking.status = BookingStatus.ERROR
         booking.save()
         return cls.get_booking_domain_object(booking)
@@ -171,7 +170,7 @@ class DjangoBookingsRepository(BookingsRepository):
         try:
             booking = models.Booking.objects.get(id=booking.id)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(_(f'Booking not found: {e}'))
+            raise BookingNotFound(f'Booking not found: {e}')
         if customer_email:
             booking.customer_email = customer_email
         if session_id:

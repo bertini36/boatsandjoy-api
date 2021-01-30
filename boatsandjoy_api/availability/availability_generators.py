@@ -2,8 +2,6 @@ from abc import ABC, abstractmethod
 from datetime import date
 from typing import List
 
-from django.utils.translation import gettext_lazy as _
-
 from boatsandjoy_api.boats.domain import Boat
 from .exceptions import AvailabilityAlreadyCreated, NoDayDefinitionDefined
 from .repository import DjangoAvailabilityRepository
@@ -31,13 +29,13 @@ class AvailabilityGenerator(AvailabilityGeneratorInterface):
         )
         if not self.day_definitions:
             raise NoDayDefinitionDefined(
-                _('This boat has not day definitions defined')
+                'This boat has not day definitions defined'
             )
 
     def generate(self, year: int = date.today().year) -> List[dict]:
         if self._exists_availability_for(year):
             raise AvailabilityAlreadyCreated(
-                _(f'Availabilty already exists for year {year}')
+                f'Availabilty already exists for year {year}'
             )
         start_date = date(year, 1, 1)
         end_date = date(year, 12, 31)

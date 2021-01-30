@@ -3,8 +3,6 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from typing import List
 
-from django.utils.translation import gettext_lazy as _
-
 from boatsandjoy_api.boats.domain import Boat
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
 from . import domain, models
@@ -149,7 +147,7 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
             day_definition = models.DayDefinition.objects.get(**django_filters)
         except models.DayDefinition.DoesNotExist:
             raise NoDayDefinitionDefined(
-                _(f'This boat has not a day definition for day {date_}')
+                f'This boat has not a day definition for day {date_}'
             )
         return cls.get_day_definition_domain_object(day_definition)
 
@@ -221,7 +219,7 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
             day = models.Day.objects.get(**django_filters)
         except models.Day.DoesNotExist:
             raise NoAvailabilityForDay(
-                _('There are not day availability definied for this day')
+                'There are not day availability definied for this day'
             )
         return cls.get_day_domain_object(day)
 
