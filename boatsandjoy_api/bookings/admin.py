@@ -59,8 +59,7 @@ class BookingAdmin(admin.ModelAdmin):
     )
     actions = [confirm_booking, unconfirm_booking]
 
-    @staticmethod
-    def get_date_and_hours(obj: Booking) -> str:
+    def get_date_and_hours(self, obj: Booking) -> str:
         slots = obj.slots.all()
         first_slot = slots.first()
         last_slot = slots.last()
@@ -72,18 +71,21 @@ class BookingAdmin(admin.ModelAdmin):
             )
         return time_str
 
+    get_date_and_hours.short_description = 'Date and hours'
+
     @staticmethod
     def get_price(obj: Booking) -> str:
         return f'{obj.price}€'
 
-    @staticmethod
-    def get_payment_url(obj: Booking) -> str:
+    def get_payment_url(self, obj: Booking) -> str:
         if obj.status == BookingStatus.PENDING:
             url = f'/generate/payment/?booking_id={obj.id}'
             return mark_safe(
                 f'<a href="{url}" target="_blank" class="button">Pay</a>'
             )
         return ''
+
+    get_payment_url.short_description = 'Payment url'
 
 
 admin.site.register(Booking, BookingAdmin)
