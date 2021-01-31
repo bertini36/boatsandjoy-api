@@ -95,7 +95,7 @@ class DayAdmin(admin.ModelAdmin):
                 )
         return mark_safe(slots_html)
 
-    get_slots.short_description = 'Slots available'
+    get_slots.short_description = 'Available slots'
 
     def get_readonly_fields(
         self, request: HttpRequest, obj: Day = None
@@ -106,12 +106,16 @@ class DayAdmin(admin.ModelAdmin):
         url = reverse(f'admin:boats_boat_change', args=[obj.boat.id])
         return mark_safe(f'<a href="{url}" target="_blank">{obj.boat}</a>')
 
+    get_boat_link.short_description = 'Boat'
+
     def get_date_link(self, obj: Day) -> str:
         url = reverse(
             f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change',
             args=[obj.id],
         )
         return mark_safe(f'<a href="{url}">{obj.date}</a>')
+
+    get_date_link.short_description = 'Date'
 
 
 admin.site.register(Day, DayAdmin)

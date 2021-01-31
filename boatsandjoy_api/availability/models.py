@@ -56,16 +56,16 @@ class DayDefinition(BaseModel):
     )
     resident_discount = models.FloatField(
         default=0.25,
-        help_text=('Discount applicable to Balearic islands residents'),
+        help_text='Discount applicable to Balearic islands residents',
     )
 
     def __str__(self) -> str:
         return (
-            f'<Day definition that starts at {self.first_time}, '
+            f'Starts at {self.first_time}, '
             f'with {self.n_slots} slots of {self.hours_per_slot} '
             f'hours each and with a price of {self.price_per_hour}€ per '
             f'hour from {self.from_date} '
-            f'to {self.to_date}>'
+            f'to {self.to_date}'
         )
 
     class Meta:
