@@ -106,17 +106,12 @@ class DjangoBookingsRepository(BookingsRepository):
         last_slot = slots.last()
         boat = first_slot.day.definition.boat
         day = first_slot.day.date
-        photo_url = ''
-        photos = boat.photos.all()
-        if photos:
-            photo_url = photos.first().image
         purchase_details = {
             'name': boat.name,
             'description': (
                 f'Renting for {day} from '
                 f'{first_slot.from_hour} to {last_slot.to_hour}'
             ),
-            'photo_url': f'{settings.MEDIA_URL}{photo_url}',
             'price': price
         }
         return purchase_details

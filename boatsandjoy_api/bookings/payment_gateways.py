@@ -15,7 +15,6 @@ class PaymentGateway(ABC):
         cls,
         name: str,
         description: str,
-        photo_url: str,
         price: float,
     ) -> str:
         pass
@@ -43,7 +42,6 @@ class StripePaymentGateway(PaymentGateway):
         cls,
         name: str,
         description: str,
-        photo_url: str,
         price: Decimal
     ) -> str:
         stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -53,7 +51,6 @@ class StripePaymentGateway(PaymentGateway):
             line_items=[{
                 'name': name,
                 'description': description,
-                'images': [f'{photo_url}'],
                 'amount': cls._format_price(price),
                 'currency': 'eur',
                 'quantity': 1,
