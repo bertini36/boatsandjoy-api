@@ -66,15 +66,6 @@ LOGGING = {
     }
 }
 
-# WHITENOISE
-# https://github.com/evansd/whitenoise
-# ------------------------------------------------------------------------------
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-MIDDLEWARE = (
-    'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-) + MIDDLEWARE
-
 # SENTRY
 # https://docs.sentry.io/platforms/python/django
 sentry_sdk.init(
