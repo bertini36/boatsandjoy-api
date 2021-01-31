@@ -1,8 +1,8 @@
 import json
 
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
+from rest_framework.decorators import api_view
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from boatsandjoy_api.bookings.api import api as bookings_api
 from boatsandjoy_api.bookings.requests import (
@@ -14,10 +14,11 @@ from boatsandjoy_api.bookings.requests import (
 )
 
 
-@csrf_exempt
-@require_http_methods(['POST'])
-def create_booking(request: HttpRequest) -> JsonResponse:
+@api_view(['POST'])
+def create_booking(request: Request) -> Response:
     """
+    Creates a booking
+
     :return {
         'error': bool,
         'data': {
@@ -37,42 +38,42 @@ def create_booking(request: HttpRequest) -> JsonResponse:
         customer_telephone_number=data['customer_telephone_number'],
     )
     results = bookings_api.create(api_request)
-    return JsonResponse(results)
+    return Response(results)
 
 
-@require_http_methods(['GET'])
-def mark_booking_as_paid(request):
+@api_view(['GET'])
+def mark_booking_as_paid(request: Request) -> Response:
     session_id = request.GET['session_id']
     api_request = MarkBookingAsPaidRequest(session_id=session_id)
     results = bookings_api.mark_as_paid(api_request)
-    return JsonResponse(results)
+    return Response(results)
 
 
-@require_http_methods(['GET'])
-def mark_booking_as_error(request):
+@api_view(['GET'])
+def mark_booking_as_error(request: Request) -> Response:
     session_id = request.GET.get('session_id')
     results = None
     if session_id:
         api_request = MarkBookingAsErrorRequest(session_id=session_id)
         results = bookings_api.mark_as_error(api_request)
-    return JsonResponse(results)
+    return Response(results)
 
 
-@csrf_exempt
-def register_booking_event(request):
+@api_view(['POST'])
+def register_booking_event(request: Request) -> Response:
     api_request = RegisterBookingEventRequest(
         headers=request.META, body=request.body
     )
     response = bookings_api.register_event(api_request)
     if response['error']:
-        return HttpResponse(status=400)
-    return HttpResponse(status=200)
+        return Response(status=400)
+    return Response(status=200)
 
 
-@require_http_methods(['GET'])
-def generate_payment(request):
+@api_view(['GET'])
+def generate_payment(request: Request) -> Response:
     api_request = GetBookingRequest(
         obj_id=request.GET['booking_id'], generate_new_session_id=True
     )
     results = bookings_api.get(api_request)
-    return JsonResponse(results)
+    return Response(results)

@@ -1,14 +1,17 @@
-from django.http import HttpRequest, JsonResponse
-from django.views.decorators.http import require_http_methods
+from rest_framework.decorators import api_view
+from rest_framework.request import Request
+from rest_framework.response import Response
 
 from boatsandjoy_api.core.utils import cast_to_date
 from .api import api as availability_api
 from .requests import GetDayAvailabilityRequest, GetMonthAvailabilityRequest
 
 
-@require_http_methods(['GET'])
-def get_day_availability(request: HttpRequest, date_: str) -> JsonResponse:
+@api_view(['GET'])
+def get_day_availability(request: Request, date_: str) -> Response:
     """
+    Get boats day availability
+
     :return: {
         'error': bool,
         'data': [
@@ -33,18 +36,20 @@ def get_day_availability(request: HttpRequest, date_: str) -> JsonResponse:
         date=date_, apply_resident_discount=apply_resident_discount
     )
     results = availability_api.get_day_availability(api_request)
-    return JsonResponse(results)
+    return Response(results)
 
 
-def get_apply_resident_discount(request: HttpRequest) -> bool:
+def get_apply_resident_discount(request: Request) -> bool:
     if 'apply_resident_discount' in request.GET:
         return bool(int(request.GET['apply_resident_discount']))
     return False
 
 
-@require_http_methods(['GET'])
-def get_month_availability(request: HttpRequest, date_: str) -> JsonResponse:
+@api_view(['GET'])
+def get_month_availability(request: Request, date_: str) -> Response:
     """
+    Get boats month availability
+
     :return: {
         'error': bool,
         'data': [
@@ -62,4 +67,4 @@ def get_month_availability(request: HttpRequest, date_: str) -> JsonResponse:
         month=date_.month, year=date_.year
     )
     results = availability_api.get_month_availability(request=api_request)
-    return JsonResponse(results)
+    return Response(results)

@@ -8,3 +8,5 @@ django-heroku
 stripe
 python-dateutil
 sentry-sdk
+djangorestframework
+markdown

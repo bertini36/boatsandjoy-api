@@ -38,14 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Admin
     'django.contrib.admin',
     # Boats & Joy apps
     'boatsandjoy_api.core',
     'boatsandjoy_api.boats',
     'boatsandjoy_api.availability',
     'boatsandjoy_api.bookings',
-    # Healthchecks
+    # Others
+    'rest_framework',
     'health_check',
     'health_check.db',
     'health_check.cache',
