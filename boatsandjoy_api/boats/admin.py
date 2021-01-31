@@ -196,6 +196,8 @@ class BoatAdmin(admin.ModelAdmin):
         )
         return mark_safe(f'<a href="{url}">{obj.name}</a>')
 
+    get_name_link.short_description = 'Name'
+
     def get_created_date(self, obj: Boat) -> str:
         url = reverse(
             f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change',
@@ -203,12 +205,16 @@ class BoatAdmin(admin.ModelAdmin):
         )
         return mark_safe(f'<a href="{url}">{obj.created}</a>')
 
+    get_created_date.short_description = 'Creation date'
+
     def get_availability_link(self, obj: Boat) -> str:
         url = reverse(f'admin:availability_day_changelist')
         url += f'?definition__boat__id__exact={obj.id}'
         return mark_safe(
             f'<a href="{url}" target="_blank">Check availability</a>'
         )
+
+    get_availability_link.short_description = 'Availability'
 
 
 admin.site.register(Boat, BoatAdmin)
