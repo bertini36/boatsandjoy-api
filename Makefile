@@ -33,6 +33,14 @@ logs: ## 📋 show container logs
 	@echo "📋 Showing logs"
 	@docker-compose logs -f --tail 100 boatsandjoy-api
 
+update-deps: ## 📥 Update requirements files with last packages versions
+	@echo "📥 Updating dependencies"
+	@docker-compose run --rm --entrypoint sh comments-engine -c "pip-compile /code/requirements/dev.in && pip-compile /code/requirements/prod.in"
+
+lint: ## 🔦 Lint code
+	@echo "🔦 Linting code"
+	@docker-compose run --rm --entrypoint sh comments-engine -c "black /code/ -t py38 --line-length 80 --skip-string-normalization"
+
 shell: ## 📗 Django shell plus console
 	@echo "📗 Shell plus console"
 	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py shell_plus

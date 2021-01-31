@@ -1,0 +1,7 @@
+-r base.in
+
+pip-tools
+git+git://github.com/psf/black
+ipython
+django-extensions
+django-debug-toolbar

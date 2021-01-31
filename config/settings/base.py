@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Admin
-    'boatsandjoy_api.core.apps.SuitConfig',
     'django.contrib.admin',
 
     # Boats & Joy apps
