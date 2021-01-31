@@ -9,11 +9,7 @@ from .exceptions import BookingAlreadyConfirmed, BookingAlreadyPending
 from .models import Booking
 
 
-def confirm_booking(
-    modeladmin,
-    request: HttpRequest,
-    queryset: QuerySet
-):
+def confirm_booking(modeladmin, request: HttpRequest, queryset: QuerySet):
     for booking in queryset:
         try:
             if booking.status == BookingStatus.CONFIRMED:
@@ -30,11 +26,7 @@ def confirm_booking(
             messages.add_message(request, messages.ERROR, str(e))
 
 
-def unconfirm_booking(
-    modeladmin,
-    request: HttpRequest,
-    queryset: QuerySet
-):
+def unconfirm_booking(modeladmin, request: HttpRequest, queryset: QuerySet):
     for booking in queryset:
         try:
             if booking.status == BookingStatus.PENDING:
@@ -55,13 +47,17 @@ class BookingAdmin(admin.ModelAdmin):
     list_filter = ('status',)
     search_fields = ('locator', 'session_id', 'customer_email')
     list_display = (
-        'created', 'locator', 'status', 'get_date_and_hours', 'get_price',
-        'session_id', 'customer_name', 'customer_email', 'get_payment_url'
+        'created',
+        'locator',
+        'status',
+        'get_date_and_hours',
+        'get_price',
+        'session_id',
+        'customer_name',
+        'customer_email',
+        'get_payment_url',
     )
-    actions = [
-        confirm_booking,
-        unconfirm_booking
-    ]
+    actions = [confirm_booking, unconfirm_booking]
 
     @staticmethod
     def get_date_and_hours(obj: Booking) -> str:
@@ -71,8 +67,9 @@ class BookingAdmin(admin.ModelAdmin):
         time_str = ''
         if first_slot and last_slot:
             day = first_slot.day.date if first_slot.day else ''
-            time_str = f'{day}: from {first_slot.from_hour} to ' \
-                       f'{last_slot.to_hour}'
+            time_str = (
+                f'{day}: from {first_slot.from_hour} to ' f'{last_slot.to_hour}'
+            )
         return time_str
 
     @staticmethod

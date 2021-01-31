@@ -10,5 +10,3 @@ class DjangoFilterBoatsForm(forms.Form):
 
 class FilterBoatsRequestValidator(DjangoRequestValidator):
     FORM = DjangoFilterBoatsForm
-
-

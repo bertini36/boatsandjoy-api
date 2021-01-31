@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import environ
 
-BASE_DIR = environ.Path(__file__) - 3    # (/a/b/myfile.py - 3 = /)
+BASE_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = BASE_DIR.path('boatsandjoy_api')
 
 env = environ.Env()
@@ -32,29 +32,24 @@ DEBUG = env.bool('DJANGO_DEBUG', False)
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 INSTALLED_APPS = [
-
     # Default Django apps
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     # Admin
     'django.contrib.admin',
-
     # Boats & Joy apps
     'boatsandjoy_api.core',
     'boatsandjoy_api.boats',
     'boatsandjoy_api.availability',
     'boatsandjoy_api.bookings',
-
     # Healthchecks
     'health_check',
     'health_check.db',
     'health_check.cache',
     'health_check.storage',
-
 ]
 
 # DATABASE CONFIGURATION
@@ -92,9 +87,7 @@ TIME_ZONE = 'Europe/Madrid'
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
 LANGUAGE_CODE = 'en'
-LANGUAGES = (
-    ('en', 'English'),
-)
+LANGUAGES = (('en', 'English'),)
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
@@ -186,9 +179,7 @@ STATIC_ROOT = str(BASE_DIR('staticfiles'))
 STATIC_URL = '/static/'
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = (
-    str(APPS_DIR.path('static')),
-)
+STATICFILES_DIRS = (str(APPS_DIR.path('static')),)
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
@@ -213,4 +204,3 @@ STRIPE_ENDPOINT_SECRET = env('STRIPE_ENDPOINT_SECRET', default='')
 # ------------------------------------------------------------------------------
 EMAIL_HOST_USER = env('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD', default='')
-

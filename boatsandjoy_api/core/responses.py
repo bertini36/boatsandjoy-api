@@ -3,7 +3,6 @@ from datetime import date
 
 
 class ResponseBuilderInterface(ABC):
-
     def __init__(self, data: any):
         self.data = data
 
@@ -13,13 +12,11 @@ class ResponseBuilderInterface(ABC):
 
 
 class ErrorResponseBuilder(ResponseBuilderInterface):
-
     def build(self) -> dict:
         return {'error': True, 'data': str(self.data)}
 
 
 class ResponseBuilder(ResponseBuilderInterface):
-
     def build(self) -> dict:
         if isinstance(self.data, dict):
             data = self._serialize_dict(self.data)
@@ -47,10 +44,7 @@ class ResponseBuilder(ResponseBuilderInterface):
     def _serialize_object(self, obj: object) -> dict:
         attrs = self._get_vars(obj)
         obj = self._cast_obj_attrs(obj, attrs)
-        return {
-            attr: getattr(obj, attr)
-            for attr in attrs
-        }
+        return {attr: getattr(obj, attr) for attr in attrs}
 
     @staticmethod
     def _get_vars(data) -> list:

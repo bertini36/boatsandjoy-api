@@ -8,7 +8,6 @@ from .repository import DjangoAvailabilityRepository
 
 
 class AvailabilityGeneratorInterface(ABC):
-
     @abstractmethod
     def generate(self, year: int = date.today().year) -> List[dict]:
         pass
@@ -19,7 +18,6 @@ class AvailabilityGeneratorInterface(ABC):
 
 
 class AvailabilityGenerator(AvailabilityGeneratorInterface):
-
     def __init__(self, boat: Boat):
         self.boat = boat
         self.day_definitions = (
@@ -40,15 +38,14 @@ class AvailabilityGenerator(AvailabilityGeneratorInterface):
         start_date = date(year, 1, 1)
         end_date = date(year, 12, 31)
         days = DjangoAvailabilityRepository.create_days(
-            day_definitions=self.day_definitions,
-            from_=start_date,
-            to=end_date
+            day_definitions=self.day_definitions, from_=start_date, to=end_date
         )
         return [
             {
                 'day': day,
-                'slots': DjangoAvailabilityRepository.create_slots(day=day)
-            } for day in days
+                'slots': DjangoAvailabilityRepository.create_slots(day=day),
+            }
+            for day in days
         ]
 
     def delete(self, year: int = date.today().year):

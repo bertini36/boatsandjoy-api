@@ -19,7 +19,6 @@ from .exceptions import (
 
 
 class BookingsRepository(ABC):
-
     @classmethod
     @abstractmethod
     def create(
@@ -29,7 +28,7 @@ class BookingsRepository(ABC):
         customer_name: str = None,
         customer_telephone_number: str = None,
         customer_email: str = None,
-        session_id: str = None
+        session_id: str = None,
     ) -> domain.Booking:
         pass
 
@@ -41,10 +40,7 @@ class BookingsRepository(ABC):
     @classmethod
     @abstractmethod
     def get(
-        cls,
-        obj_id: int = None,
-        session_id: str = None,
-        status: str = None
+        cls, obj_id: int = None, session_id: str = None, status: str = None
     ) -> domain.Booking:
         pass
 
@@ -64,7 +60,7 @@ class BookingsRepository(ABC):
         cls,
         booking: domain.Booking,
         customer_email: str = None,
-        session_id: str = None
+        session_id: str = None,
     ) -> domain.Booking:
         pass
 
@@ -80,7 +76,7 @@ class DjangoBookingsRepository(BookingsRepository):
         customer_name: str = None,
         customer_telephone_number: str = None,
         customer_email: str = None,
-        session_id: str = None
+        session_id: str = None,
     ) -> domain.Booking:
         django_data = cls.DATA_ADAPTER.transform(
             price=price,
@@ -88,7 +84,7 @@ class DjangoBookingsRepository(BookingsRepository):
             customer_telephone_number=customer_telephone_number,
             session_id=session_id,
             customer_email=customer_email,
-            locator=cls._generate_locator()
+            locator=cls._generate_locator(),
         )
         try:
             booking = models.Booking.objects.create(**django_data)
@@ -112,21 +108,16 @@ class DjangoBookingsRepository(BookingsRepository):
                 f'Renting for {day} from '
                 f'{first_slot.from_hour} to {last_slot.to_hour}'
             ),
-            'price': price
+            'price': price,
         }
         return purchase_details
 
     @classmethod
     def get(
-        cls,
-        obj_id: int = None,
-        session_id: str = None,
-        status: str = None
+        cls, obj_id: int = None, session_id: str = None, status: str = None
     ) -> domain.Booking:
         django_filters = cls.DATA_ADAPTER.transform(
-            id=obj_id,
-            session_id=session_id,
-            status=status
+            id=obj_id, session_id=session_id, status=status
         )
         try:
             booking = models.Booking.objects.get(**django_filters)
@@ -160,7 +151,7 @@ class DjangoBookingsRepository(BookingsRepository):
         cls,
         booking: domain.Booking,
         customer_email: str = None,
-        session_id: str = None
+        session_id: str = None,
     ) -> domain.Booking:
         try:
             booking = models.Booking.objects.get(id=booking.id)
@@ -175,8 +166,7 @@ class DjangoBookingsRepository(BookingsRepository):
 
     @classmethod
     def get_booking_domain_object(
-        cls,
-        booking: models.Booking
+        cls, booking: models.Booking
     ) -> domain.Booking:
         slots = booking.slots.order_by('position')
         return domain.Booking(
@@ -193,7 +183,7 @@ class DjangoBookingsRepository(BookingsRepository):
             checkout_hour=slots.last().to_hour,
             customer_email=booking.customer_email,
             customer_name=booking.customer_name,
-            customer_telephone_number=booking.customer_telephone_number
+            customer_telephone_number=booking.customer_telephone_number,
         )
 
     @staticmethod

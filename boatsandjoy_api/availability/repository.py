@@ -10,34 +10,24 @@ from .exceptions import NoAvailabilityForDay, NoDayDefinitionDefined
 
 
 class AvailabilityRepository(ABC):
-
     @classmethod
     @abstractmethod
     def filter_days_definitions(
-        cls,
-        obj_id: int = None,
-        boat_id: int = None,
-        date_: date = None
+        cls, obj_id: int = None, boat_id: int = None, date_: date = None
     ) -> List[domain.DayDefinition]:
         pass
 
     @classmethod
     @abstractmethod
     def get_day_definition(
-        cls,
-        obj_id: int = None,
-        boat_id: int = None,
-        date_: date = None
+        cls, obj_id: int = None, boat_id: int = None, date_: date = None
     ) -> domain.DayDefinition:
         pass
 
     @classmethod
     @abstractmethod
     def create_days(
-        cls,
-        day_definitions: List[domain.DayDefinition],
-        from_: date,
-        to: date
+        cls, day_definitions: List[domain.DayDefinition], from_: date, to: date
     ) -> List[domain.Day]:
         pass
 
@@ -49,10 +39,7 @@ class AvailabilityRepository(ABC):
     @classmethod
     @abstractmethod
     def filter_price_variations(
-        cls,
-        obj_id: int = None,
-        boat_id: int = None,
-        date_: date = None
+        cls, obj_id: int = None, boat_id: int = None, date_: date = None
     ) -> List[domain.PriceVariation]:
         pass
 
@@ -68,9 +55,7 @@ class AvailabilityRepository(ABC):
 
     @classmethod
     def get_slot_timing(
-        cls,
-        day_definition: domain.DayDefinition,
-        slot: domain.Slot
+        cls, day_definition: domain.DayDefinition, slot: domain.Slot
     ) -> domain.SlotTiming:
         hours_per_slot = day_definition.hours_per_slot
         delta = timedelta(hours=hours_per_slot * slot.position)
@@ -78,9 +63,7 @@ class AvailabilityRepository(ABC):
             datetime.combine(date(1, 1, 1), day_definition.first_time) + delta
         ).time()
         delta2 = timedelta(hours=day_definition.hours_per_slot)
-        to_hour = (
-            datetime.combine(date(1, 1, 1), from_hour) + delta2
-        ).time()
+        to_hour = (datetime.combine(date(1, 1, 1), from_hour) + delta2).time()
         return domain.SlotTiming(from_hour=from_hour, to_hour=to_hour)
 
     @classmethod
@@ -95,15 +78,14 @@ class AvailabilityRepository(ABC):
     def get_price_per_hour(cls, boat: Boat, date_: date) -> Decimal:
         day_definition = cls.get_day_definition(boat_id=boat.id, date_=date_)
         price_variations = cls.filter_price_variations(
-            boat_id=boat.id,
-            date_=date_
+            boat_id=boat.id, date_=date_
         )
         price = day_definition.price_per_hour
         if price_variations:
             price_variation = price_variations[0]
             if price_variation.factor:
-                price = (
-                    day_definition.price_per_hour * Decimal(price_variation.factor)
+                price = day_definition.price_per_hour * Decimal(
+                    price_variation.factor
                 )
         return round(price, 2)
 
@@ -113,16 +95,10 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
 
     @classmethod
     def filter_days_definitions(
-        cls,
-        obj_id: int = None,
-        boat_id: int = None,
-        date_: date = None
+        cls, obj_id: int = None, boat_id: int = None, date_: date = None
     ) -> List[domain.DayDefinition]:
         django_filters = cls.DATA_ADAPTER.transform(
-            id=obj_id,
-            boat_id=boat_id,
-            from_date__lte=date_,
-            to_date__gte=date_
+            id=obj_id, boat_id=boat_id, from_date__lte=date_, to_date__gte=date_
         )
         day_definitions = models.DayDefinition.objects.filter(**django_filters)
         return [
@@ -132,16 +108,10 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
 
     @classmethod
     def get_day_definition(
-        cls,
-        obj_id: int = None,
-        boat_id: int = None,
-        date_: date = None
+        cls, obj_id: int = None, boat_id: int = None, date_: date = None
     ) -> domain.DayDefinition:
         django_filters = cls.DATA_ADAPTER.transform(
-            id=obj_id,
-            boat_id=boat_id,
-            from_date__lte=date_,
-            to_date__gte=date_
+            id=obj_id, boat_id=boat_id, from_date__lte=date_, to_date__gte=date_
         )
         try:
             day_definition = models.DayDefinition.objects.get(**django_filters)
@@ -153,10 +123,7 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
 
     @classmethod
     def create_days(
-        cls,
-        day_definitions: List[domain.DayDefinition],
-        from_: date,
-        to: date
+        cls, day_definitions: List[domain.DayDefinition], from_: date, to: date
     ) -> List[domain.Day]:
         days = []
         for i in range(int((to - from_).days)):
@@ -185,16 +152,10 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
 
     @classmethod
     def filter_price_variations(
-        cls,
-        obj_id: int = None,
-        boat_id: int = None,
-        date_: date = None
+        cls, obj_id: int = None, boat_id: int = None, date_: date = None
     ) -> List[domain.PriceVariation]:
         django_filters = cls.DATA_ADAPTER.transform(
-            id=obj_id,
-            boat_id=boat_id,
-            from_date__lte=date_,
-            to_date__gte=date_
+            id=obj_id, boat_id=boat_id, from_date__lte=date_, to_date__gte=date_
         )
         price_variations = models.PriceVariation.objects.filter(
             **django_filters
@@ -212,8 +173,7 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
     @classmethod
     def get_day(cls, boat: Boat, date_: date) -> domain.Day:
         django_filters = cls.DATA_ADAPTER.transform(
-            definition__boat_id=boat.id,
-            date=date_
+            definition__boat_id=boat.id, date=date_
         )
         try:
             day = models.Day.objects.get(**django_filters)
@@ -225,8 +185,7 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
 
     @classmethod
     def get_day_definition_domain_object(
-        cls,
-        day_definition: models.DayDefinition
+        cls, day_definition: models.DayDefinition
     ) -> domain.DayDefinition:
         return domain.DayDefinition(
             id=day_definition.id,
@@ -243,7 +202,7 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
             ],
             n_slots_deal_threshold=day_definition.n_slots_deal_threshold,
             discount_when_deal=day_definition.discount_when_deal,
-            resident_discount=day_definition.resident_discount
+            resident_discount=day_definition.resident_discount,
         )
 
     @classmethod
@@ -253,9 +212,8 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
             date=day.date,
             day_definition_id=day.definition.id,
             slots=[
-                cls.get_slot_domain_object(slot)
-                for slot in day.slots.all()
-            ]
+                cls.get_slot_domain_object(slot) for slot in day.slots.all()
+            ],
         )
 
     @classmethod
@@ -266,17 +224,16 @@ class DjangoAvailabilityRepository(AvailabilityRepository):
             from_hour=slot.from_hour,
             to_hour=slot.to_hour,
             booked=slot.booked,
-            day_id=slot.day.id
+            day_id=slot.day.id,
         )
 
     @classmethod
     def get_price_variation_domain_object(
-        cls,
-        price_variation: models.PriceVariation
+        cls, price_variation: models.PriceVariation
     ) -> domain.PriceVariation:
         return domain.PriceVariation(
             from_date=price_variation.from_date,
             to_date=price_variation.to_date,
             factor=price_variation.factor,
-            boat_id=price_variation.boat.id
+            boat_id=price_variation.boat.id,
         )

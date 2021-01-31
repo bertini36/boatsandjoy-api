@@ -8,12 +8,11 @@ urlpatterns = [
     re_path(
         r'day/(?P<date_>\d{4}-\d{2}-\d{2})/',
         get_day_availability,
-        name='get-day-availability'
+        name='get-day-availability',
     ),
-
     re_path(
         r'month/(?P<date_>\d{4}-\d{2}-\d{2})/',
         get_month_availability,
-        name='get-month-availability'
+        name='get-month-availability',
     ),
 ]

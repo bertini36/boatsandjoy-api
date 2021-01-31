@@ -12,9 +12,7 @@ django_heroku.settings(locals())
 # SITE CONFIGURATION
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 # ------------------------------------------------------------------------------
-ALLOWED_HOSTS = (
-    'boatsandjoy_api.herokuapp.com',
-)
+ALLOWED_HOSTS = ('boatsandjoy_api.herokuapp.com',)
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
@@ -27,10 +25,13 @@ EMAIL_PORT = 587
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader
 # ------------------------------------------------------------------------------
 TEMPLATES[0]['OPTIONS']['loaders'] = [
-    ('django.template.loaders.cached.Loader', [
-        'django.template.loaders.filesystem.Loader',
-        'django.template.loaders.app_directories.Loader',
-    ]),
+    (
+        'django.template.loaders.cached.Loader',
+        [
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
+        ],
+    ),
 ]
 
 # LOGGING
@@ -50,7 +51,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': BASE_DIR('logs/boatsandjoy_api.log'),
-            'formatter': 'verbose'
+            'formatter': 'verbose',
         },
     },
     'loggers': {
@@ -63,7 +64,7 @@ LOGGING = {
             'handlers': ['file'],
             'level': 'DEBUG',
         },
-    }
+    },
 }
 
 # SENTRY
@@ -72,7 +73,7 @@ sentry_sdk.init(
     dsn=env('SENTRY_DSN'),
     integrations=[DjangoIntegration()],
     environment='prod',
-    send_default_pii=True
+    send_default_pii=True,
 )
 
 # SECURE SSL

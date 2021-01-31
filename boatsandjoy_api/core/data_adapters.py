@@ -5,7 +5,6 @@ from .utils import filter_none_values_in_dict
 
 
 class DataAdapterInterface(ABC):
-
     @classmethod
     @abstractmethod
     def transform(cls, **kwargs) -> dict:
@@ -13,7 +12,6 @@ class DataAdapterInterface(ABC):
 
 
 class DjangoDataAdapter(DataAdapterInterface):
-
     @classmethod
     def transform(cls, **kwargs) -> dict:
         django_data = filter_none_values_in_dict(deepcopy(kwargs))

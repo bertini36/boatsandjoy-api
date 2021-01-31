@@ -13,12 +13,11 @@ from .validators import FilterBoatsRequestValidator
 
 
 class BoatsApi:
-
     def __init__(
         self,
         boats_repository: Type[BoatsRepository],
         response_builder: Type[ResponseBuilderInterface],
-        error_builder: Type[ResponseBuilderInterface]
+        error_builder: Type[ResponseBuilderInterface],
     ):
         self.boats_repository = boats_repository
         self.response_builder = response_builder
@@ -43,8 +42,4 @@ class BoatsApi:
             return self.error_builder(e).build()
 
 
-api = BoatsApi(
-    DjangoBoatsRepository,
-    ResponseBuilder,
-    ErrorResponseBuilder
-)
+api = BoatsApi(DjangoBoatsRepository, ResponseBuilder, ErrorResponseBuilder)

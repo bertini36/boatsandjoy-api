@@ -15,16 +15,53 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Booking',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                (
+                    'id',
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID',
+                    ),
+                ),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('locator', models.CharField(max_length=20)),
-                ('price', models.DecimalField(decimal_places=2, help_text='Booking price', max_digits=8)),
+                (
+                    'price',
+                    models.DecimalField(
+                        decimal_places=2,
+                        help_text='Booking price',
+                        max_digits=8,
+                    ),
+                ),
                 ('customer_name', models.CharField(default='', max_length=100)),
-                ('customer_email', models.CharField(default='', max_length=100)),
-                ('customer_telephone_number', models.CharField(default='', max_length=100)),
-                ('status', models.CharField(choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('error', 'Error')], default='pending', max_length=10)),
-                ('session_id', models.CharField(blank=True, help_text='Session id', max_length=100)),
+                (
+                    'customer_email',
+                    models.CharField(default='', max_length=100),
+                ),
+                (
+                    'customer_telephone_number',
+                    models.CharField(default='', max_length=100),
+                ),
+                (
+                    'status',
+                    models.CharField(
+                        choices=[
+                            ('pending', 'Pending'),
+                            ('confirmed', 'Confirmed'),
+                            ('error', 'Error'),
+                        ],
+                        default='pending',
+                        max_length=10,
+                    ),
+                ),
+                (
+                    'session_id',
+                    models.CharField(
+                        blank=True, help_text='Session id', max_length=100
+                    ),
+                ),
                 ('slots', models.ManyToManyField(to='availability.Slot')),
             ],
             options={

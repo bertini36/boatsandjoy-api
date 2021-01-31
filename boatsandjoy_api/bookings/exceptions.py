@@ -27,5 +27,3 @@ class BookingAlreadyConfirmed(BookingsApiException):
 
 class BookingAlreadyPending(BookingsApiException):
     pass
-
-

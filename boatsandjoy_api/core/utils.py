@@ -15,7 +15,6 @@ def cast_to_date(obj: str) -> date:
 
 
 class MultipleIntField(forms.TypedMultipleChoiceField):
-
     def __init__(self, *args, **kwargs):
         super(MultipleIntField, self).__init__(*args, **kwargs)
         self.coerce = int
@@ -25,16 +24,10 @@ class MultipleIntField(forms.TypedMultipleChoiceField):
 
 
 def send_email(
-    subject: str,
-    to_email: str,
-    from_email: str,
-    template: str,
-    **kwargs
+    subject: str, to_email: str, from_email: str, template: str, **kwargs
 ):
     msg = EmailMultiAlternatives(
-        subject=subject,
-        from_email=from_email,
-        to=[to_email]
+        subject=subject, from_email=from_email, to=[to_email]
     )
     msg.attach_alternative(render_to_string(template, kwargs), 'text/html')
     msg.send()

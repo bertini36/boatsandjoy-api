@@ -4,8 +4,4 @@ class BookingStatus:
     CONFIRMED = 'confirmed'
     ERROR = 'error'
 
-    STATUS = (
-        (PENDING, 'Pending'),
-        (CONFIRMED, 'Confirmed'),
-        (ERROR, 'Error')
-    )
+    STATUS = ((PENDING, 'Pending'), (CONFIRMED, 'Confirmed'), (ERROR, 'Error'))

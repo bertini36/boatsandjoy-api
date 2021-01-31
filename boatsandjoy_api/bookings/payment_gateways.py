@@ -8,7 +8,6 @@ from .exceptions import PaymentGatewayException
 
 
 class PaymentGateway(ABC):
-
     @classmethod
     @abstractmethod
     def generate_checkout_session_id(
@@ -36,27 +35,25 @@ class PaymentGateway(ABC):
 
 
 class StripePaymentGateway(PaymentGateway):
-
     @classmethod
     def generate_checkout_session_id(
-        cls,
-        name: str,
-        description: str,
-        price: Decimal
+        cls, name: str, description: str, price: Decimal
     ) -> str:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         success_url = f'{settings.DOMAIN}/payment/success/'
         session = stripe.checkout.Session.create(
             payment_method_types=['card'],
-            line_items=[{
-                'name': name,
-                'description': description,
-                'amount': cls._format_price(price),
-                'currency': 'eur',
-                'quantity': 1,
-            }],
+            line_items=[
+                {
+                    'name': name,
+                    'description': description,
+                    'amount': cls._format_price(price),
+                    'currency': 'eur',
+                    'quantity': 1,
+                }
+            ],
             success_url=success_url + '?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=f'{settings.DOMAIN}/payment/error/'
+            cancel_url=f'{settings.DOMAIN}/payment/error/',
         )
         return session.id
 
@@ -66,7 +63,7 @@ class StripePaymentGateway(PaymentGateway):
             event = stripe.Webhook.construct_event(
                 body,
                 headers['HTTP_STRIPE_SIGNATURE'],
-                settings.STRIPE_ENDPOINT_SECRET
+                settings.STRIPE_ENDPOINT_SECRET,
             )
         except ValueError as e:
             raise PaymentGatewayException(

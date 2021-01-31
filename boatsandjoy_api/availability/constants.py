@@ -40,5 +40,5 @@ class DayAvailabilityTypes:
         (FREE, 'Free'),
         (FULL, 'Full'),
         (PARTIALLY_FREE, 'Partially free'),
-        (NO_AVAIL, 'No availability')
+        (NO_AVAIL, 'No availability'),
     )

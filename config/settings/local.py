@@ -36,7 +36,7 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
+            'formatter': 'verbose',
         },
     },
     'loggers': {
@@ -55,7 +55,9 @@ LOGGING = {
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ('debug_toolbar',)
 MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
-INTERNAL_IPS = ['127.0.0.1', ]
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 # Django-extensions
 # https://github.com/django-extensions/django-extensions
@@ -68,6 +70,5 @@ sentry_sdk.init(
     dsn=env('SENTRY_DSN'),
     integrations=[DjangoIntegration()],
     environment='pre',
-    send_default_pii=True
+    send_default_pii=True,
 )
-
