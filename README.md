@@ -11,7 +11,7 @@
   </a>&nbsp;&nbsp;•&nbsp;
   <a href="https://github.com/bertini36/boatsandjoy/blob/v2/Makefile" target="_blank">
     Commands
-  </a>~~~~
+  </a>
 </p>
 <p align="center">
 A simple availability engine to rent boats in Mallorca
