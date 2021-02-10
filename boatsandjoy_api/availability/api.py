@@ -136,9 +136,10 @@ class AvailabilityApi:
                 self._get_global_day_availability_type(boats, idate)
             )
             result = {
-                'name': global_day_availability_type,
                 'date': idate,
-                'disabled': global_day_availability_type in disabled_states,
+                'availability': (
+                    global_day_availability_type not in disabled_states
+                ),
             }
             results.append(result)
         return results
