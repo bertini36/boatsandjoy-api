@@ -54,10 +54,13 @@ class DayDefinitionInlineAdmin(admin.StackedInline):
     formset = DayDefinitionInlineFormset
     extra = 0
 
+    def has_add_permission(self, request: HttpRequest, obj: Day = None) -> bool:
+        return True
+
     def has_delete_permission(
         self, request: HttpRequest, obj: Day = None
     ) -> bool:
-        return False
+        return True
 
 
 class PriceVariationInlineFormset(BaseInlineFormSet):
@@ -101,6 +104,14 @@ class PriceVariationInlineAdmin(admin.StackedInline):
     model = PriceVariation
     formset = PriceVariationInlineFormset
     extra = 0
+
+    def has_add_permission(self, request: HttpRequest, obj: Day = None) -> bool:
+        return True
+
+    def has_delete_permission(
+        self, request: HttpRequest, obj: Day = None
+    ) -> bool:
+        return True
 
 
 def generate_availability_for(
