@@ -19,7 +19,6 @@ services:
 
   db:
     image: postgres:12
-    restart: always
     env_file: ../../.env
     volumes:
       - ~/Dropbox/projects/boatsandjoy:/data
