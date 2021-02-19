@@ -166,6 +166,7 @@ class AvailabilityApi:
             },
             'availability': [
                 {
+                    'boat_id': boat.id,
                     'slots': [
                         {
                             'id': slot.id,
