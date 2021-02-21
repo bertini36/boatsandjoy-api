@@ -19,7 +19,6 @@ def get_day_availability(request: Request, date_: str) -> Response:
                 'boat': boat,
                 'availability': [
                     {
-                        'boat_id': float,
                         'slots': combination,
                         'price': float,
                         'from_hour': time,

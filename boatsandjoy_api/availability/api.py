@@ -49,6 +49,7 @@ class AvailabilityApi:
             'data': [
                 {
                     'boat': boat,
+                    'day': date,
                     'availability': [
                         {
                             'slots': combination,
@@ -166,7 +167,7 @@ class AvailabilityApi:
             },
             'availability': [
                 {
-                    'boat_id': boat.id,
+                    'day': date_,
                     'slots': [
                         {
                             'id': slot.id,
@@ -187,6 +188,9 @@ class AvailabilityApi:
                 }
                 for i, combination in enumerate(combinations)
             ],
+            'discounts': {
+                'resident': day_definition.resident_discount,
+            }
         }
 
     def _get_combinations(
