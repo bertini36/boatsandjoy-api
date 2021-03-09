@@ -7,7 +7,10 @@ from .constants import BookingStatus
 class Booking(BaseModel):
     locator = models.CharField(max_length=20)
     price = models.DecimalField(
-        blank=False, max_digits=8, decimal_places=2, help_text='Booking price'
+        blank=False,
+        max_digits=8,
+        decimal_places=2,
+        help_text='Booking price'
     )
     slots = models.ManyToManyField('availability.Slot')
     customer_name = models.CharField(max_length=100, default='')
@@ -19,8 +22,10 @@ class Booking(BaseModel):
         max_length=10,
     )
     session_id = models.CharField(
-        max_length=100, help_text='Session id', blank=True
+        max_length=100,
+        help_text='Session id', blank=True
     )
+    extras = models.TextField(default='')
 
     def __str__(self) -> str:
         return f'Booking [{self.id}]'

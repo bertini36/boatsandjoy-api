@@ -29,6 +29,7 @@ class BookingsRepository(ABC):
         customer_telephone_number: str = None,
         customer_email: str = None,
         session_id: str = None,
+        extras: str = None,
     ) -> domain.Booking:
         pass
 
@@ -77,6 +78,7 @@ class DjangoBookingsRepository(BookingsRepository):
         customer_telephone_number: str = None,
         customer_email: str = None,
         session_id: str = None,
+        extras: str = None,
     ) -> domain.Booking:
         django_data = cls.DATA_ADAPTER.transform(
             price=price,
@@ -85,6 +87,7 @@ class DjangoBookingsRepository(BookingsRepository):
             session_id=session_id,
             customer_email=customer_email,
             locator=cls._generate_locator(),
+            extras=extras,
         )
         try:
             booking = models.Booking.objects.create(**django_data)
@@ -117,7 +120,9 @@ class DjangoBookingsRepository(BookingsRepository):
         cls, obj_id: int = None, session_id: str = None, status: str = None
     ) -> domain.Booking:
         django_filters = cls.DATA_ADAPTER.transform(
-            id=obj_id, session_id=session_id, status=status
+            id=obj_id,
+            session_id=session_id,
+            status=status
         )
         try:
             booking = models.Booking.objects.get(**django_filters)
@@ -184,6 +189,7 @@ class DjangoBookingsRepository(BookingsRepository):
             customer_email=booking.customer_email,
             customer_name=booking.customer_name,
             customer_telephone_number=booking.customer_telephone_number,
+            extras=booking.extras,
         )
 
     @staticmethod

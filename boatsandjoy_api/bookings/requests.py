@@ -9,6 +9,7 @@ class CreateBookingRequest:
     slot_ids: List[int]
     customer_name: str
     customer_telephone_number: str
+    extras: str
 
 
 @dataclass

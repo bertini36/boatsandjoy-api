@@ -8,7 +8,8 @@ class DjangoBookingCreationForm(forms.Form):
     price = forms.DecimalField(required=True)
     slot_ids = MultipleIntField(required=True)
     customer_name = forms.CharField(required=True)
-    customer_telephone_number = forms.CharField(required=False)
+    customer_telephone_number = forms.CharField(required=True)
+    extras = forms.CharField(required=False)
 
 
 class DjangoGetBookingForm(forms.Form):

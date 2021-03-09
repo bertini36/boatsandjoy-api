@@ -59,13 +59,15 @@ class BookingsApi:
         try:
             BookingCreationRequestValidator.validate(request)
             purchase_details = self.bookings_repository.get_purchase_details(
-                slot_ids=request.slot_ids, price=request.price
+                slot_ids=request.slot_ids,
+                price=request.price
             )
             session_id = self.payment_gateway.generate_checkout_session_id(
                 **purchase_details
             )
             booking = self.bookings_repository.create(
-                **asdict(request), session_id=session_id
+                **asdict(request),
+                session_id=session_id
             )
             return self.response_builder(booking).build()
 
@@ -90,7 +92,8 @@ class BookingsApi:
                     **purchase_details
                 )
                 booking = self.bookings_repository.update(
-                    booking=booking, session_id=session_id
+                    booking=booking,
+                    session_id=session_id
                 )
             return self.response_builder(booking).build()
 
@@ -136,7 +139,8 @@ class BookingsApi:
             )
             booking = self.bookings_repository.get(session_id=session_id)
             booking = self.bookings_repository.update(
-                booking=booking, customer_email=customer_email
+                booking=booking,
+                customer_email=customer_email
             )
             self.send_confirmation_email(booking)
             return self.response_builder([]).build()

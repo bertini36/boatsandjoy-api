@@ -36,6 +36,7 @@ def create_booking(request: Request) -> Response:
         slot_ids=[int(slot_id) for slot_id in data['slot_ids'].split(',')],
         customer_name=data['customer_name'],
         customer_telephone_number=data['customer_telephone_number'],
+        extras=data['extras'],
     )
     results = bookings_api.create(api_request)
     return Response(results)
@@ -62,7 +63,8 @@ def mark_booking_as_error(request: Request) -> Response:
 @api_view(['POST'])
 def register_booking_event(request: Request) -> Response:
     api_request = RegisterBookingEventRequest(
-        headers=request.META, body=request.body
+        headers=request.META,
+        body=request.body
     )
     response = bookings_api.register_event(api_request)
     if response['error']:
@@ -73,7 +75,8 @@ def register_booking_event(request: Request) -> Response:
 @api_view(['GET'])
 def generate_payment(request: Request) -> Response:
     api_request = GetBookingRequest(
-        obj_id=request.GET['booking_id'], generate_new_session_id=True
+        obj_id=request.GET['booking_id'],
+        generate_new_session_id=True
     )
     results = bookings_api.get(api_request)
     return Response(results)
