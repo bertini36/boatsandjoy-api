@@ -78,7 +78,8 @@ class AvailabilityApi:
             return self.response_builder([]).build()
 
     def get_month_availability(
-        self, request: GetMonthAvailabilityRequest
+        self,
+        request: GetMonthAvailabilityRequest
     ) -> dict:
         """
         :return: {
@@ -98,7 +99,9 @@ class AvailabilityApi:
             results = boats_api.filter(FilterBoatsRequest(active=True))
             boats = [Boat(**boat_data) for boat_data in results['data']]
             month_availability_results = self._get_month_availability(
-                boats=boats, month=request.month, year=request.year
+                boats=boats,
+                month=request.month,
+                year=request.year
             )
             return self.response_builder(month_availability_results).build()
 
@@ -108,7 +111,10 @@ class AvailabilityApi:
             ).build()
 
     def _get_day_availability(
-        self, boats: List[Boat], date_: date, apply_resident_discount: bool
+        self,
+        boats: List[Boat],
+        date_: date,
+        apply_resident_discount: bool
     ) -> list:
         results = []
         for boat in boats:
@@ -117,7 +123,9 @@ class AvailabilityApi:
                     raise NoActiveBoat('This boat is not active')
                 results.append(
                     self._get_boat_response(
-                        boat, date_, apply_resident_discount
+                        boat,
+                        date_,
+                        apply_resident_discount
                     )
                 )
             except BoatsAndJoyException:
@@ -125,7 +133,10 @@ class AvailabilityApi:
         return results
 
     def _get_month_availability(
-        self, boats: List[Boat], month: int, year: int
+        self,
+        boats: List[Boat],
+        month: int,
+        year: int
     ) -> list:
         results = []
         disabled_states = (
@@ -146,19 +157,26 @@ class AvailabilityApi:
         return results
 
     def _get_boat_response(
-        self, boat: Boat, date_: date, apply_resident_discount: bool
+        self,
+        boat: Boat,
+        date_: date,
+        apply_resident_discount: bool
     ) -> dict:
         day_definition = DjangoAvailabilityRepository.get_day_definition(
-            boat_id=boat.id, date_=date_
+            boat_id=boat.id,
+            date_=date_
         )
         day = DjangoAvailabilityRepository.get_day(boat, date_)
         available_slots = DjangoAvailabilityRepository.get_available_slots(day)
         combinations = self._get_combinations(available_slots)
         combinations_prices = self._get_combinations_prices(
-            boat, day, combinations
+            boat,
+            day,
+            combinations
         )
         combinations_timings = self._get_combinations_timing(
-            day_definition=day_definition, combinations=combinations
+            day_definition=day_definition,
+            combinations=combinations
         )
         return {
             'boat': {
@@ -194,7 +212,8 @@ class AvailabilityApi:
         }
 
     def _get_combinations(
-        self, slots: List[domain.Slot]
+        self,
+        slots: List[domain.Slot]
     ) -> List[List[domain.Slot]]:
         """
         Two slots can be at the same combination just
@@ -229,21 +248,26 @@ class AvailabilityApi:
 
     @staticmethod
     def _add_combination(
-        combinations: List[List[domain.Slot]], combination: List[domain.Slot]
+        combinations: List[List[domain.Slot]],
+        combination: List[domain.Slot]
     ) -> List[List[domain.Slot]]:
         combinations.append(deepcopy(combination))
         return combinations
 
     @staticmethod
     def _get_combinations_prices(
-        boat: Boat, day: domain.Day, combinations: List[List[domain.Slot]]
+        boat: Boat,
+        day: domain.Day,
+        combinations: List[List[domain.Slot]]
     ) -> List[Decimal]:
         day_definition = DjangoAvailabilityRepository.get_day_definition(
-            boat_id=boat.id, date_=day.date
+            boat_id=boat.id,
+            date_=day.date
         )
         hours_per_slot = day_definition.hours_per_slot
         day_price_per_hour = DjangoAvailabilityRepository.get_price_per_hour(
-            boat=boat, date_=day.date
+            boat=boat,
+            date_=day.date
         )
         return [
             len(combination) * hours_per_slot * day_price_per_hour
@@ -262,15 +286,18 @@ class AvailabilityApi:
             elif len(combination) == 1:
                 slot_combination_hour_limits.append(
                     DjangoAvailabilityRepository.get_slot_timing(
-                        day_definition=day_definition, slot=combination[0]
+                        day_definition=day_definition,
+                        slot=combination[0]
                     )
                 )
             elif len(combination) > 1:
                 from_hour = DjangoAvailabilityRepository.get_slot_timing(
-                    day_definition=day_definition, slot=combination[0]
+                    day_definition=day_definition,
+                    slot=combination[0]
                 ).from_hour
                 to_hour = DjangoAvailabilityRepository.get_slot_timing(
-                    day_definition=day_definition, slot=combination[-1]
+                    day_definition=day_definition,
+                    slot=combination[-1]
                 ).to_hour
                 slot_combination_hour_limits.append(
                     domain.SlotTiming(from_hour=from_hour, to_hour=to_hour)
@@ -279,7 +306,8 @@ class AvailabilityApi:
 
     @staticmethod
     def _get_global_day_availability_type(
-        boats: List[Boat], date_: date
+        boats: List[Boat],
+        date_: date
     ) -> str:
         boats_day_availability_types = []
         if date_ < date.today():
@@ -288,7 +316,8 @@ class AvailabilityApi:
             try:
                 boats_day_availability_types.append(
                     DjangoAvailabilityRepository.get_day(
-                        boat=boat, date_=date_
+                        boat=boat,
+                        date_=date_
                     ).availability_type
                 )
             except (NoDayDefinitionDefined, NoAvailabilityForDay):

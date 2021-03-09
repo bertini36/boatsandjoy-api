@@ -21,7 +21,9 @@ class SlotInlineAdmin(admin.StackedInline):
 
 
 def get_days(
-    queryset: QuerySet = None, year: int = None, month: int = None
+    queryset: QuerySet = None,
+    year: int = None,
+    month: int = None
 ) -> QuerySet:
     if not queryset:
         queryset = Day.objects.all()
@@ -29,7 +31,8 @@ def get_days(
         queryset = queryset.filter(date__year__lte=year, date__year__gte=year)
     if month:
         queryset = queryset.filter(
-            date__month__lte=month, date__month__gte=month
+            date__month__lte=month,
+            date__month__gte=month
         )
     return queryset
 
@@ -98,7 +101,9 @@ class DayAdmin(admin.ModelAdmin):
     get_slots.short_description = 'Available slots'
 
     def get_readonly_fields(
-        self, request: HttpRequest, obj: Day = None
+        self,
+        request: HttpRequest,
+        obj: Day = None
     ) -> List[str]:
         return ['definition', 'date']
 

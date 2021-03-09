@@ -38,7 +38,9 @@ class AvailabilityGenerator(AvailabilityGeneratorInterface):
         start_date = date(year, 1, 1)
         end_date = date(year, 12, 31)
         days = DjangoAvailabilityRepository.create_days(
-            day_definitions=self.day_definitions, from_=start_date, to=end_date
+            day_definitions=self.day_definitions,
+            from_=start_date,
+            to=end_date
         )
         return [
             {

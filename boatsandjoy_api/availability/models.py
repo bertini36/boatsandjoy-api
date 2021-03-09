@@ -14,10 +14,13 @@ class DayDefinition(BaseModel):
     """
 
     boat = models.ForeignKey(
-        Boat, related_name='day_definitions', on_delete=models.CASCADE
+        Boat,
+        related_name='day_definitions',
+        on_delete=models.CASCADE
     )
     first_time = models.TimeField(
-        default=time(hour=9), help_text='Time when the day starts'
+        default=time(hour=9),
+        help_text='Time when the day starts'
     )
     hours_per_slot = models.IntegerField(
         default=2,
@@ -25,7 +28,8 @@ class DayDefinition(BaseModel):
         help_text='How many hours define a slot',
     )
     n_slots = models.IntegerField(
-        default=0, help_text='Number of availability slots in a single day'
+        default=0,
+        help_text='Number of availability slots in a single day'
     )
     price_per_hour = models.DecimalField(
         null=False,
@@ -35,10 +39,12 @@ class DayDefinition(BaseModel):
         default=0.0,
     )
     from_date = models.DateField(
-        blank=False, help_text='Since which date this definition is available'
+        blank=False,
+        help_text='Since which date this definition is available'
     )
     to_date = models.DateField(
-        blank=False, help_text='Until which date this definition is available'
+        blank=False,
+        help_text='Until which date this definition is available'
     )
     n_slots_deal_threshold = models.IntegerField(
         default=0,
@@ -75,7 +81,9 @@ class DayDefinition(BaseModel):
 
 class Day(BaseModel):
     definition = models.ForeignKey(
-        DayDefinition, related_name='days', on_delete=models.CASCADE
+        DayDefinition,
+        related_name='days',
+        on_delete=models.CASCADE
     )
     date = models.DateField()
 
@@ -121,7 +129,9 @@ class Slot(BaseModel):
 
 class PriceVariation(BaseModel):
     boat = models.ForeignKey(
-        Boat, related_name='price_variations', on_delete=models.CASCADE
+        Boat,
+        related_name='price_variations',
+        on_delete=models.CASCADE
     )
     from_date = models.DateField(blank=False)
     to_date = models.DateField(blank=False)
