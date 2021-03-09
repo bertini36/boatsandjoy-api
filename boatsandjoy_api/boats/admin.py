@@ -58,7 +58,9 @@ class DayDefinitionInlineAdmin(admin.StackedInline):
         return True
 
     def has_delete_permission(
-        self, request: HttpRequest, obj: Day = None
+        self,
+        request: HttpRequest,
+        obj: Day = None
     ) -> bool:
         return True
 
@@ -109,13 +111,17 @@ class PriceVariationInlineAdmin(admin.StackedInline):
         return True
 
     def has_delete_permission(
-        self, request: HttpRequest, obj: Day = None
+        self,
+        request: HttpRequest,
+        obj: Day = None
     ) -> bool:
         return True
 
 
 def generate_availability_for(
-    modeladmin, request: HttpRequest, queryset: QuerySet
+    modeladmin,
+    request: HttpRequest,
+    queryset: QuerySet
 ):
     try:
         year = int(request.POST['year'])
@@ -142,7 +148,9 @@ generate_availability_for.short_description = 'Generate availability for year'
 
 
 def delete_availability_for(
-    modeladmin, request: HttpRequest, queryset: QuerySet
+    modeladmin,
+    request: HttpRequest,
+    queryset: QuerySet
 ):
     try:
         year = int(request.POST['year'])
@@ -169,7 +177,9 @@ delete_availability_for.short_description = 'Delete availability for year'
 
 
 def deactivate_selected_boats(
-    modeladmin, request: HttpRequest, queryset: QuerySet
+    modeladmin,
+    request: HttpRequest,
+    queryset: QuerySet
 ):
     queryset.update(active=False)
 
