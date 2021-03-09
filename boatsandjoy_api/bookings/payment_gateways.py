@@ -37,7 +37,10 @@ class PaymentGateway(ABC):
 class StripePaymentGateway(PaymentGateway):
     @classmethod
     def generate_checkout_session_id(
-        cls, name: str, description: str, price: Decimal
+        cls,
+        name: str,
+        description: str,
+        price: Decimal
     ) -> str:
         stripe.api_key = settings.STRIPE_SECRET_KEY
         success_url = f'{settings.DOMAIN}/payment/success/'

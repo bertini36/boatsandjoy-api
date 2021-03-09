@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 from decimal import Decimal
 from typing import List
 
-from django.conf import settings
 from django.db import DatabaseError
 
 from boatsandjoy_api.availability.models import Slot
@@ -41,7 +40,10 @@ class BookingsRepository(ABC):
     @classmethod
     @abstractmethod
     def get(
-        cls, obj_id: int = None, session_id: str = None, status: str = None
+        cls,
+        obj_id: int = None,
+        session_id: str = None,
+        status: str = None
     ) -> domain.Booking:
         pass
 
@@ -117,7 +119,10 @@ class DjangoBookingsRepository(BookingsRepository):
 
     @classmethod
     def get(
-        cls, obj_id: int = None, session_id: str = None, status: str = None
+        cls,
+        obj_id: int = None,
+        session_id: str = None,
+        status: str = None
     ) -> domain.Booking:
         django_filters = cls.DATA_ADAPTER.transform(
             id=obj_id,
@@ -171,7 +176,8 @@ class DjangoBookingsRepository(BookingsRepository):
 
     @classmethod
     def get_booking_domain_object(
-        cls, booking: models.Booking
+        cls,
+        booking: models.Booking
     ) -> domain.Booking:
         slots = booking.slots.order_by('position')
         return domain.Booking(
