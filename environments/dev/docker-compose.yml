@@ -34,11 +34,11 @@ services:
 
   ngrok:
     image: wernight/ngrok
-    links:
-      - boatsandjoy-api
-    command: ngrok http boatsandjoy-api:80
     ports:
-      - "4040:4040" # Access to public domain: /api/tunnels
+      - "4041:4040"
+    depends_on:
+      - boatsandjoy-api
+    command: ngrok http  boatsandjoy-api:80 -host-header="localhost:80"
 
 volumes:
   boatsandjoy-data: {}

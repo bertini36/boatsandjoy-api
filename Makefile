@@ -73,6 +73,10 @@ collectstatic: ## 🗿️ Collect statics
 	@echo "🗿 Collect statics"
 	@docker-compose run --rm --entrypoint python boatsandjoy-api manage.py collectstatic
 
+run-ngrok:	## 📙‍️ Run Ngrok
+	@echo "📙 Run Ngrok"
+	@docker-compose up ngrok
+
 help: ## 📖 Show make targets
 	@echo "📖 Help"
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {sub("\\\\n",sprintf("\n%22c"," "), $$2);printf " \033[36m%-20s\033[0m  %s\n", $$1, $$2}' $(MAKEFILE_LIST)
