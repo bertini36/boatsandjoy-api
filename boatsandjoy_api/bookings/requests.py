@@ -19,11 +19,6 @@ class GetBookingRequest:
 
 
 @dataclass
-class MarkBookingAsPaidRequest:
-    session_id: str
-
-
-@dataclass
 class MarkBookingAsErrorRequest:
     session_id: str
 

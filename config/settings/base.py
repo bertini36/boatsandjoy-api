@@ -189,8 +189,9 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-# Web application domain
-DOMAIN = env('DOMAIN', default='')
+# Payment redirection urls
+PAYMENT_SUCCESS_URL = env('PAYMENT_SUCCESS_URL', default='')
+PAYMENT_ERROR_URL = env('PAYMENT_ERROR_URL', default='')
 
 # THIRD PARTY APPLICATIONS
 # ******************************************************************************

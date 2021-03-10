@@ -9,9 +9,18 @@ from boatsandjoy_api.bookings.requests import (
     CreateBookingRequest,
     GetBookingRequest,
     MarkBookingAsErrorRequest,
-    MarkBookingAsPaidRequest,
     RegisterBookingEventRequest,
 )
+
+
+@api_view(['GET'])
+def generate_payment(request: Request) -> Response:
+    api_request = GetBookingRequest(
+        obj_id=request.GET['booking_id'],
+        generate_new_session_id=True
+    )
+    results = bookings_api.get(api_request)
+    return Response(results)
 
 
 @api_view(['POST'])
@@ -42,12 +51,16 @@ def create_booking(request: Request) -> Response:
     return Response(results)
 
 
-@api_view(['GET'])
-def mark_booking_as_paid(request: Request) -> Response:
-    session_id = request.GET['session_id']
-    api_request = MarkBookingAsPaidRequest(session_id=session_id)
-    results = bookings_api.mark_as_paid(api_request)
-    return Response(results)
+@api_view(['POST'])
+def register_booking_event(request: Request) -> Response:
+    api_request = RegisterBookingEventRequest(
+        headers=request.META,
+        body=json.loads(request.body)
+    )
+    response = bookings_api.register_event(api_request)
+    if response['error']:
+        return Response(status=400)
+    return Response(status=200)
 
 
 @api_view(['GET'])
@@ -57,26 +70,4 @@ def mark_booking_as_error(request: Request) -> Response:
     if session_id:
         api_request = MarkBookingAsErrorRequest(session_id=session_id)
         results = bookings_api.mark_as_error(api_request)
-    return Response(results)
-
-
-@api_view(['POST'])
-def register_booking_event(request: Request) -> Response:
-    api_request = RegisterBookingEventRequest(
-        headers=request.META,
-        body=request.body
-    )
-    response = bookings_api.register_event(api_request)
-    if response['error']:
-        return Response(status=400)
-    return Response(status=200)
-
-
-@api_view(['GET'])
-def generate_payment(request: Request) -> Response:
-    api_request = GetBookingRequest(
-        obj_id=request.GET['booking_id'],
-        generate_new_session_id=True
-    )
-    results = bookings_api.get(api_request)
     return Response(results)

@@ -3,12 +3,12 @@ provider "heroku" {
 }
 
 resource "heroku_app" "default" {
-  name = "albertopou"
+  name = "boatsandjoy"
   region = "eu"
 
   config_vars = {
     DJANGO_ADMIN_URL = ""
-    DJANGO_DEBUG = ""
+    DJANGO_DEBUG = "False"
     DJANGO_SECRET_KEY = ""
     EMAIL_HOST_USER = ""
     EMAIL_HOST_PASSWORD = ""
@@ -19,10 +19,8 @@ resource "heroku_app" "default" {
     STRIPE_API_KEY = ""
     STRIPE_SECRET_KEY = ""
     STRIPE_ENDPOINT_SECRET = ""
-    AWS_ACCESS_KEY_ID = ""
-    AWS_SECRET_ACCESS_KEY = ""
-    AWS_STORAGE_BUCKET_NAME = ""
-    AWS_LOCATION = ""
+    PAYMENT_SUCCESS_URL = ""
+    PAYMENT_ERROR_URL = ""
   }
 
   buildpacks = [

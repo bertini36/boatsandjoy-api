@@ -19,7 +19,6 @@ from .requests import (
     CreateBookingRequest,
     GetBookingRequest,
     MarkBookingAsErrorRequest,
-    MarkBookingAsPaidRequest,
     RegisterBookingEventRequest,
 )
 from .validators import (
@@ -100,22 +99,6 @@ class BookingsApi:
         except BookingsApiException as e:
             return self.error_builder(e).build()
 
-    def mark_as_paid(self, request: MarkBookingAsPaidRequest):
-        try:
-            IdentifyBookingBySessionRequestValidator.validate(request)
-            booking = self.bookings_repository.get(**asdict(request))
-            if booking.status != BookingStatus.CONFIRMED:
-                self._send_payment_success_notification_email(booking)
-            booking = self.bookings_repository.mark_as_paid(booking)
-            api_request = FilterBoatsRequest(obj_id=booking.boat_id)
-            results = boats_api.get(api_request)
-            return self.response_builder(
-                {'booking': booking, 'boat': results['data']}
-            ).build()
-
-        except BookingsApiException as e:
-            return self.error_builder(e).build()
-
     def mark_as_error(self, request: MarkBookingAsErrorRequest):
         try:
             IdentifyBookingBySessionRequestValidator.validate(request)
@@ -130,9 +113,7 @@ class BookingsApi:
 
     def register_event(self, request: RegisterBookingEventRequest):
         try:
-            event = self.payment_gateway.register_event(
-                headers=request.headers, body=request.body
-            )
+            event = request.body
             session_id = self.payment_gateway.get_session_id_from_event(event)
             customer_email = self.payment_gateway.get_customer_email_from_event(
                 event=event
@@ -142,7 +123,8 @@ class BookingsApi:
                 booking=booking,
                 customer_email=customer_email
             )
-            self.send_confirmation_email(booking)
+            booking = self.bookings_repository.mark_as_paid(booking)
+            # self.send_confirmation_email(booking)
             return self.response_builder([]).build()
 
         except BookingsApiException as e:

@@ -20,11 +20,6 @@ class PaymentGateway(ABC):
 
     @classmethod
     @abstractmethod
-    def register_event(cls, headers: dict, body: dict) -> dict:
-        pass
-
-    @classmethod
-    @abstractmethod
     def get_session_id_from_event(cls, event: dict) -> str:
         pass
 
@@ -43,7 +38,6 @@ class StripePaymentGateway(PaymentGateway):
         price: Decimal
     ) -> str:
         stripe.api_key = settings.STRIPE_SECRET_KEY
-        success_url = f'{settings.DOMAIN}/payment/success/'
         session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[
@@ -55,29 +49,13 @@ class StripePaymentGateway(PaymentGateway):
                     'quantity': 1,
                 }
             ],
-            success_url=success_url + '?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=f'{settings.DOMAIN}/payment/error/',
+            success_url=(
+                settings.PAYMENT_SUCCESS_URL
+                + '?session_id={CHECKOUT_SESSION_ID}'
+            ),
+            cancel_url=f'{settings.PAYMENT_ERROR_URL}/payment/error/',
         )
         return session.id
-
-    @classmethod
-    def register_event(cls, headers: dict, body: dict) -> dict:
-        try:
-            event = stripe.Webhook.construct_event(
-                body,
-                headers['HTTP_STRIPE_SIGNATURE'],
-                settings.STRIPE_ENDPOINT_SECRET,
-            )
-        except ValueError as e:
-            raise PaymentGatewayException(
-                f'There has been some error in the '
-                f'construction of the event: {e}'
-            )
-        except stripe.error.SignatureVerificationError as e:
-            raise PaymentGatewayException(
-                f'Signature verification has failed: {e}'
-            )
-        return event
 
     @classmethod
     def get_session_id_from_event(cls, event: dict) -> str:
