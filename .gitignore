@@ -43,10 +43,10 @@ init.sql/
 *.mo
 
 # Terraform
-environments/prod/infrastructure.tf
-environments/prod/.terraform/
-environments/prod/terraform.tfstate*
-environments/prod/.terraform.tfstate*
+prod/infrastructure.tf
+prod/.terraform/
+prod/terraform.tfstate*
+prod/.terraform.tfstate*
 
 # TODOs
 .todo

@@ -3,11 +3,10 @@ services:
 
   boatsandjoy-api:
     build:
-      context: ../..
-      dockerfile: environments/dev/Dockerfile
-    env_file: ../../.env
+      context: .
+    env_file: .env
     volumes:
-      - "../../:/code"
+      - ".:/code"
     depends_on:
       - db
     ports:
@@ -19,18 +18,11 @@ services:
 
   db:
     image: postgres:12
-    env_file: ../../.env
+    env_file: .env
     volumes:
-      - ~/Dropbox/projects/boatsandjoy:/data
       - boatsandjoy-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-
-  mailhog:
-    image: mailhog/mailhog
-    ports:
-      - "1025:1025" # SMTP server
-      - "8025:8025" # Web UI
 
   ngrok:
     image: wernight/ngrok

@@ -13,6 +13,4 @@ COPY requirements/dev.txt /code/requirements/
 
 RUN pip3 install --upgrade pip  && pip3 install -r /code/requirements/prod.txt && pip3 install -r /code/requirements/dev.txt
 
-COPY . /code/
-
 RUN groupadd nobody

@@ -124,7 +124,7 @@ class BookingsApi:
                 customer_email=customer_email
             )
             booking = self.bookings_repository.mark_as_paid(booking)
-            # self.send_confirmation_email(booking)
+            self.send_confirmation_email(booking)
             return self.response_builder([]).build()
 
         except BookingsApiException as e:

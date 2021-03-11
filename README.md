@@ -64,7 +64,7 @@ export HEROKU_API_KEY=<TOKEN> HEROKU_EMAIL=<EMAIL>
 ### 🏗️  Build environment
 
 ```bash
-cd environments/prod/
+cd prod/
 cp infrastructure.tfsample infrastructure.tf
 ```
 
