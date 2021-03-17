@@ -13,6 +13,7 @@ class Booking:
     status: str
     session_id: str
     boat_id: str
+    boat_name: str
     slot_ids: List[int]
     date: date
     checkin_hour: time

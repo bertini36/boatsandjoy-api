@@ -180,6 +180,7 @@ class DjangoBookingsRepository(BookingsRepository):
         booking: models.Booking
     ) -> domain.Booking:
         slots = booking.slots.order_by('position')
+        boat = slots.first().day.definition.boat
         return domain.Booking(
             id=booking.id,
             locator=booking.locator,
@@ -187,7 +188,8 @@ class DjangoBookingsRepository(BookingsRepository):
             price=booking.price,
             status=booking.status,
             session_id=booking.session_id,
-            boat_id=slots.first().day.definition.boat_id,
+            boat_id=boat.id,
+            boat_name=boat.name,
             slot_ids=list(slots.values_list('id', flat=True)),
             date=slots.first().day.date,
             checkin_hour=slots.first().from_hour,
