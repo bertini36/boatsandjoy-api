@@ -50,7 +50,7 @@ class StripePaymentGateway(PaymentGateway):
                 }
             ],
             success_url=(
-                settings.PAYMENT_SUCCESS_URL
+                settings.STRIPE_REDIRECT_URL
                 + '?session_id={CHECKOUT_SESSION_ID}'
             ),
             cancel_url=f'{settings.PAYMENT_ERROR_URL}/payment/error/',

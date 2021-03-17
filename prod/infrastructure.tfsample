@@ -19,8 +19,7 @@ resource "heroku_app" "default" {
     STRIPE_API_KEY = ""
     STRIPE_SECRET_KEY = ""
     STRIPE_ENDPOINT_SECRET = ""
-    PAYMENT_SUCCESS_URL = ""
-    PAYMENT_ERROR_URL = ""
+    STRIPE_REDIRECT_URL = ""
   }
 
   buildpacks = [

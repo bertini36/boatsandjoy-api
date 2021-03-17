@@ -189,10 +189,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-# Payment redirection urls
-PAYMENT_SUCCESS_URL = env('PAYMENT_SUCCESS_URL', default='')
-PAYMENT_ERROR_URL = env('PAYMENT_ERROR_URL', default='')
-
 # THIRD PARTY APPLICATIONS
 # ******************************************************************************
 
@@ -207,6 +203,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 STRIPE_API_KEY = env('STRIPE_API_KEY', default='')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY', default='')
 STRIPE_ENDPOINT_SECRET = env('STRIPE_ENDPOINT_SECRET', default='')
+STRIPE_REDIRECT_URL = env('STRIPE_REDIRECT_URL', default='')
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
