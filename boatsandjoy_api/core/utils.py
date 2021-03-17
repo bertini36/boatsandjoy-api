@@ -24,7 +24,11 @@ class MultipleIntField(forms.TypedMultipleChoiceField):
 
 
 def send_email(
-    subject: str, to_email: str, from_email: str, template: str, **kwargs
+    subject: str,
+    to_email: str,
+    from_email: str,
+    template: str,
+    **kwargs
 ):
     msg = EmailMultiAlternatives(
         subject=subject,

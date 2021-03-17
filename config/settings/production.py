@@ -14,13 +14,6 @@ django_heroku.settings(locals())
 # ------------------------------------------------------------------------------
 ALLOWED_HOSTS = ('boatsandjoy_api.herokuapp.com',)
 
-# EMAIL CONFIGURATION
-# ------------------------------------------------------------------------------
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-
 # TEMPLATE CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader
 # ------------------------------------------------------------------------------
