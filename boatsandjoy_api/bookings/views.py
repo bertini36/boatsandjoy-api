@@ -10,6 +10,7 @@ from boatsandjoy_api.bookings.requests import (
     GetBookingRequest,
     MarkBookingAsErrorRequest,
     RegisterBookingEventRequest,
+    GetBookingBySessionRequest,
 )
 
 
@@ -70,4 +71,12 @@ def mark_booking_as_error(request: Request) -> Response:
     if session_id:
         api_request = MarkBookingAsErrorRequest(session_id=session_id)
         results = bookings_api.mark_as_error(api_request)
+    return Response(results)
+
+
+@api_view(['GET'])
+def get_booking_by_session(request: Request) -> Response:
+    session_id = request.GET.get('session_id')
+    api_request = GetBookingBySessionRequest(session_id=session_id)
+    results = bookings_api.get_booking_by_session(api_request)
     return Response(results)

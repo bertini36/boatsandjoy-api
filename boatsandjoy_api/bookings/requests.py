@@ -27,3 +27,8 @@ class MarkBookingAsErrorRequest:
 class RegisterBookingEventRequest:
     headers: dict
     body: dict
+
+
+@dataclass
+class GetBookingBySessionRequest:
+    session_id: str

@@ -20,11 +20,13 @@ from .requests import (
     GetBookingRequest,
     MarkBookingAsErrorRequest,
     RegisterBookingEventRequest,
+    GetBookingBySessionRequest,
 )
 from .validators import (
     BookingCreationRequestValidator,
     GetBookingRequestValidator,
     IdentifyBookingBySessionRequestValidator,
+    GetBookingBySessionRequestValidator,
 )
 from ..boats.requests import FilterBoatsRequest
 
@@ -101,7 +103,7 @@ class BookingsApi:
 
     def mark_as_error(self, request: MarkBookingAsErrorRequest):
         try:
-            IdentifyBookingBySessionRequestValidator.validate(request)
+            GetBookingBySessionRequestValidator.validate(request)
             booking = self.bookings_repository.get(**asdict(request))
             if booking.status != BookingStatus.CONFIRMED:
                 self._send_payment_error_notification_email(booking)
@@ -126,6 +128,16 @@ class BookingsApi:
             booking = self.bookings_repository.mark_as_paid(booking)
             self.send_confirmation_email(booking)
             return self.response_builder([]).build()
+
+        except BookingsApiException as e:
+            return self.error_builder(e).build()
+
+    def get_booking_by_session(self, request: GetBookingBySessionRequest):
+        try:
+            IdentifyBookingBySessionRequestValidator.validate(request)
+            request_dict = asdict(request)
+            booking = self.bookings_repository.get(**request_dict)
+            return self.response_builder(booking).build()
 
         except BookingsApiException as e:
             return self.error_builder(e).build()

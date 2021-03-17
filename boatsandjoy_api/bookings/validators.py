@@ -30,3 +30,9 @@ class DjangoIdentifyBookingBySessionForm(forms.Form):
 
 class IdentifyBookingBySessionRequestValidator(DjangoRequestValidator):
     FORM = DjangoIdentifyBookingBySessionForm
+
+
+class GetBookingBySessionRequestValidator(
+    IdentifyBookingBySessionRequestValidator
+):
+    pass

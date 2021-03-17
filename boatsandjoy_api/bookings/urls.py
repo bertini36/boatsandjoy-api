@@ -5,6 +5,7 @@ from .views import (
     generate_payment,
     mark_booking_as_error,
     register_booking_event,
+    get_booking_by_session,
 )
 
 app_name = 'bookings'
@@ -22,4 +23,9 @@ urlpatterns = [
         mark_booking_as_error,
         name='mark-booking-as-error'
     ),
+    path(
+        r'get/booking/by/session/',
+        get_booking_by_session,
+        name='get-booking-by-session'
+    )
 ]
