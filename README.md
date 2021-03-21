@@ -1,5 +1,5 @@
 ![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)
-[![Requirements Status](https://requires.io/github/bertini36/boatsandjoy/requirements.svg?branch=v2)](https://requires.io/github/bertini36/boatsandjoy/requirements/?branch=v2)
+[![Requirements Status](https://requires.io/github/bertini36/boatsandjoy-api/requirements.svg?branch=master)](https://requires.io/github/bertini36/boatsandjoy-api/requirements/?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 <h3 align="center">
@@ -9,7 +9,7 @@
   <a href="#-environment-setup" target="_blank">
     Installation
   </a>&nbsp;&nbsp;•&nbsp;
-  <a href="https://github.com/bertini36/boatsandjoy/blob/v2/Makefile" target="_blank">
+  <a href="https://github.com/bertini36/boatsandjoy-api/blob/master/Makefile" target="_blank">
     Commands
   </a>
 </p>
@@ -26,8 +26,9 @@ Powered by <a href="https://www.djangoproject.com//" target="_blank">#django</a>
 ### 🐳 Required tools
 
 1. [Install Docker and Docker Compose](https://www.docker.com/get-started)
-2. Clone this project: `git clone https://github.com/bertini36/boatsandjoy`
-3. Move to the project folder: `boatsandjoy`
+2. Clone this project: `git clone https://github.com/bertini36/boatsandjoy-api`
+3. Move to the project folder: `boatsandjoy-api`
+4. Configure some environment variables: `cp .env-sample .env`
 
 ### 🔥 Application execution
 
@@ -35,7 +36,6 @@ Powered by <a href="https://www.djangoproject.com//" target="_blank">#django</a>
 2. Create the database: `make migrate`
 3. Create a super user: `make createsuperuser`
 4. Run the server: `make up` (by default Django runs applications at 80 port)
-5. You can configure some environment variables: `cp .env-sample .env`
 
 ## 🚀 Deploy
 
@@ -56,7 +56,7 @@ and follow the instructions to install its client from:
 ### 🔓 Configure access to Heroku
 
 ```bash
-export APP_NAME=boatsandjoy
+export APP_NAME=boatsandjoy-api
 heroku authorizations:create --description $APP_NAME
 export HEROKU_API_KEY=<TOKEN> HEROKU_EMAIL=<EMAIL>
 ```
@@ -77,7 +77,7 @@ terraform apply
 
 If the infrascture has been created correctly in Heroku you will have received project url as output
 ```
-boatsandjoy_url = https://boatsandjoy.herokuapp.com
+boatsandjoy_api_url = https://boatsandjoy-api.herokuapp.com
 ```
 
 <p align="center">&mdash; Built with :heart: from Mallorca &mdash;</p>

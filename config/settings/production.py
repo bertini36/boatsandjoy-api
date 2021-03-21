@@ -9,6 +9,14 @@ from .base import *
 # ------------------------------------------------------------------------------
 django_heroku.settings(locals())
 
+# APP CONFIGURATION
+# ******************************************************************************
+
+# DEBUG
+# https://docs.djangoproject.com/en/dev/ref/settings/#debug
+# ------------------------------------------------------------------------------
+DEBUG = False
+
 # SITE CONFIGURATION
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 # ------------------------------------------------------------------------------

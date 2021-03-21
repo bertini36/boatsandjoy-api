@@ -6,10 +6,10 @@ from .base import *
 # APP CONFIGURATION
 # ******************************************************************************
 
-# EMAIL CONFIGURATION
+# DEBUG
+# https://docs.djangoproject.com/en/dev/ref/settings/#debug
 # ------------------------------------------------------------------------------
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
+DEBUG = True
 
 # TEMPLATES
 # ------------------------------------------------------------------------------

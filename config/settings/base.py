@@ -24,12 +24,15 @@ environ.Env.read_env('.env')
 # DEBUG
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 # ------------------------------------------------------------------------------
-DEBUG = env.bool('DJANGO_DEBUG', False)
+DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
 # SECRET CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # ------------------------------------------------------------------------------
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = env(
+    'DJANGO_SECRET_KEY',
+    default='6rj+%+m3!+_apkegua$pbetc9g6+d@$1yi(vvzldgn5i)949cm'
+)
 
 INSTALLED_APPS = [
     # Default Django apps
@@ -59,10 +62,10 @@ INSTALLED_APPS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB', default=''),
-        'USER': env('POSTGRES_USER', default=''),
-        'PASSWORD': env('POSTGRES_PASSWORD', default=''),
-        'HOST': env('POSTGRES_HOST', default='localhost'),
+        'NAME': env('POSTGRES_DB', default='boatsandjoydb'),
+        'USER': env('POSTGRES_USER', default='postgres'),
+        'PASSWORD': env('POSTGRES_PASSWORD', default='postgres'),
+        'HOST': env('POSTGRES_HOST', default='db'),
         'PORT': env('POSTGRES_PORT', default='5432'),
         'CONN_MAX_AGE': env.int('DATABASE_CONN_MAX_AGE', default=300),
     }
@@ -202,7 +205,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 # ------------------------------------------------------------------------------
 STRIPE_API_KEY = env('STRIPE_API_KEY', default='')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY', default='')
-STRIPE_ENDPOINT_SECRET = env('STRIPE_ENDPOINT_SECRET', default='')
 STRIPE_REDIRECT_URL = env('STRIPE_REDIRECT_URL', default='')
 
 # EMAIL CONFIGURATION
