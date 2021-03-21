@@ -1,4 +1,4 @@
-from calendar import monthlen
+from calendar import Calendar
 from datetime import date, timedelta
 
 from .domain import DateRange
@@ -18,5 +18,5 @@ def date_ranges_collision(date_range_1: DateRange, date_range_2: DateRange):
 
 
 def month_date_iter(year, month):
-    for i in range(1, monthlen(year, month) + 1):
-        yield date(year, month, i)
+    calendar = Calendar()
+    return [d for d in calendar.itermonthdates(year, month) if d.month == month]
