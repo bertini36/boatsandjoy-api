@@ -4,8 +4,6 @@ from decimal import Decimal
 import stripe
 from django.conf import settings
 
-from .exceptions import PaymentGatewayException
-
 
 class PaymentGateway(ABC):
     @classmethod

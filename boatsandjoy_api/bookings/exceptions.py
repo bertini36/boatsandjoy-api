@@ -17,10 +17,6 @@ class BookingNotFound(BookingsApiException):
     pass
 
 
-class PaymentGatewayException(BookingsApiException):
-    pass
-
-
 class BookingAlreadyConfirmed(BookingsApiException):
     pass
 
