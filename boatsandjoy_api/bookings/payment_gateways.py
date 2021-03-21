@@ -53,7 +53,7 @@ class StripePaymentGateway(PaymentGateway):
                 settings.STRIPE_REDIRECT_URL
                 + '?session_id={CHECKOUT_SESSION_ID}'
             ),
-            cancel_url=f'{settings.PAYMENT_ERROR_URL}/payment/error/',
+            cancel_url=settings.STRIPE_REDIRECT_URL,
         )
         return session.id
 
