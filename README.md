@@ -78,5 +78,10 @@ If the infrascture has been created correctly in Heroku you will have received p
 boatsandjoy_api_url = https://boatsandjoy-api.herokuapp.com
 ```
 
+Create a superuser to access `admin/`
+```bash
+heroku run -a boatsandjoy-api "python manage.py createsuperuser"
+```
+
 <p align="center">&mdash; Built with :heart: from Mallorca &mdash;</p>
 
