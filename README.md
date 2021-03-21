@@ -56,9 +56,7 @@ and follow the instructions to install its client from:
 ### 🔓 Configure access to Heroku
 
 ```bash
-export APP_NAME=boatsandjoy-api
-heroku authorizations:create --description $APP_NAME
-export HEROKU_API_KEY=<TOKEN> HEROKU_EMAIL=<EMAIL>
+heroku login
 ```
 
 ### 🏗️  Build environment
