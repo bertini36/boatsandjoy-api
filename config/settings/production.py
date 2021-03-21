@@ -20,7 +20,7 @@ DEBUG = False
 # SITE CONFIGURATION
 # https://docs.djangoproject.com/en/1.6/ref/settings/#allowed-hosts
 # ------------------------------------------------------------------------------
-ALLOWED_HOSTS = ('boatsandjoy_api.herokuapp.com',)
+ALLOWED_HOSTS = ('boatsandjoy-api.herokuapp.com',)
 
 # TEMPLATE CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/templates/api/#django.template.loaders.cached.Loader

@@ -49,6 +49,6 @@ resource "heroku_formation" "default" {
   depends_on = [heroku_build.default]
 }
 
-output "blog_url" {
+output "boatsandjoy_api_url" {
   value = "https://${heroku_app.default.name}.herokuapp.com"
 }
