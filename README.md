@@ -1,4 +1,4 @@
-![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge)
+[![Heroku](http://heroku-badges.herokuapp.com/?app=heroku-badges)](http://heroku-badges.herokuapp.com/projects.html)
 [![Requirements Status](https://requires.io/github/bertini36/boatsandjoy-api/requirements.svg?branch=master)](https://requires.io/github/bertini36/boatsandjoy-api/requirements/?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
