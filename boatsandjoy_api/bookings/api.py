@@ -127,6 +127,7 @@ class BookingsApi:
             )
             booking = self.bookings_repository.mark_as_paid(booking)
             self.send_confirmation_email(booking)
+            self._send_payment_success_notification_email(booking)
             return self.response_builder([]).build()
 
         except BookingsApiException as e:
@@ -163,7 +164,7 @@ class BookingsApi:
         """
         send_email(
             subject=f'Booking {booking.locator} payment success',
-            to_email=settings.EMAIL_HOST_USER,
+            to_email=settings.DEFAULT_FROM_EMAIL,
             template='emails/payment_success_notification.html',
             booking=booking,
         )
@@ -175,7 +176,7 @@ class BookingsApi:
         """
         send_email(
             subject=f'Booking {booking.locator} payment error',
-            to_email=settings.EMAIL_HOST_USER,
+            to_email=settings.DEFAULT_FROM_EMAIL,
             template='emails/payment_error_notification.html',
             booking=booking,
         )
