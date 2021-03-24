@@ -127,7 +127,7 @@ class BookingsApi:
             )
             booking = self.bookings_repository.mark_as_paid(booking)
             self.send_confirmation_email(booking)
-            self._send_payment_success_notification_email(booking)
+            self._send_new_booking_notification_email(booking)
             return self.response_builder([]).build()
 
         except BookingsApiException as e:
@@ -149,7 +149,7 @@ class BookingsApi:
             api_request = FilterBoatsRequest(obj_id=booking.boat_id)
             results = boats_api.get(api_request)
             send_email(
-                subject='B&J: Booking confirmation',
+                subject='Boats & Joy: Booking confirmation',
                 to_email=booking.customer_email,
                 template='emails/confirmation.html',
                 booking=booking,
@@ -158,14 +158,14 @@ class BookingsApi:
             )
 
     @staticmethod
-    def _send_payment_success_notification_email(booking: Booking):
+    def _send_new_booking_notification_email(booking: Booking):
         """
         Email sent just for company information
         """
         send_email(
-            subject=f'Booking {booking.locator} payment success',
+            subject=f'New booking ({booking.locator})',
             to_email=settings.DEFAULT_FROM_EMAIL,
-            template='emails/payment_success_notification.html',
+            template='emails/new_booking.html',
             booking=booking,
         )
 
