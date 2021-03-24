@@ -150,7 +150,6 @@ class BookingsApi:
             send_email(
                 subject='B&J: Booking confirmation',
                 to_email=booking.customer_email,
-                from_email=settings.EMAIL_HOST_USER,
                 template='emails/confirmation.html',
                 booking=booking,
                 boat=results['data'],
@@ -162,28 +161,24 @@ class BookingsApi:
         """
         Email sent just for company information
         """
-        if settings.EMAIL_HOST != 'localhost':  # Temporal
-            send_email(
-                subject=f'Booking {booking.locator} payment success',
-                to_email=settings.EMAIL_HOST_USER,
-                from_email=settings.EMAIL_HOST_USER,
-                template='emails/payment_success_notification.html',
-                booking=booking,
-            )
+        send_email(
+            subject=f'Booking {booking.locator} payment success',
+            to_email=settings.EMAIL_HOST_USER,
+            template='emails/payment_success_notification.html',
+            booking=booking,
+        )
 
     @staticmethod
     def _send_payment_error_notification_email(booking: Booking):
         """
         Email sent just for company information
         """
-        if settings.EMAIL_HOST != 'localhost':  # Temporal
-            send_email(
-                subject=f'Booking {booking.locator} payment error',
-                to_email=settings.EMAIL_HOST_USER,
-                from_email=settings.EMAIL_HOST_USER,
-                template='emails/payment_error_notification.html',
-                booking=booking,
-            )
+        send_email(
+            subject=f'Booking {booking.locator} payment error',
+            to_email=settings.EMAIL_HOST_USER,
+            template='emails/payment_error_notification.html',
+            booking=booking,
+        )
 
 
 api = BookingsApi(

@@ -209,6 +209,7 @@ STRIPE_REDIRECT_URL = env('STRIPE_REDIRECT_URL', default='')
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='')
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY', default='')
