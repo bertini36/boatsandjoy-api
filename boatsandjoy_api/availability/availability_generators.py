@@ -3,7 +3,7 @@ from datetime import date
 from typing import List
 
 from boatsandjoy_api.boats.domain import Boat
-from .exceptions import AvailabilityAlreadyCreated, NoDayDefinitionDefined
+from .exceptions import NoDayDefinitionDefined
 from .repository import DjangoAvailabilityRepository
 
 
@@ -31,10 +31,6 @@ class AvailabilityGenerator(AvailabilityGeneratorInterface):
             )
 
     def generate(self, year: int = date.today().year) -> List[dict]:
-        if self._exists_availability_for(year):
-            raise AvailabilityAlreadyCreated(
-                f'Availabilty already exists for year {year}'
-            )
         start_date = date(year, 1, 1)
         end_date = date(year, 12, 31)
         days = DjangoAvailabilityRepository.create_days(
