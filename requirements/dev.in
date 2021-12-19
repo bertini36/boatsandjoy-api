@@ -1,4 +1,4 @@
--r base.in
+-r base.txt
 
 pip-tools
 git+git://github.com/psf/black

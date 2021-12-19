@@ -1,1 +1,4 @@
--r base.in
+-r base.txt
+
+gunicorn
+sentry-sdk

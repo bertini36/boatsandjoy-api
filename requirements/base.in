@@ -3,11 +3,9 @@ django-environ
 psycopg2
 Pillow
 django-health-check
-gunicorn
 django-heroku
 stripe
 python-dateutil
-sentry-sdk
 djangorestframework
 markdown
 django-cors-headers

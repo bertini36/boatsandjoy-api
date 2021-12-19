@@ -1,6 +1,3 @@
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
-
 from .base import *
 
 # APP CONFIGURATION
@@ -63,12 +60,3 @@ INTERNAL_IPS = [
 # https://github.com/django-extensions/django-extensions
 # ------------------------------------------------------------------------------
 INSTALLED_APPS += ('django_extensions',)
-
-# SENTRY
-# https://docs.sentry.io/platforms/python/django
-sentry_sdk.init(
-    dsn=env('SENTRY_DSN'),
-    integrations=[DjangoIntegration()],
-    environment='pre',
-    send_default_pii=True,
-)
