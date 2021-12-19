@@ -14,7 +14,7 @@
   </a>
 </p>
 <p align="center">
-A simple availability engine to rent boats in Mallorca
+A simple availability engine to <a href="https://www.boatsandjoy.com/">rent boats in Mallorca</a>
 </p>
 <p align="center">
 Powered by <a href="https://www.djangoproject.com//" target="_blank">#django</a> and
