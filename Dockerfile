@@ -5,7 +5,7 @@ ARG REQUIREMENTS
 WORKDIR /code/
 
 RUN apt update \
- && apt install -y libjpeg-dev libgraphviz-dev libpq-dev build-essential \
+ && apt install -y libjpeg-dev libgraphviz-dev libpq-dev build-essential wait-for-it \
  && apt install -y libxmlsec1-dev pkg-config graphviz graphicsmagick python-dev gettext
 
 COPY requirements/prod.txt /code/requirements/

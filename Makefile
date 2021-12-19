@@ -37,7 +37,7 @@ logs: ## 📋 show container logs
 
 update-deps: ## 📥 Update requirements files with last packages versions
 	@echo "📥 Updating dependencies"
-	@docker-compose run --rm --entrypoint sh boatsandjoy-api -c "pip-compile /code/requirements/dev.in && pip-compile /code/requirements/prod.in"
+	@docker-compose run --rm --entrypoint sh boatsandjoy-api -c "pip-compile /code/requirements/base.in && pip-compile /code/requirements/dev.in && pip-compile /code/requirements/prod.in"
 
 lint: ## 🔦 Lint code
 	@echo "🔦 Linting code"

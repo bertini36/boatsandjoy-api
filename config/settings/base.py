@@ -70,6 +70,7 @@ DATABASES = {
         'CONN_MAX_AGE': env.int('DATABASE_CONN_MAX_AGE', default=300),
     }
 }
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # ADMIN CONFIGURATION
 # ------------------------------------------------------------------------------
