@@ -1,9 +1,13 @@
 from dataclasses import asdict
+from datetime import date
 from typing import Type
 
 from django.conf import settings
+from decimal import Decimal
+from django.db.models import F
 
 from boatsandjoy_api.boats.api import api as boats_api
+from boatsandjoy_api.bookings.models import Promocode
 from boatsandjoy_api.core.responses import (
     ErrorResponseBuilder,
     ResponseBuilder,
@@ -16,17 +20,15 @@ from .exceptions import BookingsApiException
 from .payment_gateways import PaymentGateway, StripePaymentGateway
 from .repository import BookingsRepository, DjangoBookingsRepository
 from .requests import (
-    CreateBookingRequest,
-    GetBookingRequest,
-    MarkBookingAsErrorRequest,
+    CreateBookingRequest, GetBookingBySessionRequest,
+    GetBookingRequest, MarkBookingAsErrorRequest,
     RegisterBookingEventRequest,
-    GetBookingBySessionRequest,
 )
 from .validators import (
     BookingCreationRequestValidator,
+    GetBookingBySessionRequestValidator,
     GetBookingRequestValidator,
     IdentifyBookingBySessionRequestValidator,
-    GetBookingBySessionRequestValidator,
 )
 from ..boats.requests import FilterBoatsRequest
 
@@ -59,9 +61,16 @@ class BookingsApi:
         """
         try:
             BookingCreationRequestValidator.validate(request)
+
+            price = request.price
+            if request.promocode:
+                price = self._apply_promocode_if_possible(
+                    price, request.promocode
+                )
+
             purchase_details = self.bookings_repository.get_purchase_details(
                 slot_ids=request.slot_ids,
-                price=request.price
+                price=price,
             )
             session_id = self.payment_gateway.generate_checkout_session_id(
                 **purchase_details
@@ -74,6 +83,21 @@ class BookingsApi:
 
         except BookingsApiException as e:
             return self.error_builder(e).build()
+
+    @staticmethod
+    def _apply_promocode_if_possible(price: Decimal, promocode: str) -> Decimal:
+        today = date.today()
+        promocode = Promocode.objects.filter(
+            name=promocode,
+            valid_from__lte=today,
+            valid_to__gte=today,
+            limit_of_uses__gt=F('used_times'),
+        )
+        if promocode.exists():
+            promocode = promocode.first()
+            price = price - (price * promocode.factor)
+
+        return price
 
     def get(self, request: GetBookingRequest):
         try:
