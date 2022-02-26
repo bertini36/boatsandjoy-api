@@ -63,11 +63,11 @@ class BookingsApi:
             BookingCreationRequestValidator.validate(request)
 
             price = request.price
-            if request.promocode:
-                price = self._apply_promocode_if_possible(
-                    price, request.promocode
-                )
-
+            price = self._apply_discounts(
+                price,
+                request.is_resident,
+                request.promocode
+            )
             purchase_details = self.bookings_repository.get_purchase_details(
                 slot_ids=request.slot_ids,
                 price=price,
@@ -85,18 +85,28 @@ class BookingsApi:
             return self.error_builder(e).build()
 
     @staticmethod
-    def _apply_promocode_if_possible(price: Decimal, promocode: str) -> Decimal:
+    def _apply_discounts(
+        price: Decimal,
+        is_resident: bool,
+        promocode: str
+    ) -> Decimal:
+        discount = Decimal(0)
+        if is_resident:
+            discount += settings.RESIDENT_DISCOUNT
+
         today = date.today()
         try:
-            promocode = Promocode.objects.filter(
+            promocode = Promocode.objects.get(
                 name=promocode,
                 valid_from__lte=today,
                 valid_to__gte=today,
                 number_of_uses__lt=F('limit_of_uses'),
             )
-            return price - (price * promocode.factor)
+            discount += promocode.factor
         except Promocode.DoesNotExist:
-            return price
+            pass
+
+        return price - (price * discount)
 
     def get(self, request: GetBookingRequest):
         try:

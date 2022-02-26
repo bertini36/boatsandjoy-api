@@ -1,5 +1,6 @@
 from datetime import time
 
+from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
@@ -61,7 +62,7 @@ class DayDefinition(BaseModel):
         ),
     )
     resident_discount = models.FloatField(
-        default=0.25,
+        default=settings.RESIDENT_DISCOUNT,
         help_text='Discount applicable to Balearic islands residents',
     )
 

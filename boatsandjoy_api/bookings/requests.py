@@ -10,6 +10,7 @@ class CreateBookingRequest:
     customer_name: str
     customer_telephone_number: str
     extras: str
+    is_resident: bool
     promocode: Optional[str] = None
 
 

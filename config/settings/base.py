@@ -216,3 +216,8 @@ EMAIL_HOST_USER = 'apikey'
 EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY', default='')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+
+# OTHERS
+# ******************************************************************************
+RESIDENT_DISCOUNT = 0.15
