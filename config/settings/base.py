@@ -220,4 +220,4 @@ EMAIL_USE_TLS = True
 
 # OTHERS
 # ******************************************************************************
-RESIDENT_DISCOUNT = 0.15
+RESIDENT_DISCOUNT = 0.25

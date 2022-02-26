@@ -45,7 +45,7 @@ def create_booking(request: Request) -> Response:
     """
     data = json.loads(request.body)
     api_request = CreateBookingRequest(
-        price=data['price'],
+        base_price=data['base_price'],
         slot_ids=[int(slot_id) for slot_id in data['slot_ids'].split(',')],
         customer_name=data['customer_name'],
         customer_telephone_number=data['customer_telephone_number'],

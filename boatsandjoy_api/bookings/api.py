@@ -62,7 +62,7 @@ class BookingsApi:
         try:
             BookingCreationRequestValidator.validate(request)
 
-            price = request.price
+            price = request.base_price
             price = self._apply_discounts(
                 price,
                 request.is_resident,
@@ -92,7 +92,7 @@ class BookingsApi:
     ) -> Decimal:
         discount = Decimal(0)
         if is_resident:
-            discount += settings.RESIDENT_DISCOUNT
+            discount += Decimal(settings.RESIDENT_DISCOUNT)
 
         today = date.today()
         try:
@@ -102,7 +102,7 @@ class BookingsApi:
                 valid_to__gte=today,
                 number_of_uses__lt=F('limit_of_uses'),
             )
-            discount += promocode.factor
+            discount += Decimal(promocode.factor)
         except Promocode.DoesNotExist:
             pass
 
