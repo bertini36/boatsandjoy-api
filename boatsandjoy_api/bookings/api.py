@@ -87,17 +87,16 @@ class BookingsApi:
     @staticmethod
     def _apply_promocode_if_possible(price: Decimal, promocode: str) -> Decimal:
         today = date.today()
-        promocode = Promocode.objects.filter(
-            name=promocode,
-            valid_from__lte=today,
-            valid_to__gte=today,
-            limit_of_uses__gt=F('used_times'),
-        )
-        if promocode.exists():
-            promocode = promocode.first()
-            price = price - (price * promocode.factor)
-
-        return price
+        try:
+            promocode = Promocode.objects.filter(
+                name=promocode,
+                valid_from__lte=today,
+                valid_to__gte=today,
+                number_of_uses__lt=F('limit_of_uses'),
+            )
+            return price - (price * promocode.factor)
+        except Promocode.DoesNotExist:
+            return price
 
     def get(self, request: GetBookingRequest):
         try:

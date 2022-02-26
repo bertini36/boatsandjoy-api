@@ -1,16 +1,19 @@
 import json
+from datetime import date
 
+from django.db.models import F
 from rest_framework.decorators import api_view
 from rest_framework.request import Request
 from rest_framework.response import Response
 
 from boatsandjoy_api.bookings.api import api as bookings_api
+from boatsandjoy_api.bookings.models import Promocode
 from boatsandjoy_api.bookings.requests import (
     CreateBookingRequest,
+    GetBookingBySessionRequest,
     GetBookingRequest,
     MarkBookingAsErrorRequest,
     RegisterBookingEventRequest,
-    GetBookingBySessionRequest,
 )
 
 
@@ -81,3 +84,19 @@ def get_booking_by_session(request: Request) -> Response:
     api_request = GetBookingBySessionRequest(session_id=session_id)
     results = bookings_api.get_booking_by_session(api_request)
     return Response(results)
+
+
+@api_view(['GET'])
+def validate_promocode(request: Request) -> Response:
+    promocode = request.GET.get('promocode')
+    today = date.today()
+    try:
+        promocode = Promocode.objects.get(
+            name=promocode,
+            valid_from__lte=today,
+            valid_to__gte=today,
+            number_of_uses__lt=F('limit_of_uses'),
+        )
+        return Response({'valid': True, 'factor': promocode.factor})
+    except Promocode.DoesNotExist:
+        return Response({'valid': False})

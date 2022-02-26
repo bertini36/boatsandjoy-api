@@ -6,6 +6,7 @@ from .views import (
     mark_booking_as_error,
     register_booking_event,
     get_booking_by_session,
+    validate_promocode,
 )
 
 app_name = 'bookings'
@@ -27,5 +28,10 @@ urlpatterns = [
         r'get/booking/by/session/',
         get_booking_by_session,
         name='get-booking-by-session'
+    ),
+    path(
+        f'validate/promocode/',
+        validate_promocode,
+        name='validate-promocode'
     )
 ]
