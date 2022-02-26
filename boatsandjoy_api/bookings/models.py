@@ -33,3 +33,26 @@ class Booking(BaseModel):
     class Meta:
         verbose_name = 'booking'
         verbose_name_plural = 'bookings'
+
+
+class Promocode(BaseModel):
+    name = models.CharField(max_length=100)
+    valid_from = models.DateField(blank=False)
+    valid_to = models.DateField(blank=False)
+    factor = models.FloatField(
+        blank=False,
+        help_text=(
+            'You can use it to define discounts with numbers less than '
+            '0 Ex: if you need a 20% discount you have to specify 0.8, if you '
+            'need to increase price a 50%, you have to specify 1.5 value'
+        ),
+    )
+    limit_of_uses = models.IntegerField(default=10)
+    number_of_uses = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f"Promocode [{self.name}]"
+
+    class Meta:
+        verbose_name = 'promocode'
+        verbose_name_plural = 'promocodes'

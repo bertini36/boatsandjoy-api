@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
 from .constants import BookingStatus
 from .exceptions import BookingAlreadyConfirmed, BookingAlreadyPending
-from .models import Booking
+from .models import Booking, Promocode
 
 
 def confirm_booking(modeladmin, request: HttpRequest, queryset: QuerySet):
@@ -89,3 +89,17 @@ class BookingAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Booking, BookingAdmin)
+
+
+class PromocodeAdmin(admin.ModelAdmin):
+    list_filter = ('name', 'valid_from', 'valid_to')
+    search_fields = ('name',)
+    list_display = (
+        'name',
+        'valid_from',
+        'valid_to',
+        'factor',
+    )
+
+
+admin.site.register(Promocode, PromocodeAdmin)
