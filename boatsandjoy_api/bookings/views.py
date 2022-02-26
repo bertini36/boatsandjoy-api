@@ -47,6 +47,7 @@ def create_booking(request: Request) -> Response:
         customer_name=data['customer_name'],
         customer_telephone_number=data['customer_telephone_number'],
         extras=data['extras'],
+        promocode=data.get('promocode'),
     )
     results = bookings_api.create(api_request)
     return Response(results)

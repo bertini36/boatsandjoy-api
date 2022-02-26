@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import List
+from typing import List, Optional
 
 
 @dataclass
@@ -10,6 +10,7 @@ class CreateBookingRequest:
     customer_name: str
     customer_telephone_number: str
     extras: str
+    promocode: Optional[str] = None
 
 
 @dataclass

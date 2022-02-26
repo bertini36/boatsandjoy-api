@@ -1,3 +1,4 @@
+from django.core.validators import validate_slug
 from django.db import models
 
 from boatsandjoy_api.core.models import BaseModel
@@ -36,7 +37,7 @@ class Booking(BaseModel):
 
 
 class Promocode(BaseModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20, validators=[validate_slug])
     valid_from = models.DateField(blank=False)
     valid_to = models.DateField(blank=False)
     factor = models.FloatField(

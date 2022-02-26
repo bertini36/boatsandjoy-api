@@ -99,6 +99,8 @@ class PromocodeAdmin(admin.ModelAdmin):
         'valid_from',
         'valid_to',
         'factor',
+        'number_of_uses',
+        'limit_of_uses',
     )
 
 
