@@ -81,8 +81,11 @@ class BookingsApi:
             session_id = self.payment_gateway.generate_checkout_session_id(
                 **purchase_details
             )
+            data = asdict(request)
+            del data['base_price']
+            data['price'] = price
             booking = self.bookings_repository.create(
-                **asdict(request),
+                **data,
                 session_id=session_id
             )
             return self.response_builder(booking).build()
