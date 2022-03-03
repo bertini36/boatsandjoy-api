@@ -82,7 +82,7 @@ class BookingsApi:
                 **purchase_details
             )
             data = asdict(request)
-            del data['base_price']
+            data.pop('base_price')
             data['price'] = price
             booking = self.bookings_repository.create(
                 **data,
