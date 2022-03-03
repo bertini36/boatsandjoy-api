@@ -201,6 +201,7 @@ class DjangoBookingsRepository(BookingsRepository):
             customer_name=booking.customer_name,
             customer_telephone_number=booking.customer_telephone_number,
             extras=booking.extras,
+            promocode=booking.promocode,
         )
 
     @staticmethod

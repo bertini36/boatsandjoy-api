@@ -22,3 +22,4 @@ class Booking:
     customer_telephone_number: str
     customer_email: str = None
     extras: str = None
+    promocode: str = None

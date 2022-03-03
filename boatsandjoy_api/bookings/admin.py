@@ -56,6 +56,7 @@ class BookingAdmin(admin.ModelAdmin):
         'customer_name',
         'customer_email',
         'get_payment_url',
+        'promocode',
     )
     actions = [confirm_booking, unconfirm_booking]
 
@@ -92,12 +93,14 @@ admin.site.register(Booking, BookingAdmin)
 
 
 class PromocodeAdmin(admin.ModelAdmin):
-    list_filter = ('name', 'valid_from', 'valid_to')
+    list_filter = ('name', 'use_from', 'use_to', 'booking_from', 'booking_to')
     search_fields = ('name',)
     list_display = (
         'name',
-        'valid_from',
-        'valid_to',
+        'use_from',
+        'use_to',
+        'booking_from',
+        'booking_to',
         'factor',
         'number_of_uses',
         'limit_of_uses',

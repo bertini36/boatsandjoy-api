@@ -90,12 +90,17 @@ def get_booking_by_session(request: Request) -> Response:
 @api_view(['GET'])
 def validate_promocode(request: Request) -> Response:
     promocode = request.GET.get('promocode')
-    today = date.today()
+    use_day = date.today()
+    booking_day = date(
+        *[int(number) for number in request.GET.get('booking_day').split("-")]
+    )
     try:
         promocode = Promocode.objects.get(
             name=promocode,
-            valid_from__lte=today,
-            valid_to__gte=today,
+            use_from__lte=use_day,
+            use_to__gte=use_day,
+            booking_from__lte=booking_day,
+            booking_to__gte=booking_day,
             number_of_uses__lt=F('limit_of_uses'),
         )
         return Response({'valid': True, 'factor': promocode.factor})

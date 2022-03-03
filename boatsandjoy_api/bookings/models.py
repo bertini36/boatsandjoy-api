@@ -39,8 +39,11 @@ class Booking(BaseModel):
 
 class Promocode(BaseModel):
     name = models.CharField(max_length=20, validators=[validate_slug])
-    valid_from = models.DateField(blank=False)
-    valid_to = models.DateField(blank=False)
+    use_from = models.DateField(blank=False)
+    use_to = models.DateField(blank=False)
+    booking_from = models.DateField(blank=False)
+    booking_to = models.DateField(blank=False)
+
     factor = models.FloatField(
         blank=False,
         help_text=(

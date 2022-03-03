@@ -1,12 +1,14 @@
 from dataclasses import asdict
 from datetime import date
+from decimal import Decimal
 from typing import Type
 
 from django.conf import settings
-from decimal import Decimal
 from django.db.models import F
 
+from boatsandjoy_api.availability import models as availability_models
 from boatsandjoy_api.boats.api import api as boats_api
+from boatsandjoy_api.bookings import models as booking_models
 from boatsandjoy_api.bookings.models import Promocode
 from boatsandjoy_api.core.responses import (
     ErrorResponseBuilder,
@@ -63,10 +65,14 @@ class BookingsApi:
             BookingCreationRequestValidator.validate(request)
 
             price = request.base_price
+            booking_day = availability_models.Slot.objects.get(
+                id=request.slot_ids[0]
+            ).day.date
             price = self._apply_discounts(
                 price,
                 request.is_resident,
-                request.promocode
+                request.promocode,
+                booking_day,
             )
             purchase_details = self.bookings_repository.get_purchase_details(
                 slot_ids=request.slot_ids,
@@ -88,18 +94,21 @@ class BookingsApi:
     def _apply_discounts(
         price: Decimal,
         is_resident: bool,
-        promocode: str
+        promocode: str,
+        booking_day: date,
     ) -> Decimal:
         discount = Decimal(0)
         if is_resident:
             discount += Decimal(settings.RESIDENT_DISCOUNT)
 
-        today = date.today()
+        use_day = date.today()
         try:
             promocode = Promocode.objects.get(
                 name=promocode,
-                valid_from__lte=today,
-                valid_to__gte=today,
+                use_from__lte=use_day,
+                use_to__gte=use_day,
+                booking_from__lte=booking_day,
+                booking_to__gte=booking_day,
                 number_of_uses__lt=F('limit_of_uses'),
             )
             discount += Decimal(promocode.factor)
@@ -159,6 +168,13 @@ class BookingsApi:
                 customer_email=customer_email
             )
             booking = self.bookings_repository.mark_as_paid(booking)
+
+            promocode = booking_models.Promocode.objects.get(
+                code=booking.promocode
+            )
+            promocode.number_of_uses += 1
+            promocode.save()
+
             self.send_confirmation_email(booking)
             self._send_new_booking_notification_email(booking)
             return self.response_builder([]).build()
