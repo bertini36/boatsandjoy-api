@@ -27,6 +27,7 @@ class Booking(BaseModel):
         help_text='Session id', blank=True
     )
     extras = models.TextField(default='')
+    promocode = models.CharField(max_length=100, default='')
 
     def __str__(self) -> str:
         return f'Booking [{self.id}]'

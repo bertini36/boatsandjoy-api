@@ -29,6 +29,7 @@ class BookingsRepository(ABC):
         customer_email: str = None,
         session_id: str = None,
         extras: str = None,
+        promocode: str = None,
     ) -> domain.Booking:
         pass
 
@@ -81,6 +82,7 @@ class DjangoBookingsRepository(BookingsRepository):
         customer_email: str = None,
         session_id: str = None,
         extras: str = None,
+        promocode: str = None,
     ) -> domain.Booking:
         django_data = cls.DATA_ADAPTER.transform(
             price=price,
@@ -90,6 +92,7 @@ class DjangoBookingsRepository(BookingsRepository):
             customer_email=customer_email,
             locator=cls._generate_locator(),
             extras=extras,
+            promocode=promocode,
         )
         try:
             booking = models.Booking.objects.create(**django_data)
