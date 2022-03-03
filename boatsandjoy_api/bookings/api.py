@@ -176,7 +176,7 @@ class BookingsApi:
             booking = self.bookings_repository.mark_as_paid(booking)
 
             promocode = booking_models.Promocode.objects.get(
-                code=booking.promocode
+                name=booking.promocode
             )
             promocode.number_of_uses += 1
             promocode.save()
