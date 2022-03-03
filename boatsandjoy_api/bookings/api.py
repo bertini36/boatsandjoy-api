@@ -90,10 +90,7 @@ class BookingsApi:
                 'extras': request.extras,
                 'promocode': request.promocode,
             }
-            booking = self.bookings_repository.create(
-                **data,
-                session_id=session_id
-            )
+            booking = self.bookings_repository.create(**data)
             return self.response_builder(booking).build()
 
         except BookingsApiException as e:
