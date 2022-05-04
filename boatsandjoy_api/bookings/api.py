@@ -175,11 +175,15 @@ class BookingsApi:
             )
             booking = self.bookings_repository.mark_as_paid(booking)
 
-            promocode = booking_models.Promocode.objects.get(
-                name=booking.promocode
-            )
-            promocode.number_of_uses += 1
-            promocode.save()
+            if booking.promocode:
+                try:
+                    promocode = booking_models.Promocode.objects.get(
+                        name=booking.promocode
+                    )
+                    promocode.number_of_uses += 1
+                    promocode.save()
+                except booking_models.Promocode.DoesNotExist:
+                    pass
 
             self.send_confirmation_email(booking)
             self._send_new_booking_notification_email(booking)
