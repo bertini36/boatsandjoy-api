@@ -42,11 +42,5 @@ init.sql/
 # Translations
 *.mo
 
-# Terraform
-prod/infrastructure.tf
-prod/.terraform/
-prod/terraform.tfstate*
-prod/.terraform.tfstate*
-
 # TODOs
 .todo

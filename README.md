@@ -39,43 +39,15 @@ Powered by <a href="https://www.djangoproject.com//" target="_blank">#django</a>
 
 ## 🚀 Deploy
 
-### 📝 Prerequisites
+Automatically deployed when commit at `master` in [Heroku](https://www.heroku.com)
 
-If you don’t have Terraform installed, download it for your OS from: 
+### 🔓 Configure Heroku
 
-- https://www.terraform.io/downloads.html
-
-If you don't have an Heroku account, create it:
-
-- https://www.heroku.com
-
-and follow the instructions to install its client from:
-
-- https://devcenter.heroku.com/articles/heroku-cli
-
-### 🔓 Configure access to Heroku
+First install [Heroku cli](https://devcenter.heroku.com/articles/heroku-cli) 
+in your machine. Then login with your credentials
 
 ```bash
 heroku login
-```
-
-### 🏗️  Build environment
-
-```bash
-cd prod/
-cp infrastructure.tfsample infrastructure.tf
-```
-
-Set environment variables defined at `infrastructure.tf` and then execute terraform
-
-```bash
-terraform init
-terraform apply
-```
-
-If the infrascture has been created correctly in Heroku you will have received project url as output
-```
-boatsandjoy_api_url = https://boatsandjoy-api.herokuapp.com
 ```
 
 Create a superuser to access `admin/`
