@@ -9,7 +9,7 @@ from django.db.models import F
 from boatsandjoy_api.availability import models as availability_models
 from boatsandjoy_api.boats.models import Boat
 from boatsandjoy_api.bookings import models as booking_models
-from boatsandjoy_api.bookings.constants import BookingStatus
+from boatsandjoy_api.bookings.models import BookingStatus
 from boatsandjoy_api.bookings.domain import Booking
 from boatsandjoy_api.bookings.exceptions import BookingsApiException
 from boatsandjoy_api.bookings.models import Promocode

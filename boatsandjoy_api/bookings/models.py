@@ -1,8 +1,23 @@
+from enum import Enum
+
 from django.core.validators import validate_slug
 from django.db import models
 
 from boatsandjoy_api.core.models import BaseModel
-from .constants import BookingStatus
+
+
+class BookingStatus(Enum):
+    PENDING = "pending"
+    CONFIRMED = "confirmed"
+    ERROR = "error"
+
+    @classmethod
+    def to_django_choices(cls) -> tuple:
+        return (
+            (cls.PENDING, "Pending"),
+            (cls.CONFIRMED, "Confirmed"),
+            (cls.ERROR, "Error"),
+        )
 
 
 class Booking(BaseModel):
@@ -15,7 +30,7 @@ class Booking(BaseModel):
     customer_email = models.CharField(max_length=100, default="")
     customer_telephone_number = models.CharField(max_length=100, default="")
     status = models.CharField(
-        choices=BookingStatus.STATUS,
+        choices=BookingStatus.to_django_choices(),
         default=BookingStatus.PENDING,
         max_length=10,
     )

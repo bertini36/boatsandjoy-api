@@ -9,7 +9,7 @@ from django.db import DatabaseError
 from boatsandjoy_api.availability.models import Slot
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
 from . import domain, models
-from .constants import BookingStatus
+from .models import BookingStatus
 from .exceptions import (
     BookingInvalidDataError,
     BookingNotFound,

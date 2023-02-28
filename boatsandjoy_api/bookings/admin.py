@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from django.utils.safestring import mark_safe
 
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
-from .constants import BookingStatus
+from .models import BookingStatus
 from .exceptions import BookingAlreadyConfirmed, BookingAlreadyPending
 from .models import Booking, Promocode
 
