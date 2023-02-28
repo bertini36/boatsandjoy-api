@@ -41,10 +41,7 @@ class BookingsRepository(ABC):
     @classmethod
     @abstractmethod
     def get(
-        cls,
-        obj_id: int = None,
-        session_id: str = None,
-        status: str = None
+        cls, obj_id: int = None, session_id: str = None, status: str = None
     ) -> domain.Booking:
         pass
 
@@ -103,39 +100,34 @@ class DjangoBookingsRepository(BookingsRepository):
 
     @classmethod
     def get_purchase_details(cls, price: Decimal, slot_ids: List[int]) -> dict:
-        slots = Slot.objects.filter(id__in=slot_ids).order_by('position')
+        slots = Slot.objects.filter(id__in=slot_ids).order_by("position")
         if not slots:
-            raise NoSlotsSelected('A purchase requires slots!')
+            raise NoSlotsSelected("A purchase requires slots!")
         first_slot = slots.first()
         last_slot = slots.last()
         boat = first_slot.day.definition.boat
         day = first_slot.day.date
         purchase_details = {
-            'name': boat.name,
-            'description': (
-                f'Renting for {day} from '
-                f'{first_slot.from_hour} to {last_slot.to_hour}'
+            "name": boat.name,
+            "description": (
+                f"Renting for {day} from "
+                f"{first_slot.from_hour} to {last_slot.to_hour}"
             ),
-            'price': price,
+            "price": price,
         }
         return purchase_details
 
     @classmethod
     def get(
-        cls,
-        obj_id: int = None,
-        session_id: str = None,
-        status: str = None
+        cls, obj_id: int = None, session_id: str = None, status: str = None
     ) -> domain.Booking:
         django_filters = cls.DATA_ADAPTER.transform(
-            id=obj_id,
-            session_id=session_id,
-            status=status
+            id=obj_id, session_id=session_id, status=status
         )
         try:
             booking = models.Booking.objects.get(**django_filters)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(f'Booking not found: {e}')
+            raise BookingNotFound(f"Booking not found: {e}")
         return cls.get_booking_domain_object(booking)
 
     @classmethod
@@ -143,7 +135,7 @@ class DjangoBookingsRepository(BookingsRepository):
         try:
             booking = models.Booking.objects.get(id=booking.id)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(f'Booking not found: {e}')
+            raise BookingNotFound(f"Booking not found: {e}")
         booking.status = BookingStatus.CONFIRMED
         booking.save()
         cls._mark_slots_as_booked(booking)
@@ -154,7 +146,7 @@ class DjangoBookingsRepository(BookingsRepository):
         try:
             booking = models.Booking.objects.get(id=booking.id)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(f'Booking not found: {e}')
+            raise BookingNotFound(f"Booking not found: {e}")
         booking.status = BookingStatus.ERROR
         booking.save()
         return cls.get_booking_domain_object(booking)
@@ -169,7 +161,7 @@ class DjangoBookingsRepository(BookingsRepository):
         try:
             booking = models.Booking.objects.get(id=booking.id)
         except models.Booking.DoesNotExist as e:
-            raise BookingNotFound(f'Booking not found: {e}')
+            raise BookingNotFound(f"Booking not found: {e}")
         if customer_email:
             booking.customer_email = customer_email
         if session_id:
@@ -178,11 +170,8 @@ class DjangoBookingsRepository(BookingsRepository):
         return cls.get_booking_domain_object(booking)
 
     @classmethod
-    def get_booking_domain_object(
-        cls,
-        booking: models.Booking
-    ) -> domain.Booking:
-        slots = booking.slots.order_by('position')
+    def get_booking_domain_object(cls, booking: models.Booking) -> domain.Booking:
+        slots = booking.slots.order_by("position")
         boat = slots.first().day.definition.boat
         return domain.Booking(
             id=booking.id,
@@ -193,7 +182,7 @@ class DjangoBookingsRepository(BookingsRepository):
             session_id=booking.session_id,
             boat_id=boat.id,
             boat_name=boat.name,
-            slot_ids=list(slots.values_list('id', flat=True)),
+            slot_ids=list(slots.values_list("id", flat=True)),
             date=slots.first().day.date,
             checkin_hour=slots.first().from_hour,
             checkout_hour=slots.last().to_hour,
@@ -212,6 +201,4 @@ class DjangoBookingsRepository(BookingsRepository):
 
     @staticmethod
     def _generate_locator(length=20):
-        return ''.join(
-            random.choices(string.ascii_uppercase + string.digits, k=length)
-        )
+        return "".join(random.choices(string.ascii_uppercase + string.digits, k=length))

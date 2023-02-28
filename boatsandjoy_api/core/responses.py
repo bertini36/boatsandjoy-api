@@ -13,7 +13,7 @@ class ResponseBuilderInterface(ABC):
 
 class ErrorResponseBuilder(ResponseBuilderInterface):
     def build(self) -> dict:
-        return {'error': True, 'data': str(self.data)}
+        return {"error": True, "data": str(self.data)}
 
 
 class ResponseBuilder(ResponseBuilderInterface):
@@ -29,7 +29,7 @@ class ResponseBuilder(ResponseBuilderInterface):
             ]
         else:
             data = self._serialize_object(self.data)
-        return {'error': False, 'data': data}
+        return {"error": False, "data": data}
 
     def _serialize_dict(self, dict_obj: dict) -> dict:
         return self._cast_dict_attrs(dict_obj)

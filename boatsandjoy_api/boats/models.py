@@ -8,8 +8,8 @@ class Boat(BaseModel):
     active = models.BooleanField(default=True)
 
     def __str__(self) -> str:
-        return f'{self.name}'
+        return f"{self.name}"
 
     class Meta:
-        verbose_name = 'boat'
-        verbose_name_plural = 'boats'
+        verbose_name = "boat"
+        verbose_name_plural = "boats"

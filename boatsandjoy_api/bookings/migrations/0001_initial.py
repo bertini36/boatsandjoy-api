@@ -4,69 +4,68 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('availability', '0001_initial'),
+        ("availability", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Booking',
+            name="Booking",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
-                ('locator', models.CharField(max_length=20)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
+                ("locator", models.CharField(max_length=20)),
                 (
-                    'price',
+                    "price",
                     models.DecimalField(
                         decimal_places=2,
-                        help_text='Booking price',
+                        help_text="Booking price",
                         max_digits=8,
                     ),
                 ),
-                ('customer_name', models.CharField(default='', max_length=100)),
+                ("customer_name", models.CharField(default="", max_length=100)),
                 (
-                    'customer_email',
-                    models.CharField(default='', max_length=100),
+                    "customer_email",
+                    models.CharField(default="", max_length=100),
                 ),
                 (
-                    'customer_telephone_number',
-                    models.CharField(default='', max_length=100),
+                    "customer_telephone_number",
+                    models.CharField(default="", max_length=100),
                 ),
                 (
-                    'status',
+                    "status",
                     models.CharField(
                         choices=[
-                            ('pending', 'Pending'),
-                            ('confirmed', 'Confirmed'),
-                            ('error', 'Error'),
+                            ("pending", "Pending"),
+                            ("confirmed", "Confirmed"),
+                            ("error", "Error"),
                         ],
-                        default='pending',
+                        default="pending",
                         max_length=10,
                     ),
                 ),
                 (
-                    'session_id',
+                    "session_id",
                     models.CharField(
-                        blank=True, help_text='Session id', max_length=100
+                        blank=True, help_text="Session id", max_length=100
                     ),
                 ),
-                ('slots', models.ManyToManyField(to='availability.Slot')),
+                ("slots", models.ManyToManyField(to="availability.Slot")),
             ],
             options={
-                'verbose_name': 'booking',
-                'verbose_name_plural': 'bookings',
+                "verbose_name": "booking",
+                "verbose_name_plural": "bookings",
             },
         ),
     ]

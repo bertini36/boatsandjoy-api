@@ -7,4 +7,4 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-        ordering = ('-created',)
+        ordering = ("-created",)

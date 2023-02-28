@@ -7,140 +7,139 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('boats', '0001_initial'),
+        ("boats", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Day',
+            name="Day",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
-                ('date', models.DateField()),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
+                ("date", models.DateField()),
             ],
             options={
-                'verbose_name': 'day',
-                'verbose_name_plural': 'days',
-                'ordering': ('date',),
+                "verbose_name": "day",
+                "verbose_name_plural": "days",
+                "ordering": ("date",),
             },
         ),
         migrations.CreateModel(
-            name='Slot',
+            name="Slot",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'position',
-                    models.IntegerField(help_text='Slot position into day'),
+                    "position",
+                    models.IntegerField(help_text="Slot position into day"),
                 ),
                 (
-                    'from_hour',
-                    models.TimeField(help_text='Time at which the slot starts'),
+                    "from_hour",
+                    models.TimeField(help_text="Time at which the slot starts"),
                 ),
                 (
-                    'to_hour',
-                    models.TimeField(help_text='Time at which the slot ends'),
+                    "to_hour",
+                    models.TimeField(help_text="Time at which the slot ends"),
                 ),
-                ('booked', models.BooleanField(default=False)),
+                ("booked", models.BooleanField(default=False)),
                 (
-                    'day',
+                    "day",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='slots',
-                        to='availability.Day',
+                        related_name="slots",
+                        to="availability.Day",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'slot',
-                'verbose_name_plural': 'slots',
-                'ordering': ('position',),
+                "verbose_name": "slot",
+                "verbose_name_plural": "slots",
+                "ordering": ("position",),
             },
         ),
         migrations.CreateModel(
-            name='PriceVariation',
+            name="PriceVariation",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
-                ('from_date', models.DateField()),
-                ('to_date', models.DateField()),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
+                ("from_date", models.DateField()),
+                ("to_date", models.DateField()),
                 (
-                    'factor',
+                    "factor",
                     models.FloatField(
-                        help_text='You can use it to define discounts with numbers less than 0 and to define increments with numbers greater than 0. Ex: if you need a 20% discount you have to specify 0.8, if you need to increase price a 50%, you have to specify 1.5 value'
+                        help_text="You can use it to define discounts with numbers less than 0 and to define increments with numbers greater than 0. Ex: if you need a 20% discount you have to specify 0.8, if you need to increase price a 50%, you have to specify 1.5 value"
                     ),
                 ),
                 (
-                    'boat',
+                    "boat",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='price_variations',
-                        to='boats.Boat',
+                        related_name="price_variations",
+                        to="boats.Boat",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'price variation',
-                'verbose_name_plural': 'price variations',
+                "verbose_name": "price variation",
+                "verbose_name_plural": "price variations",
             },
         ),
         migrations.CreateModel(
-            name='DayDefinition',
+            name="DayDefinition",
             fields=[
                 (
-                    'id',
+                    "id",
                     models.AutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name='ID',
+                        verbose_name="ID",
                     ),
                 ),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
                 (
-                    'first_time',
+                    "first_time",
                     models.TimeField(
                         default=datetime.time(9, 0),
-                        help_text='Time when the day starts',
+                        help_text="Time when the day starts",
                     ),
                 ),
                 (
-                    'hours_per_slot',
+                    "hours_per_slot",
                     models.IntegerField(
                         default=2,
-                        help_text='How many hours define a slot',
+                        help_text="How many hours define a slot",
                         validators=[
                             django.core.validators.MaxValueValidator(24),
                             django.core.validators.MinValueValidator(1),
@@ -148,75 +147,75 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    'n_slots',
+                    "n_slots",
                     models.IntegerField(
                         default=0,
-                        help_text='Number of availability slots in a single day',
+                        help_text="Number of availability slots in a single day",
                     ),
                 ),
                 (
-                    'price_per_hour',
+                    "price_per_hour",
                     models.DecimalField(
                         decimal_places=2,
                         default=0.0,
-                        help_text='Price per hour in euros',
+                        help_text="Price per hour in euros",
                         max_digits=8,
                     ),
                 ),
                 (
-                    'from_date',
+                    "from_date",
                     models.DateField(
-                        help_text='Since which date this definition is available'
+                        help_text="Since which date this definition is available"
                     ),
                 ),
                 (
-                    'to_date',
+                    "to_date",
                     models.DateField(
-                        help_text='Until which date this definition is available'
+                        help_text="Until which date this definition is available"
                     ),
                 ),
                 (
-                    'n_slots_deal_threshold',
+                    "n_slots_deal_threshold",
                     models.IntegerField(
                         default=0,
-                        help_text='Number of slots that has to have an availability result to be considered as a good deal',
+                        help_text="Number of slots that has to have an availability result to be considered as a good deal",
                     ),
                 ),
                 (
-                    'discount_when_deal',
+                    "discount_when_deal",
                     models.FloatField(
                         default=0.0,
-                        help_text='Discount applied when availability result is composed by more than n_slots_deal_threshold slots',
+                        help_text="Discount applied when availability result is composed by more than n_slots_deal_threshold slots",
                     ),
                 ),
                 (
-                    'resident_discount',
+                    "resident_discount",
                     models.FloatField(
                         default=0.25,
-                        help_text='Discount applicable to Balearic islands residents',
+                        help_text="Discount applicable to Balearic islands residents",
                     ),
                 ),
                 (
-                    'boat',
+                    "boat",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name='day_definitions',
-                        to='boats.Boat',
+                        related_name="day_definitions",
+                        to="boats.Boat",
                     ),
                 ),
             ],
             options={
-                'verbose_name': 'day definition',
-                'verbose_name_plural': 'day definition',
+                "verbose_name": "day definition",
+                "verbose_name_plural": "day definition",
             },
         ),
         migrations.AddField(
-            model_name='day',
-            name='definition',
+            model_name="day",
+            name="definition",
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name='days',
-                to='availability.DayDefinition',
+                related_name="days",
+                to="availability.DayDefinition",
             ),
         ),
     ]

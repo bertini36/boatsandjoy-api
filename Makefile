@@ -39,10 +39,6 @@ upgrade-deps: ## 📥 Upgrade requirements files with last packages versions
 	@echo "📥 Upgrading dependencies"
 	@docker-compose run --rm --entrypoint sh $(service) -c "pip-compile /code/requirements/base.in --upgrade --resolver=backtracking && pip-compile /code/requirements/dev.in --upgrade --resolver=backtracking && pip-compile /code/requirements/prod.in --upgrade --resolver=backtracking"
 
-lint: ## 🔦 Lint code
-	@echo "🔦 Linting code"
-	@docker-compose run --rm --entrypoint sh $(service) -c "black /code/ -t py38 --line-length 80 --skip-string-normalization"
-
 shell: ## 📗 Django shell plus console
 	@echo "📗 Shell plus console"
 	@docker-compose run --rm --entrypoint python $(service) manage.py shell_plus
@@ -81,7 +77,7 @@ run-ngrok:	## 📙‍️ Run Ngrok
 
 black: ## 🏴 Run black
 	@echo "🏴 Run black"
-	@docker-compose run --rm $(service) black
+	@docker-compose run --rm $(service) black .
 
 help: ## 📖 Show make targets
 	@echo "📖 Help"

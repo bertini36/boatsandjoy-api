@@ -6,35 +6,59 @@ import re
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('bookings', '0002_booking_extras'),
+        ("bookings", "0002_booking_extras"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Promocode',
+            name="Promocode",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('modified', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=20, validators=[django.core.validators.RegexValidator(re.compile('^[-a-zA-Z0-9_]+\\Z'), 'Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.', 'invalid')])),
-                ('use_from', models.DateField()),
-                ('use_to', models.DateField()),
-                ('booking_from', models.DateField()),
-                ('booking_to', models.DateField()),
-                ('factor', models.FloatField(help_text='You can use it to define discounts with numbers less than 0 Ex: if you need a 20% discount you have to specify 0.8, if you need to increase price a 50%, you have to specify 1.5 value')),
-                ('limit_of_uses', models.IntegerField(default=10)),
-                ('number_of_uses', models.IntegerField(default=0)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                ("modified", models.DateTimeField(auto_now=True)),
+                (
+                    "name",
+                    models.CharField(
+                        max_length=20,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                re.compile("^[-a-zA-Z0-9_]+\\Z"),
+                                "Enter a valid “slug” consisting of letters, numbers, underscores or hyphens.",
+                                "invalid",
+                            )
+                        ],
+                    ),
+                ),
+                ("use_from", models.DateField()),
+                ("use_to", models.DateField()),
+                ("booking_from", models.DateField()),
+                ("booking_to", models.DateField()),
+                (
+                    "factor",
+                    models.FloatField(
+                        help_text="You can use it to define discounts with numbers less than 0 Ex: if you need a 20% discount you have to specify 0.8, if you need to increase price a 50%, you have to specify 1.5 value"
+                    ),
+                ),
+                ("limit_of_uses", models.IntegerField(default=10)),
+                ("number_of_uses", models.IntegerField(default=0)),
             ],
             options={
-                'verbose_name': 'promocode',
-                'verbose_name_plural': 'promocodes',
+                "verbose_name": "promocode",
+                "verbose_name_plural": "promocodes",
             },
         ),
         migrations.AddField(
-            model_name='booking',
-            name='promocode',
-            field=models.CharField(default='', max_length=100),
+            model_name="booking",
+            name="promocode",
+            field=models.CharField(default="", max_length=100),
         ),
     ]

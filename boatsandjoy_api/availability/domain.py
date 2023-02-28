@@ -60,5 +60,5 @@ class PriceVariation:
     boat_id: int
 
 
-SlotTiming = namedtuple('SlotTiming', ['from_hour', 'to_hour'])
-DateRange = namedtuple('DateRange', ['from_date', 'to_date'])
+SlotTiming = namedtuple("SlotTiming", ["from_hour", "to_hour"])
+DateRange = namedtuple("DateRange", ["from_date", "to_date"])

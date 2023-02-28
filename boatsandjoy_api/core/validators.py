@@ -22,4 +22,4 @@ class DjangoRequestValidator(RequestValidatorInterface):
     def validate(cls, request: dataclass):
         form = cls.FORM(data=asdict(request))
         if not form.is_valid():
-            raise InvalidDataError(f'Validation error {form.errors.as_text()}')
+            raise InvalidDataError(f"Validation error {form.errors.as_text()}")

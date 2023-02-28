@@ -32,7 +32,5 @@ class IdentifyBookingBySessionRequestValidator(DjangoRequestValidator):
     FORM = DjangoIdentifyBookingBySessionForm
 
 
-class GetBookingBySessionRequestValidator(
-    IdentifyBookingBySessionRequestValidator
-):
+class GetBookingBySessionRequestValidator(IdentifyBookingBySessionRequestValidator):
     pass

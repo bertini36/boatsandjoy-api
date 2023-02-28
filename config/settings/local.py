@@ -10,36 +10,36 @@ DEBUG = True
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
-TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 
 # ALLOWED HOSTS
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 # ------------------------------------------------------------------------------
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 
 # LOGGING
 # https://docs.djangoproject.com/en/dev/topics/logging/
 # ------------------------------------------------------------------------------
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '%(levelname)-7s %(asctime)s %(message)s',
-            'datefmt': '%d-%m-%Y %H:%M:%S',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)-7s %(asctime)s %(message)s",
+            "datefmt": "%d-%m-%Y %H:%M:%S",
         },
     },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
         },
     },
-    'loggers': {
-        'boatsandjoy_api': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
+    "loggers": {
+        "boatsandjoy_api": {
+            "handlers": ["console"],
+            "level": "DEBUG",
         },
     },
 }
@@ -50,13 +50,13 @@ LOGGING = {
 # DJANGO DEBUG TOOLBAR
 # https://github.com/jazzband/django-debug-toolbar
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ('debug_toolbar',)
-MIDDLEWARE += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+INSTALLED_APPS += ("debug_toolbar",)
+MIDDLEWARE += ("debug_toolbar.middleware.DebugToolbarMiddleware",)
 INTERNAL_IPS = [
-    '127.0.0.1',
+    "127.0.0.1",
 ]
 
 # Django-extensions
 # https://github.com/django-extensions/django-extensions
 # ------------------------------------------------------------------------------
-INSTALLED_APPS += ('django_extensions',)
+INSTALLED_APPS += ("django_extensions",)

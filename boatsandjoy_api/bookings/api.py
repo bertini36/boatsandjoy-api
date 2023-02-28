@@ -22,8 +22,10 @@ from .exceptions import BookingsApiException
 from .payment_gateways import PaymentGateway, StripePaymentGateway
 from .repository import BookingsRepository, DjangoBookingsRepository
 from .requests import (
-    CreateBookingRequest, GetBookingBySessionRequest,
-    GetBookingRequest, MarkBookingAsErrorRequest,
+    CreateBookingRequest,
+    GetBookingBySessionRequest,
+    GetBookingRequest,
+    MarkBookingAsErrorRequest,
     RegisterBookingEventRequest,
 )
 from .validators import (
@@ -82,13 +84,13 @@ class BookingsApi:
                 **purchase_details
             )
             data = {
-                'price': price,
-                'slot_ids': request.slot_ids,
-                'customer_name': request.customer_name,
-                'customer_telephone_number': request.customer_telephone_number,
-                'session_id': session_id,
-                'extras': request.extras,
-                'promocode': request.promocode,
+                "price": price,
+                "slot_ids": request.slot_ids,
+                "customer_name": request.customer_name,
+                "customer_telephone_number": request.customer_telephone_number,
+                "session_id": session_id,
+                "extras": request.extras,
+                "promocode": request.promocode,
             }
             booking = self.bookings_repository.create(**data)
             return self.response_builder(booking).build()
@@ -115,7 +117,7 @@ class BookingsApi:
                 use_to__gte=use_day,
                 booking_from__lte=booking_day,
                 booking_to__gte=booking_day,
-                number_of_uses__lt=F('limit_of_uses'),
+                number_of_uses__lt=F("limit_of_uses"),
             )
             discount += Decimal(promocode.factor)
         except Promocode.DoesNotExist:
@@ -127,22 +129,17 @@ class BookingsApi:
         try:
             GetBookingRequestValidator.validate(request)
             request_dict = asdict(request)
-            generate_new_session_id = request_dict.pop(
-                'generate_new_session_id'
-            )
+            generate_new_session_id = request_dict.pop("generate_new_session_id")
             booking = self.bookings_repository.get(**request_dict)
             if generate_new_session_id:
-                purchase_details = (
-                    self.bookings_repository.get_purchase_details(
-                        slot_ids=booking.slot_ids, price=booking.price
-                    )
+                purchase_details = self.bookings_repository.get_purchase_details(
+                    slot_ids=booking.slot_ids, price=booking.price
                 )
                 session_id = self.payment_gateway.generate_checkout_session_id(
                     **purchase_details
                 )
                 booking = self.bookings_repository.update(
-                    booking=booking,
-                    session_id=session_id
+                    booking=booking, session_id=session_id
                 )
             return self.response_builder(booking).build()
 
@@ -170,8 +167,7 @@ class BookingsApi:
             )
             booking = self.bookings_repository.get(session_id=session_id)
             booking = self.bookings_repository.update(
-                booking=booking,
-                customer_email=customer_email
+                booking=booking, customer_email=customer_email
             )
             booking = self.bookings_repository.mark_as_paid(booking)
 
@@ -208,11 +204,11 @@ class BookingsApi:
             api_request = FilterBoatsRequest(obj_id=booking.boat_id)
             results = boats_api.get(api_request)
             send_email(
-                subject='Boats & Joy: Booking confirmation',
+                subject="Boats & Joy: Booking confirmation",
                 to_email=booking.customer_email,
-                template='emails/confirmation.html',
+                template="emails/confirmation.html",
                 booking=booking,
-                boat=results['data'],
+                boat=results["data"],
                 EMAIL_HOST_USER=settings.EMAIL_HOST_USER,
             )
 
@@ -222,9 +218,9 @@ class BookingsApi:
         Email sent just for company information
         """
         send_email(
-            subject=f'New booking ({booking.locator})',
+            subject=f"New booking ({booking.locator})",
             to_email=settings.DEFAULT_FROM_EMAIL,
-            template='emails/new_booking.html',
+            template="emails/new_booking.html",
             booking=booking,
         )
 
@@ -234,9 +230,9 @@ class BookingsApi:
         Email sent just for company information
         """
         send_email(
-            subject=f'Booking {booking.locator} payment error',
+            subject=f"Booking {booking.locator} payment error",
             to_email=settings.DEFAULT_FROM_EMAIL,
-            template='emails/payment_error_notification.html',
+            template="emails/payment_error_notification.html",
             booking=booking,
         )
 

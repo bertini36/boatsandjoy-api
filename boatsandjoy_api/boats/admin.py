@@ -26,25 +26,25 @@ class DayDefinitionInlineFormset(BaseInlineFormSet):
     def clean(self):
         for i, day_definition1 in enumerate(self.cleaned_data):
             for j, day_definition2 in enumerate(self.cleaned_data):
-                if day_definition2['from_date'] > day_definition2['to_date']:
+                if day_definition2["from_date"] > day_definition2["to_date"]:
                     raise ValidationError(
-                        f'Some day definition has its from '
-                        f'date greater than its to date'
+                        f"Some day definition has its from "
+                        f"date greater than its to date"
                     )
                 if i != j:
                     if date_ranges_collision(
                         DateRange(
-                            from_date=day_definition1['from_date'],
-                            to_date=day_definition1['to_date'],
+                            from_date=day_definition1["from_date"],
+                            to_date=day_definition1["to_date"],
                         ),
                         DateRange(
-                            from_date=day_definition2['from_date'],
-                            to_date=day_definition2['to_date'],
+                            from_date=day_definition2["from_date"],
+                            to_date=day_definition2["to_date"],
                         ),
                     ):
                         raise ValidationError(
-                            f'Exists a collision between the '
-                            f'date ranges of some day definitions'
+                            f"Exists a collision between the "
+                            f"date ranges of some day definitions"
                         )
         return self.cleaned_data
 
@@ -57,11 +57,7 @@ class DayDefinitionInlineAdmin(admin.StackedInline):
     def has_add_permission(self, request: HttpRequest, obj: Day = None) -> bool:
         return True
 
-    def has_delete_permission(
-        self,
-        request: HttpRequest,
-        obj: Day = None
-    ) -> bool:
+    def has_delete_permission(self, request: HttpRequest, obj: Day = None) -> bool:
         return True
 
 
@@ -70,34 +66,33 @@ class PriceVariationInlineFormset(BaseInlineFormSet):
         for i, price_variation1 in enumerate(self.cleaned_data):
             for j, price_variation2 in enumerate(self.cleaned_data):
                 if (
-                    'from_date' not in price_variation2
-                    or 'to_date' not in price_variation2
-                    or 'from_date' not in price_variation1
-                    or 'to_date' not in price_variation1
+                    "from_date" not in price_variation2
+                    or "to_date" not in price_variation2
+                    or "from_date" not in price_variation1
+                    or "to_date" not in price_variation1
                 ):
                     raise ValidationError(
-                        'Some price variations have not '
-                        'all its required data filled'
+                        "Some price variations have not " "all its required data filled"
                     )
-                if price_variation2['from_date'] > price_variation2['to_date']:
+                if price_variation2["from_date"] > price_variation2["to_date"]:
                     raise ValidationError(
-                        f'Some price definition has its from '
-                        f'date greater than its to date'
+                        f"Some price definition has its from "
+                        f"date greater than its to date"
                     )
                 if i != j:
                     if date_ranges_collision(
                         DateRange(
-                            from_date=price_variation1['from_date'],
-                            to_date=price_variation1['to_date'],
+                            from_date=price_variation1["from_date"],
+                            to_date=price_variation1["to_date"],
                         ),
                         DateRange(
-                            from_date=price_variation2['from_date'],
-                            to_date=price_variation2['to_date'],
+                            from_date=price_variation2["from_date"],
+                            to_date=price_variation2["to_date"],
                         ),
                     ):
                         raise ValidationError(
-                            f'Exists a collision between the '
-                            f'date ranges of some price variations'
+                            f"Exists a collision between the "
+                            f"date ranges of some price variations"
                         )
         return self.cleaned_data
 
@@ -110,27 +105,17 @@ class PriceVariationInlineAdmin(admin.StackedInline):
     def has_add_permission(self, request: HttpRequest, obj: Day = None) -> bool:
         return True
 
-    def has_delete_permission(
-        self,
-        request: HttpRequest,
-        obj: Day = None
-    ) -> bool:
+    def has_delete_permission(self, request: HttpRequest, obj: Day = None) -> bool:
         return True
 
 
-def generate_availability_for(
-    modeladmin,
-    request: HttpRequest,
-    queryset: QuerySet
-):
+def generate_availability_for(modeladmin, request: HttpRequest, queryset: QuerySet):
     try:
-        year = int(request.POST['year'])
+        year = int(request.POST["year"])
         if not year:
             raise ValueError
     except ValueError:
-        messages.add_message(
-            request, messages.ERROR, 'You have to specify a year'
-        )
+        messages.add_message(request, messages.ERROR, "You have to specify a year")
         return
     for boat in queryset:
         try:
@@ -140,26 +125,20 @@ def generate_availability_for(
             messages.add_message(
                 request,
                 messages.ERROR,
-                f'Unable to generate availability for boat {boat} because {e}',
+                f"Unable to generate availability for boat {boat} because {e}",
             )
 
 
-generate_availability_for.short_description = 'Generate availability for year'
+generate_availability_for.short_description = "Generate availability for year"
 
 
-def delete_availability_for(
-    modeladmin,
-    request: HttpRequest,
-    queryset: QuerySet
-):
+def delete_availability_for(modeladmin, request: HttpRequest, queryset: QuerySet):
     try:
-        year = int(request.POST['year'])
+        year = int(request.POST["year"])
         if not year:
             raise Exception
     except Exception:
-        messages.add_message(
-            request, messages.ERROR, 'You have to specify a year'
-        )
+        messages.add_message(request, messages.ERROR, "You have to specify a year")
         return
     for boat in queryset:
         try:
@@ -169,22 +148,18 @@ def delete_availability_for(
             messages.add_message(
                 request,
                 messages.ERROR,
-                f'Unable to delete availability for boat {boat} because {e}',
+                f"Unable to delete availability for boat {boat} because {e}",
             )
 
 
-delete_availability_for.short_description = 'Delete availability for year'
+delete_availability_for.short_description = "Delete availability for year"
 
 
-def deactivate_selected_boats(
-    modeladmin,
-    request: HttpRequest,
-    queryset: QuerySet
-):
+def deactivate_selected_boats(modeladmin, request: HttpRequest, queryset: QuerySet):
     queryset.update(active=False)
 
 
-deactivate_selected_boats.short_description = 'Deactivate selected boats'
+deactivate_selected_boats.short_description = "Deactivate selected boats"
 
 
 class BoatAdminActionForm(ActionForm):
@@ -192,12 +167,12 @@ class BoatAdminActionForm(ActionForm):
 
 
 class BoatAdmin(admin.ModelAdmin):
-    list_filter = ('active', 'name', 'created')
+    list_filter = ("active", "name", "created")
     list_display = (
-        'active',
-        'get_name_link',
-        'get_created_date',
-        'get_availability_link',
+        "active",
+        "get_name_link",
+        "get_created_date",
+        "get_availability_link",
     )
     inlines = (
         DayDefinitionInlineAdmin,
@@ -212,30 +187,28 @@ class BoatAdmin(admin.ModelAdmin):
 
     def get_name_link(self, obj: Boat) -> str:
         url = reverse(
-            f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change',
+            f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change",
             args=[obj.id],
         )
         return mark_safe(f'<a href="{url}">{obj.name}</a>')
 
-    get_name_link.short_description = 'Name'
+    get_name_link.short_description = "Name"
 
     def get_created_date(self, obj: Boat) -> str:
         url = reverse(
-            f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change',
+            f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change",
             args=[obj.id],
         )
         return mark_safe(f'<a href="{url}">{obj.created}</a>')
 
-    get_created_date.short_description = 'Creation date'
+    get_created_date.short_description = "Creation date"
 
     def get_availability_link(self, obj: Boat) -> str:
-        url = reverse(f'admin:availability_day_changelist')
-        url += f'?definition__boat__id__exact={obj.id}'
-        return mark_safe(
-            f'<a href="{url}" target="_blank">Check availability</a>'
-        )
+        url = reverse(f"admin:availability_day_changelist")
+        url += f"?definition__boat__id__exact={obj.id}"
+        return mark_safe(f'<a href="{url}" target="_blank">Check availability</a>')
 
-    get_availability_link.short_description = 'Availability'
+    get_availability_link.short_description = "Availability"
 
 
 admin.site.register(Boat, BoatAdmin)

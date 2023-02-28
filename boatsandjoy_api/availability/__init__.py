@@ -1,1 +1,1 @@
-default_app_config = 'boatsandjoy_api.availability.apps.AvailabilityConfig'
+default_app_config = "boatsandjoy_api.availability.apps.AvailabilityConfig"

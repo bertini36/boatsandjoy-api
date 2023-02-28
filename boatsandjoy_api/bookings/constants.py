@@ -1,11 +1,6 @@
 class BookingStatus:
+    PENDING = "pending"
+    CONFIRMED = "confirmed"
+    ERROR = "error"
 
-    PENDING = 'pending'
-    CONFIRMED = 'confirmed'
-    ERROR = 'error'
-
-    STATUS = (
-        (PENDING, 'Pending'),
-        (CONFIRMED, 'Confirmed'),
-        (ERROR, 'Error')
-    )
+    STATUS = ((PENDING, "Pending"), (CONFIRMED, "Confirmed"), (ERROR, "Error"))

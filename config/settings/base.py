@@ -13,10 +13,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import environ
 
 BASE_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
-APPS_DIR = BASE_DIR.path('boatsandjoy_api')
+APPS_DIR = BASE_DIR.path("boatsandjoy_api")
 
 env = environ.Env()
-environ.Env.read_env('.env')
+environ.Env.read_env(".env")
 
 # APP CONFIGURATION
 # ******************************************************************************
@@ -24,75 +24,74 @@ environ.Env.read_env('.env')
 # DEBUG
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 # ------------------------------------------------------------------------------
-DEBUG = env.bool('DJANGO_DEBUG', default=False)
+DEBUG = env.bool("DJANGO_DEBUG", default=False)
 
 # SECRET CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 # ------------------------------------------------------------------------------
 SECRET_KEY = env(
-    'DJANGO_SECRET_KEY',
-    default='6rj+%+m3!+_apkegua$pbetc9g6+d@$1yi(vvzldgn5i)949cm'
+    "DJANGO_SECRET_KEY", default="6rj+%+m3!+_apkegua$pbetc9g6+d@$1yi(vvzldgn5i)949cm"
 )
 
 INSTALLED_APPS = [
     # Default Django apps
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.admin',
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.admin",
     # Boats & Joy apps
-    'boatsandjoy_api.core',
-    'boatsandjoy_api.boats',
-    'boatsandjoy_api.availability',
-    'boatsandjoy_api.bookings',
+    "boatsandjoy_api.core",
+    "boatsandjoy_api.boats",
+    "boatsandjoy_api.availability",
+    "boatsandjoy_api.bookings",
     # Others
-    'rest_framework',
-    'corsheaders',
-    'health_check',
-    'health_check.db',
-    'health_check.cache',
-    'health_check.storage',
+    "rest_framework",
+    "corsheaders",
+    "health_check",
+    "health_check.db",
+    "health_check.cache",
+    "health_check.storage",
 ]
 
 # DATABASE CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # ------------------------------------------------------------------------------
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('POSTGRES_DB', default='boatsandjoydb'),
-        'USER': env('POSTGRES_USER', default='postgres'),
-        'PASSWORD': env('POSTGRES_PASSWORD', default='postgres'),
-        'HOST': env('POSTGRES_HOST', default='db'),
-        'PORT': env('POSTGRES_PORT', default='5432'),
-        'CONN_MAX_AGE': env.int('DATABASE_CONN_MAX_AGE', default=300),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("POSTGRES_DB", default="boatsandjoydb"),
+        "USER": env("POSTGRES_USER", default="postgres"),
+        "PASSWORD": env("POSTGRES_PASSWORD", default="postgres"),
+        "HOST": env("POSTGRES_HOST", default="db"),
+        "PORT": env("POSTGRES_PORT", default="5432"),
+        "CONN_MAX_AGE": env.int("DATABASE_CONN_MAX_AGE", default=300),
     }
 }
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # ADMIN CONFIGURATION
 # ------------------------------------------------------------------------------
-ADMIN_URL = 'admin/'
+ADMIN_URL = "admin/"
 
 # URL CONFIGURATION
 # ------------------------------------------------------------------------------
-ROOT_URLCONF = 'config.urls'
+ROOT_URLCONF = "config.urls"
 
 # WSGI CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 # ------------------------------------------------------------------------------
-WSGI_APPLICATION = 'config.wsgi.application'
+WSGI_APPLICATION = "config.wsgi.application"
 
 # GENERAL CONFIGURATION
 # ------------------------------------------------------------------------------
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
-TIME_ZONE = 'Europe/Madrid'
+TIME_ZONE = "Europe/Madrid"
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = 'en'
-LANGUAGES = (('en', 'English'),)
+LANGUAGE_CODE = "en"
+LANGUAGES = (("en", "English"),)
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
@@ -106,21 +105,21 @@ USE_L10N = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#use-tz
 USE_TZ = True
 
-DATE_FORMAT = '%Y-%m-%d'
+DATE_FORMAT = "%Y-%m-%d"
 
 # MIDDLEWARE CONFIGURATION
 # https://docs.djangoproject.com/en/dev/topics/http/middleware/
 # ------------------------------------------------------------------------------
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
 # PASSWORD VALIDATION
@@ -128,16 +127,16 @@ MIDDLEWARE = [
 # ------------------------------------------------------------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -147,30 +146,30 @@ AUTH_PASSWORD_VALIDATORS = [
 TEMPLATES = [
     {
         # https://docs.djangoproject.com/en/dev/ref/settings/#std:setting-TEMPLATES-BACKEND
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         # https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
-        'DIRS': [
-            str(APPS_DIR.path('templates')),
+        "DIRS": [
+            str(APPS_DIR.path("templates")),
         ],
-        'OPTIONS': {
+        "OPTIONS": {
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
-            'debug': DEBUG,
+            "debug": DEBUG,
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-loaders
             # https://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
-            'loaders': [
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
+            "loaders": [
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
             ],
             # https://docs.djangoproject.com/en/dev/ref/settings/#template-context-processors
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.template.context_processors.i18n',
-                'django.template.context_processors.media',
-                'django.template.context_processors.static',
-                'django.template.context_processors.tz',
-                'django.contrib.messages.context_processors.messages',
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
@@ -179,18 +178,18 @@ TEMPLATES = [
 # STATIC FILES CONFIGURATION
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-root
 # ------------------------------------------------------------------------------
-STATIC_ROOT = str(BASE_DIR('staticfiles'))
+STATIC_ROOT = str(BASE_DIR("staticfiles"))
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-STATIC_URL = '/static/'
+STATIC_URL = "/static/"
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = (str(APPS_DIR.path('static')),)
+STATICFILES_DIRS = (str(APPS_DIR.path("static")),)
 
 # https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 )
 
 # THIRD PARTY APPLICATIONS
@@ -204,16 +203,16 @@ CORS_ORIGIN_ALLOW_ALL = True
 # Stripe
 # https://github.com/stripe/stripe-python
 # ------------------------------------------------------------------------------
-STRIPE_API_KEY = env('STRIPE_API_KEY', default='')
-STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY', default='')
-STRIPE_REDIRECT_URL = env('STRIPE_REDIRECT_URL', default='')
+STRIPE_API_KEY = env("STRIPE_API_KEY", default="")
+STRIPE_SECRET_KEY = env("STRIPE_SECRET_KEY", default="")
+STRIPE_REDIRECT_URL = env("STRIPE_REDIRECT_URL", default="")
 
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL', default='')
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = env('SENDGRID_API_KEY', default='')
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="")
+EMAIL_HOST = "smtp.sendgrid.net"
+EMAIL_HOST_USER = "apikey"
+EMAIL_HOST_PASSWORD = env("SENDGRID_API_KEY", default="")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 

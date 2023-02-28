@@ -23,16 +23,9 @@ class MultipleIntField(forms.TypedMultipleChoiceField):
         return True
 
 
-def send_email(
-    subject: str,
-    to_email: str,
-    template: str,
-    **kwargs
-):
+def send_email(subject: str, to_email: str, template: str, **kwargs):
     msg = EmailMultiAlternatives(
-        subject=subject,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[to_email]
+        subject=subject, from_email=settings.DEFAULT_FROM_EMAIL, to=[to_email]
     )
-    msg.attach_alternative(render_to_string(template, kwargs), 'text/html')
+    msg.attach_alternative(render_to_string(template, kwargs), "text/html")
     msg.send()

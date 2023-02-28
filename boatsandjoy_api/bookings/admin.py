@@ -14,7 +14,7 @@ def confirm_booking(modeladmin, request: HttpRequest, queryset: QuerySet):
         try:
             if booking.status == BookingStatus.CONFIRMED:
                 raise BookingAlreadyConfirmed(
-                    f'Booking {booking.locator} already confirmed!'
+                    f"Booking {booking.locator} already confirmed!"
                 )
             booking.status = BookingStatus.CONFIRMED
             booking.save()
@@ -31,7 +31,7 @@ def unconfirm_booking(modeladmin, request: HttpRequest, queryset: QuerySet):
         try:
             if booking.status == BookingStatus.PENDING:
                 raise BookingAlreadyPending(
-                    f'Booking {booking.locator} already pending!'
+                    f"Booking {booking.locator} already pending!"
                 )
             booking.status = BookingStatus.PENDING
             booking.save()
@@ -44,19 +44,19 @@ def unconfirm_booking(modeladmin, request: HttpRequest, queryset: QuerySet):
 
 
 class BookingAdmin(admin.ModelAdmin):
-    list_filter = ('status',)
-    search_fields = ('locator', 'session_id', 'customer_email')
+    list_filter = ("status",)
+    search_fields = ("locator", "session_id", "customer_email")
     list_display = (
-        'created',
-        'locator',
-        'status',
-        'get_date_and_hours',
-        'get_price',
-        'session_id',
-        'customer_name',
-        'customer_email',
-        'get_payment_url',
-        'promocode',
+        "created",
+        "locator",
+        "status",
+        "get_date_and_hours",
+        "get_price",
+        "session_id",
+        "customer_name",
+        "customer_email",
+        "get_payment_url",
+        "promocode",
     )
     actions = [confirm_booking, unconfirm_booking]
 
@@ -64,46 +64,42 @@ class BookingAdmin(admin.ModelAdmin):
         slots = obj.slots.all()
         first_slot = slots.first()
         last_slot = slots.last()
-        time_str = ''
+        time_str = ""
         if first_slot and last_slot:
-            day = first_slot.day.date if first_slot.day else ''
-            time_str = (
-                f'{day}: from {first_slot.from_hour} to ' f'{last_slot.to_hour}'
-            )
+            day = first_slot.day.date if first_slot.day else ""
+            time_str = f"{day}: from {first_slot.from_hour} to " f"{last_slot.to_hour}"
         return time_str
 
-    get_date_and_hours.short_description = 'Date and hours'
+    get_date_and_hours.short_description = "Date and hours"
 
     @staticmethod
     def get_price(obj: Booking) -> str:
-        return f'{obj.price}€'
+        return f"{obj.price}€"
 
     def get_payment_url(self, obj: Booking) -> str:
         if obj.status == BookingStatus.PENDING:
-            url = f'/generate/payment/?booking_id={obj.id}'
-            return mark_safe(
-                f'<a href="{url}" target="_blank" class="button">Pay</a>'
-            )
-        return ''
+            url = f"/generate/payment/?booking_id={obj.id}"
+            return mark_safe(f'<a href="{url}" target="_blank" class="button">Pay</a>')
+        return ""
 
-    get_payment_url.short_description = 'Payment url'
+    get_payment_url.short_description = "Payment url"
 
 
 admin.site.register(Booking, BookingAdmin)
 
 
 class PromocodeAdmin(admin.ModelAdmin):
-    list_filter = ('name', 'use_from', 'use_to', 'booking_from', 'booking_to')
-    search_fields = ('name',)
+    list_filter = ("name", "use_from", "use_to", "booking_from", "booking_to")
+    search_fields = ("name",)
     list_display = (
-        'name',
-        'use_from',
-        'use_to',
-        'booking_from',
-        'booking_to',
-        'factor',
-        'number_of_uses',
-        'limit_of_uses',
+        "name",
+        "use_from",
+        "use_to",
+        "booking_from",
+        "booking_to",
+        "factor",
+        "number_of_uses",
+        "limit_of_uses",
     )
 
 
