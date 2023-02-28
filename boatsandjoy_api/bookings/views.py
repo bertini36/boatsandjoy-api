@@ -7,24 +7,13 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from boatsandjoy_api.bookings.api import api as bookings_api
-from boatsandjoy_api.bookings.factories import build_create_booking_service
-from boatsandjoy_api.bookings.models import Promocode
+from boatsandjoy_api.bookings.factories import build_bookings_service
+from boatsandjoy_api.bookings.models import Booking, Promocode
 from boatsandjoy_api.bookings.requests import (
     CreateBookingRequest,
     GetBookingBySessionRequest,
-    GetBookingRequest,
     MarkBookingAsErrorRequest,
-    RegisterBookingEventRequest,
 )
-
-
-@api_view(["GET"])
-def generate_payment(request: Request) -> Response:
-    api_request = GetBookingRequest(
-        obj_id=request.GET["booking_id"], generate_new_session_id=True
-    )
-    results = bookings_api.get(api_request)
-    return Response(results)
 
 
 @api_view(["POST"])
@@ -53,19 +42,23 @@ def create_booking(request: Request) -> Response:
         is_resident=data["is_resident"],
         promocode=data.get("promocode"),
     )
-    service = build_create_booking_service()
-    booking_data = service.execute(request)
-    return Response(booking_data)
+    service = build_bookings_service()
+    booking = service.create(request)
+    return Response(booking)
+
+
+@api_view(["GET"])
+def force_booking_checkout(request: Request) -> Response:
+    booking = Booking.objects.get(id=request.GET["booking_id"])
+    service = build_bookings_service()
+    booking = service.force_checkout(booking)
+    return Response(booking)
 
 
 @api_view(["POST"])
-def register_booking_event(request: Request) -> Response:
-    api_request = RegisterBookingEventRequest(
-        headers=request.META, body=json.loads(request.body)
-    )
-    response = bookings_api.register_event(api_request)
-    if response["error"]:
-        return Response(status=400)
+def register_payment(request: Request) -> Response:
+    service = build_bookings_service()
+    service.register_payment(json.loads(request.body))
     return Response(status=200)
 
 
