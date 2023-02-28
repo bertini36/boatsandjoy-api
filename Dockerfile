@@ -1,6 +1,4 @@
-FROM python:3.7
-
-ARG REQUIREMENTS
+FROM python:3.10
 
 WORKDIR /code/
 
@@ -11,6 +9,7 @@ RUN apt update \
 COPY requirements/prod.txt /code/requirements/
 COPY requirements/dev.txt /code/requirements/
 
-RUN pip3 install --upgrade pip  && pip3 install -r /code/requirements/prod.txt && pip3 install -r /code/requirements/dev.txt
+RUN pip install --upgrade pip  && pip install -r /code/requirements/prod.txt && pip install -r /code/requirements/dev.txt
+RUN pip install --upgrade pip-tools
 
 RUN groupadd nobody

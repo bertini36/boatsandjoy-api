@@ -1,7 +1,7 @@
 -r base.txt
 
 pip-tools
-git+git://github.com/psf/black
+black
 ipython
 django-extensions
 django-debug-toolbar
