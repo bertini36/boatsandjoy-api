@@ -3,6 +3,7 @@ from enum import Enum
 from django.core.validators import validate_slug
 from django.db import models
 
+from boatsandjoy_api.bookings.managers import PromocodeQuerySet
 from boatsandjoy_api.core.models import BaseModel
 
 
@@ -52,7 +53,6 @@ class Promocode(BaseModel):
     use_to = models.DateField(blank=False)
     booking_from = models.DateField(blank=False)
     booking_to = models.DateField(blank=False)
-
     factor = models.FloatField(
         blank=False,
         help_text=(
@@ -63,6 +63,8 @@ class Promocode(BaseModel):
     )
     limit_of_uses = models.IntegerField(default=10)
     number_of_uses = models.IntegerField(default=0)
+
+    objects = PromocodeQuerySet.as_manager()
 
     def __str__(self) -> str:
         return f"Promocode [{self.name}]"

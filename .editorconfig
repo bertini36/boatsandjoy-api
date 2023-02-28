@@ -11,7 +11,7 @@ insert_final_newline=true
 trim_trailing_whitespace=true
 
 [*.py]
-max_line_length=80
+max_line_length=100
 quote_type=single
 not_skip=__init__.py
 multi_line_output=5

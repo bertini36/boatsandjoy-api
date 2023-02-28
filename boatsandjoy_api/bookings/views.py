@@ -7,6 +7,7 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 
 from boatsandjoy_api.bookings.api import api as bookings_api
+from boatsandjoy_api.bookings.factories import build_create_booking_service
 from boatsandjoy_api.bookings.models import Promocode
 from boatsandjoy_api.bookings.requests import (
     CreateBookingRequest,
@@ -31,7 +32,7 @@ def create_booking(request: Request) -> Response:
     """
     Creates a booking
 
-    :return {
+    :returns {
         'error': bool,
         'data': {
             'id': int,
@@ -43,7 +44,7 @@ def create_booking(request: Request) -> Response:
     }
     """
     data = json.loads(request.body)
-    api_request = CreateBookingRequest(
+    request = CreateBookingRequest(
         base_price=data["base_price"],
         slot_ids=[int(slot_id) for slot_id in data["slot_ids"].split(",")],
         customer_name=data["customer_name"],
@@ -52,8 +53,9 @@ def create_booking(request: Request) -> Response:
         is_resident=data["is_resident"],
         promocode=data.get("promocode"),
     )
-    results = bookings_api.create(api_request)
-    return Response(results)
+    service = build_create_booking_service()
+    booking_data = service.execute(request)
+    return Response(booking_data)
 
 
 @api_view(["POST"])

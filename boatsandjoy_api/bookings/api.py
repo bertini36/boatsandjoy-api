@@ -1,31 +1,25 @@
 from dataclasses import asdict
-from datetime import date
-from decimal import Decimal
 from typing import Type
 
 from django.conf import settings
-from django.db.models import F
 
-from boatsandjoy_api.availability import models as availability_models
 from boatsandjoy_api.boats.models import Boat
 from boatsandjoy_api.bookings import models as booking_models
-from boatsandjoy_api.bookings.models import BookingStatus
 from boatsandjoy_api.bookings.domain import Booking
 from boatsandjoy_api.bookings.exceptions import BookingsApiException
-from boatsandjoy_api.bookings.models import Promocode
-from boatsandjoy_api.bookings.payment_gateways import PaymentGateway, \
-    StripePaymentGateway
-from boatsandjoy_api.bookings.repository import BookingsRepository, \
-    DjangoBookingsRepository
+from boatsandjoy_api.bookings.models import BookingStatus
+from boatsandjoy_api.bookings.payment_gateways import StripePaymentGateway
+from boatsandjoy_api.bookings.repository import (
+    BookingsRepository,
+    DjangoBookingsRepository,
+)
 from boatsandjoy_api.bookings.requests import (
-    CreateBookingRequest,
     GetBookingBySessionRequest,
     GetBookingRequest,
     MarkBookingAsErrorRequest,
     RegisterBookingEventRequest,
 )
 from boatsandjoy_api.bookings.validators import (
-    BookingCreationRequestValidator,
     GetBookingBySessionRequestValidator,
     GetBookingRequestValidator,
     IdentifyBookingBySessionRequestValidator,
@@ -44,87 +38,12 @@ class BookingsApi:
         bookings_repository: Type[BookingsRepository],
         response_builder: Type[ResponseBuilderInterface],
         error_builder: Type[ResponseBuilderInterface],
-        payment_gateway: Type[PaymentGateway],
+        payment_gateway: "StripePaymentGateway",
     ):
         self.bookings_repository = bookings_repository
         self.response_builder = response_builder
         self.error_builder = error_builder
         self.payment_gateway = payment_gateway
-
-    def create(self, request: CreateBookingRequest):
-        """
-        :return {
-            'error': bool,
-            'data': {
-                'id': int,
-                'created': datetime,
-                'price': Decimal,
-                'status': str,
-                'session_id': str
-            }
-        }
-        """
-        try:
-            BookingCreationRequestValidator.validate(request)
-
-            price = request.base_price
-            booking_day = availability_models.Slot.objects.get(
-                id=request.slot_ids[0]
-            ).day.date
-            price = self._apply_discounts(
-                price,
-                request.is_resident,
-                request.promocode,
-                booking_day,
-            )
-            purchase_details = self.bookings_repository.get_purchase_details(
-                slot_ids=request.slot_ids,
-                price=price,
-            )
-            session_id = self.payment_gateway.generate_checkout_session_id(
-                **purchase_details
-            )
-            data = {
-                "price": price,
-                "slot_ids": request.slot_ids,
-                "customer_name": request.customer_name,
-                "customer_telephone_number": request.customer_telephone_number,
-                "session_id": session_id,
-                "extras": request.extras,
-                "promocode": request.promocode,
-            }
-            booking = self.bookings_repository.create(**data)
-            return self.response_builder(booking).build()
-
-        except BookingsApiException as e:
-            return self.error_builder(e).build()
-
-    @staticmethod
-    def _apply_discounts(
-        price: Decimal,
-        is_resident: bool,
-        promocode: str,
-        booking_day: date,
-    ) -> Decimal:
-        discount = Decimal(0)
-        if is_resident:
-            discount += Decimal(settings.RESIDENT_DISCOUNT)
-
-        use_day = date.today()
-        try:
-            promocode = Promocode.objects.get(
-                name=promocode,
-                use_from__lte=use_day,
-                use_to__gte=use_day,
-                booking_from__lte=booking_day,
-                booking_to__gte=booking_day,
-                number_of_uses__lt=F("limit_of_uses"),
-            )
-            discount += Decimal(promocode.factor)
-        except Promocode.DoesNotExist:
-            pass
-
-        return price - (price * discount)
 
     def get(self, request: GetBookingRequest):
         try:
