@@ -7,34 +7,35 @@ from django.conf import settings
 from django.db.models import F
 
 from boatsandjoy_api.availability import models as availability_models
-from boatsandjoy_api.boats.api import api as boats_api
+from boatsandjoy_api.boats.models import Boat
 from boatsandjoy_api.bookings import models as booking_models
+from boatsandjoy_api.bookings.constants import BookingStatus
+from boatsandjoy_api.bookings.domain import Booking
+from boatsandjoy_api.bookings.exceptions import BookingsApiException
 from boatsandjoy_api.bookings.models import Promocode
-from boatsandjoy_api.core.responses import (
-    ErrorResponseBuilder,
-    ResponseBuilder,
-    ResponseBuilderInterface,
-)
-from boatsandjoy_api.core.utils import send_email
-from .constants import BookingStatus
-from .domain import Booking
-from .exceptions import BookingsApiException
-from .payment_gateways import PaymentGateway, StripePaymentGateway
-from .repository import BookingsRepository, DjangoBookingsRepository
-from .requests import (
+from boatsandjoy_api.bookings.payment_gateways import PaymentGateway, \
+    StripePaymentGateway
+from boatsandjoy_api.bookings.repository import BookingsRepository, \
+    DjangoBookingsRepository
+from boatsandjoy_api.bookings.requests import (
     CreateBookingRequest,
     GetBookingBySessionRequest,
     GetBookingRequest,
     MarkBookingAsErrorRequest,
     RegisterBookingEventRequest,
 )
-from .validators import (
+from boatsandjoy_api.bookings.validators import (
     BookingCreationRequestValidator,
     GetBookingBySessionRequestValidator,
     GetBookingRequestValidator,
     IdentifyBookingBySessionRequestValidator,
 )
-from ..boats.requests import FilterBoatsRequest
+from boatsandjoy_api.core.responses import (
+    ErrorResponseBuilder,
+    ResponseBuilder,
+    ResponseBuilderInterface,
+)
+from boatsandjoy_api.core.utils import send_email
 
 
 class BookingsApi:
@@ -201,14 +202,13 @@ class BookingsApi:
     @staticmethod
     def send_confirmation_email(booking: Booking):
         if booking.customer_email:
-            api_request = FilterBoatsRequest(obj_id=booking.boat_id)
-            results = boats_api.get(api_request)
+            boat = Boat.objects.get(id=booking.boat_id)
             send_email(
                 subject="Boats & Joy: Booking confirmation",
                 to_email=booking.customer_email,
                 template="emails/confirmation.html",
                 booking=booking,
-                boat=results["data"],
+                boat=boat,
                 EMAIL_HOST_USER=settings.EMAIL_HOST_USER,
             )
 

@@ -7,11 +7,7 @@ from boatsandjoy_api.availability.exceptions import (
     NoAvailabilityForDay,
     NoDayDefinitionDefined,
 )
-from boatsandjoy_api.boats.api import api as boats_api
-from boatsandjoy_api.boats.domain import Boat
-from boatsandjoy_api.boats.exceptions import NoActiveBoat
-from boatsandjoy_api.boats.requests import FilterBoatsRequest
-from boatsandjoy_api.core.exceptions import BoatsAndJoyException
+from boatsandjoy_api.boats.models import Boat
 from boatsandjoy_api.core.responses import (
     ResponseBuilder,
     ResponseBuilderInterface,
@@ -65,8 +61,7 @@ class AvailabilityApi:
         """
         try:
             GetAvailabilityRequestValidator.validate(request)
-            results = boats_api.filter(FilterBoatsRequest(active=True))
-            boats = [Boat(**boat_data) for boat_data in results["data"]]
+            boats = Boat.objects.active()
             availablity_results = self._get_day_availability(
                 boats=boats,
                 date_=request.date,
@@ -93,8 +88,7 @@ class AvailabilityApi:
         """
         try:
             GetMonthAvailabilityRequestValidator.validate(request)
-            results = boats_api.filter(FilterBoatsRequest(active=True))
-            boats = [Boat(**boat_data) for boat_data in results["data"]]
+            boats = Boat.objects.active()
             month_availability_results = self._get_month_availability(
                 boats=boats, month=request.month, year=request.year
             )
@@ -106,18 +100,12 @@ class AvailabilityApi:
             ).build()
 
     def _get_day_availability(
-        self, boats: List[Boat], date_: date, apply_resident_discount: bool
+        self, boats: list[Boat], date_: date, apply_resident_discount: bool
     ) -> list:
-        results = []
-        for boat in boats:
-            try:
-                if not boat.active:
-                    raise NoActiveBoat("This boat is not active")
-                results.append(
-                    self._get_boat_response(boat, date_, apply_resident_discount)
-                )
-            except BoatsAndJoyException:
-                continue
+        results = [
+            self._get_boat_response(boat, date_, apply_resident_discount)
+            for boat in boats
+        ]
         return results
 
     def _get_month_availability(self, boats: List[Boat], month: int, year: int) -> list:
@@ -266,7 +254,7 @@ class AvailabilityApi:
         return slot_combination_hour_limits
 
     @staticmethod
-    def _get_global_day_availability_type(boats: List[Boat], date_: date) -> str:
+    def _get_global_day_availability_type(boats: list[Boat], date_: date) -> str:
         boats_day_availability_types = []
         if date_ < date.today():
             return DayAvailabilityTypes.NO_AVAIL

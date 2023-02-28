@@ -3,7 +3,7 @@ from datetime import date, datetime, timedelta
 from decimal import Decimal
 from typing import List
 
-from boatsandjoy_api.boats.domain import Boat
+from boatsandjoy_api.boats.models import Boat
 from boatsandjoy_api.core.data_adapters import DjangoDataAdapter
 from . import domain, models
 from .exceptions import NoAvailabilityForDay, NoDayDefinitionDefined

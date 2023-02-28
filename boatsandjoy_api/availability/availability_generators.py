@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from datetime import date
 from typing import List
 
-from boatsandjoy_api.boats.domain import Boat
+from boatsandjoy_api.boats.models import Boat
 from .exceptions import NoDayDefinitionDefined
 from .repository import DjangoAvailabilityRepository
 

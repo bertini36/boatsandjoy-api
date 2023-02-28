@@ -1,13 +1,9 @@
 from boatsandjoy_api.core.exceptions import BoatsAndJoyException
 
 
-class BoatsApiException(BoatsAndJoyException):
+class BoatNotFound(BoatsAndJoyException):
     pass
 
 
-class BoatNotFound(BoatsApiException):
-    pass
-
-
-class NoActiveBoat(BoatsApiException):
+class NoActiveBoat(BoatsAndJoyException):
     pass
