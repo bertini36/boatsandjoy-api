@@ -123,7 +123,11 @@ class BookingsApi:
         except Promocode.DoesNotExist:
             pass
 
-        return price - (price * discount)
+        price_as_decimal = price
+        if isinstance(price, float):
+            price_as_decimal = Decimal(price)
+
+        return price_as_decimal - (price_as_decimal * discount)
 
     def get(self, request: GetBookingRequest):
         try:
