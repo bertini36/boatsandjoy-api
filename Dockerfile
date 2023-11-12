@@ -4,7 +4,7 @@ WORKDIR /code/
 
 RUN apt update \
  && apt install -y libjpeg-dev libgraphviz-dev libpq-dev build-essential wait-for-it \
- && apt install -y libxmlsec1-dev pkg-config graphviz graphicsmagick python-dev gettext
+ && apt install -y libxmlsec1-dev pkg-config graphviz graphicsmagick gettext
 
 COPY requirements/prod.txt /code/requirements/
 COPY requirements/dev.txt /code/requirements/
