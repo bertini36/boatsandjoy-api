@@ -47,3 +47,8 @@ init.sql/
 
 # Dependencies
 .direnv/
+
+# Mac files
+.DS_Store
+*.swp
+*.swo
