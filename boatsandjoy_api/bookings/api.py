@@ -185,8 +185,8 @@ class BookingsApi:
                 except booking_models.Promocode.DoesNotExist:
                     pass
 
-            self.send_confirmation_email(booking)
-            self._send_new_booking_notification_email(booking)
+            # self.send_confirmation_email(booking)
+            # self._send_new_booking_notification_email(booking)
             return self.response_builder([]).build()
 
         except BookingsApiException as e:
